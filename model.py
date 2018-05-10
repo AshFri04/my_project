@@ -1,6 +1,7 @@
 """ Models for Gluten-Free WebApp Project. """
 
-from flask_sqlalchemy import flask_sqlalchemy
+#from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
@@ -19,7 +20,7 @@ class User(db.Model):
     password = db.Column(db.String(25))
 
     # Relationship between users, restaurants and favorite_restaurants.
-    favorite_restaurants = db.relationship("Restaurant", secondary="favorite_restaurants",                                  backref="users")
+    favorite_restaurants = db.relationship("Restaurant", secondary="favorite_restaurants", backref="users")
 
 
     def __repr__(self):
@@ -34,16 +35,16 @@ class Restaurant(db.Model):
 
     __tablename__ = "restaurants"
 
-    restaurant_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
-    phone_number = db.Column(db.Integer)
-    picture = db.Column(db.String(75))
-    menu_url= db.Column(db.String(50))
-    website_url = db.Column(db.String(50))
+    restaurant_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(100))
+    address = db.Column(db.String(100))
+    phone_number = db.Column(db.String(100))
+    picture = db.Column(db.String(100))
+    menu_url= db.Column(db.String(255))
+    website_url = db.Column(db.String(255))
     last_update = db.Column(db.DateTime)
     avg_rating = db.Column(db.Integer)
     neighborhood_id = db.Column(db.Integer, db.ForeignKey('neighborhoods.neighborhood_id'))
-    gf_type_id = db.Column(db.Integer, db.ForeignKey('gf_types.gf_type_id'))
 
     # Relationships between neighborhoods table and restaurants table in the database.
     neighborhood = db.relationship("Neighborhood", backref='restaurants')
@@ -82,7 +83,7 @@ class GF_type(db.Model):
     gf_type = db.Column(db.String(50))
 
     # Relationship between GF_type, restaurants and estaurant_types.
-    restaurant_type = db.relationship("Restaurant", secondary="restaurant_types",                                  backref="GF_type")
+    restaurant_type = db.relationship("Restaurant", secondary="restaurant_types", backref="GF_type")
 
 
     def __repr__(self):
@@ -98,8 +99,8 @@ class Restaurant_type(db.Model):
     __tablename__ = "restaurant_types"
 
     restaurant_type_id = db.Column(db.Integer, primary_key=True)
-    gf_type_id = db.Column(db.Integer)
-    restaurant_id = db.Column(db.Integer)
+    gf_type_id = db.Column(db.Integer, db.ForeignKey('gf_types.gf_type_id'))
+    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.restaurant_id'))
 
 
     def __repr__(self):
@@ -125,6 +126,24 @@ class Neighborhood(db.Model):
 
 
 
+#############################################################################
+# # Helper functions
+
+def connect_to_db(app):
+    """ Connect the database to my Flask app. """
+
+    # Configure to use PostgreSQL database
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///gluten_free'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    #app.config['SQLALCHEMY_ECHO'] = True
+    db.app = app
+    db.init_app(app)
+
+if __name__ == "__main__":
+
+    from server import app
+    connect_to_db(app)
+    print "Connected to Database."
 
 
 
