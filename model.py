@@ -98,7 +98,7 @@ class Restaurant_type(db.Model):
 
     __tablename__ = "restaurant_types"
 
-    restaurant_type_id = db.Column(db.Integer, primary_key=True)
+    restaurant_type_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     gf_type_id = db.Column(db.Integer, db.ForeignKey('gf_types.gf_type_id'))
     restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.restaurant_id'))
 
