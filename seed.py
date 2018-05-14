@@ -20,10 +20,6 @@ url = 'https://api.yelp.com/v3/businesses/search'
 headers = {'Authorization': 'Bearer %s' % api_key}
 
 
-# Dont hard code a list of neighborhoods // create a query to my db for neighborhood names
-# save it to a variable and loop through it
-
-
 def load_restaurants():
     # """ Load restaurant data into database. """
 
@@ -80,33 +76,6 @@ def load_restaurants():
     db.session.commit()
 
 
-#     # with open(filename, 'w') as my_file:
-#     #     my_file.write(results)
-        
-#         # Turns into dictionary (type=dict)
-#         # Keys = [u'region', u'total', u'businesses']
-#     data = json.loads(data)    
-#     restaurants = data['businesses']   # type = list (List of dictionaries)
-#     # print restaurants
-
-#     for restaurant in restaurants:
-#         name = restaurant['name']
-#         address = restaurant['location']['display_address']  # location key has a dict value
-#         phone_number = restaurant['display_phone']
-#         picture = restaurant['image_url']
-#         website_url =restaurant['url']
-#         avg_rating = restaurant['rating']
-
-
-#         restaurant_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating)
-
-#         db.session.add(restaurant_info)
-
-#     db.session.commit()
-
-    
-    # neighborhood_id
-
 # def set_val_gf_types_table():
 #     """ Set the values to the table gf_types. """
 
@@ -116,6 +85,7 @@ def load_restaurants():
 
 #     db.session.add_all([completely_gf, gf_options, gf_bakeries])
 #     db.session.commit()
+
 
 def set_val_neighborhoods_table():
     """ Set the values to the table neighborhoods. """
@@ -151,8 +121,6 @@ def set_val_neighborhoods_table():
     db.session.add_all([n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13, n14, n15, n16, n17, n18, n19, n20, n21, n22, n23, n24, n25])
     db.session.commit()
     
-
-
 
 
 if __name__ == "__main__":
