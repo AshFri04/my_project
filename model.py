@@ -18,6 +18,7 @@ class User(db.Model):
     lname = db.Column(db.String(25))
     email = db.Column(db.String(75))
     password = db.Column(db.String(25))
+    zipcode = db.Column(db.Integer)
 
     # Relationship between users, restaurants and favorite_restaurants.
     favorite_restaurants = db.relationship("Restaurant", secondary="favorite_restaurants", backref="users")
@@ -26,7 +27,7 @@ class User(db.Model):
     def __repr__(self):
         """ Provide helpful representation when printed. """
 
-        return "<User user_id={} fname={} lname={} email={}>".format(self.user_id, self.fname, self.lname, self.email)
+        return "<User user_id={} fname={} lname={} email={} zipcode={}>".format(self.user_id, self.fname, self.lname, self.email, self.zipcode)
 
 
 
