@@ -45,9 +45,11 @@ def load_restaurants():
             website_url =bakery['url']
             avg_rating = bakery['rating']
 
-    restaurant_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating)
+    bakery_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating)
 
-    db.session.add(restaurant_info)
+    # Add bakery data to the database.
+    db.session.add(bakery_info)
+    db.session.commit()
 
     for neighborhood in neighborhood_list:
         # Make a GET request to the API
@@ -71,20 +73,20 @@ def load_restaurants():
 
     restaurant_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating)
 
+    # Add restaurant data to the database.
     db.session.add(restaurant_info)
-
     db.session.commit()
 
 
-# def set_val_gf_types_table():
-#     """ Set the values to the table gf_types. """
+def set_val_gf_types_table():
+    """ Set the values to the table gf_types. """
 
-#     completely_gf = GF_type(gf_type="Completely Gluten Free")
-#     gf_options = GF_type(gf_type="Gluten Free Options")
-#     gf_bakeries = GF_type(gf_type="Gluten Free Bakeries")
+    completely_gf = GF_type(gf_type="Completely Gluten Free")
+    gf_options = GF_type(gf_type="Gluten Free Options")
+    gf_bakeries = GF_type(gf_type="Gluten Free Bakeries")
 
-#     db.session.add_all([completely_gf, gf_options, gf_bakeries])
-#     db.session.commit()
+    db.session.add_all([completely_gf, gf_options, gf_bakeries])
+    db.session.commit()
 
 
 def set_val_neighborhoods_table():

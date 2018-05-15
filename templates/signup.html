@@ -1,44 +1,28 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
     
     <h1>Create a New Account</h1>
 
-    <form>
-        First Name:   <input type="text" name="firstname">
-    </form>
-    <br></br>
-    <form>
-        Last Name:   <input type="text" name="lastname">
-    </form>
-    <br></br>
-    <form>
+    <form action="/thankyou" method="POST">
+        First Name   <input type="text" name="firstname">
+      <br></br>
+        Last Name   <input type="text" name="lastname">
+      <br></br>
         Your Email   <input type="text" name="email">
-    </form>
-    <br></br>
-    <form>
+      <br></br>
         Confirm Email   <input type="text" name="confirm_email">
-    </form>
-    <br></br>
-    <form>
-        Zipcode   <input type="text" name="firstname">
-    </form>
-    <br></br>
-    <form>
+      <br></br>
+        Zipcode   <input type="text" name="zipcode">
+      <br></br>
         Password   <input type="text" name="password">
-    </form>
-    <br></br>
-    <form>
+      <br></br>
         Confirm Password   <input type="text" name="confirm_password">
-    </form>
-    <br></br>
-    <form>
-      <input type="checkbox" name="terms" value="term"> Yes, I agree to Glutie.com Terms of Use
-    </form>
-    <br></br>
-    <form>
-      <input type="submit" value="Sign Up">
+
+      <br></br>
+        <input type="checkbox" name="terms" value="term"> Yes, I agree to Glutie.com Terms of Use
+      <br></br>
+        <input type="submit" value="Sign Up">
     </form>
 
 {% endblock %}
