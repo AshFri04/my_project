@@ -84,13 +84,16 @@ def register_process():
 def login():
     """ Display login form. """
 
+    if session.get('user_id'):
+        return redirect('/login_mainpage1')
+    
     return render_template("login.html")
 
 
 
 @app.route('/login_mainpage', methods=["POST"])
 def login_process():
-    """ Action for login form; log a user into their account. """
+    """ Process login information; log a user into their account. """
 
 
     email = request.form.get('email')
@@ -111,24 +114,19 @@ def login_process():
 
 
 
-# @app.route('/login_mainpage')
-# def login_mainpage():
-#     """ Display the main page after user logs in. """
+@app.route('/login_mainpage1')
+def display_login_mainpage():
+    """ Display the main page after user logs in. """
 
-#     # ADD CODE
-#     pass
+    return render_template("login_mainpage.html")
 
 @app.route('/sign_out')
 def sign_out():
     """ Sign out of user's account. """
-
-    if "user_id" in session:
-        del session["user_id"]
-        del session['email']
-        del session['fname']
-        del session['current_user']
-
-        return render_template("sign_out.html")
+    
+    session.clear()
+        
+    return render_template("sign_out.html")
 
 # @app.route()
 # def delete_account():
@@ -154,6 +152,27 @@ def sign_out():
 
 #     pass
 
+################################################################################
+
+@app.route("/only_gf")
+def only_gf():
+    """ Display restaurants that are Completely Gluten Free."""
+
+    pass
+
+
+app.route("/restaurants_gf_options")
+def only_gf():
+    """ Display restaurants that have Gluten Free Options on their menu."""
+
+    pass
+    
+
+app.route("/bakery_gf_options")
+def only_gf():
+    """ Display bakeries that have Gluten Free Options on their menu."""
+
+    pass
 
 
 

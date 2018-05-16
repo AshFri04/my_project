@@ -81,8 +81,9 @@ def load_restaurants():
             picture = bakery['image_url']
             website_url =bakery['url']
             avg_rating = bakery['rating']
+            nh = neighborhood.neighborhood_id
 
-            bakery_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating)
+            bakery_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating, neighborhood_id=nh)
 
     # Add bakery data to the database.
             db.session.add(bakery_info)
@@ -108,8 +109,9 @@ def load_restaurants():
             picture = restaurant['image_url']
             website_url =restaurant['url']
             avg_rating = restaurant['rating']
+            nh = neighborhood.neighborhood_id
 
-            restaurant_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating)
+            restaurant_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating, neighborhood_id=nh)
 
     # Add restaurant data to the database.
             db.session.add(restaurant_info)
