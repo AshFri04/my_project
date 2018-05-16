@@ -14,10 +14,10 @@ class User(db.Model):
     __tablename__ = "users"
 
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    fname = db.Column(db.String(25))
-    lname = db.Column(db.String(25))
-    email = db.Column(db.String(75))
-    password = db.Column(db.String(25))
+    fname = db.Column(db.String(100))
+    lname = db.Column(db.String(100))
+    email = db.Column(db.String(100))
+    password = db.Column(db.String(150))
     zipcode = db.Column(db.Integer)
 
     # Relationship between users, restaurants and favorite_restaurants.
