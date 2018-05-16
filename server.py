@@ -5,6 +5,8 @@ from flask import Flask, render_template, request, redirect, session, flash
 from model import connect_to_db, db, User, Restaurant, Favorite_restaurant, GF_type, Restaurant_type, Neighborhood
 from flask_debugtoolbar import DebugToolbarExtension
 
+from passlib.hash import pbkdf2_sha256
+
 app = Flask(__name__)
 
 # Required to use Flask sessions and the debug toolbar
@@ -29,7 +31,7 @@ def homepage():
 
 
 @app.route('/signup')
-def signup():
+def register():
     """ Display sign up form. """
 
     return render_template("signup.html")
@@ -49,13 +51,15 @@ def register_process():
     confirm_password = request.form.get("confirm_password")
     terms = request.form.get("terms")
 
+    password_hash = pbkdf2_sha256.hash(password)
+
     if email == confirm_email:
         if password == confirm_password:
             if User.query.filter_by(email=email).first():
                 flash("This email address is already registered.")
                 return redirect('/signup')
             else:
-                user_info = User(fname=fname, lname=lname, email=email, zipcode=zipcode, password=password)
+                user_info = User(fname=fname, lname=lname, email=email, zipcode=zipcode, password=password_hash)
 
                 # Add user information to the database.
                 db.session.add(user_info)
@@ -84,33 +88,35 @@ def login():
 
 
 
-@app.route('/login', methods=["POST"])
+@app.route('/login_mainpage', methods=["POST"])
 def login_process():
     """ Action for login form; log a user into their account. """
 
 
     email = request.form.get('email')
     password = request.form.get('password')
+    user = User.query.filter_by(email=email).first()
 
-    if User.query.filter_by(email=email).first():
-        session['user_id'] = user.user_id
-        session['email'] = user.email
-        session['fname'] =user.fname
-        session['current_user'] = username
-        flash("Great to have you back, {}!".format(user.fname))
-        return redirect('login_mainpage')
-    else:
-        flash("The email or password you've entered does not match any of our accounts. \n Please try again.")
-        return redirect('/login')
+    if user:
+        if pbkdf2_sha256.verify(password, user.password):
+            session['user_id'] = user.user_id
+            session['email'] = user.email
+            session['fname'] =user.fname
+            flash("Great to have you back, {}!".format(user.fname))
+            return render_template("login_mainpage.html")
+
+# Why doesn't the else work here
+    flash("The email or password you've entered does not match any of our accounts. \n Please try again.")
+    return redirect('/login')
 
 
 
-@app.route('/login_mainpage')
-def login_mainpage():
-    """ Display the main page after user logs in. """
+# @app.route('/login_mainpage')
+# def login_mainpage():
+#     """ Display the main page after user logs in. """
 
-    # ADD CODE
-    pass
+#     # ADD CODE
+#     pass
 
 @app.route('/sign_out')
 def sign_out():
@@ -122,7 +128,7 @@ def sign_out():
         del session['fname']
         del session['current_user']
 
-        return redirect("sign_out.html")
+        return render_template("sign_out.html")
 
 # @app.route()
 # def delete_account():

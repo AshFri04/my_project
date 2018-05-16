@@ -128,13 +128,7 @@ def set_val_gf_types_table():
 
 
 
-def set_users_table():
-    """ Create fake user accounts in users table. """
 
-    user1 = User(fname="Ashley", lname="Freidel", email="a@gmail.com", zipcode=94133, password=123)
-
-    db.session.add(user1)
-    db.session.commit()
 
 
 
@@ -148,7 +142,7 @@ if __name__ == "__main__":
     set_val_neighborhoods_table()
     load_restaurants()
     set_val_gf_types_table()
-    set_users_table()
+
     
 
 
