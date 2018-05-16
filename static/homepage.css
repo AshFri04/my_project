@@ -1,0 +1,34 @@
+body  {
+    margin: 0;
+
+}
+
+h1 {
+    font-size: 100px
+    font-family: sans-serif;
+    color: blue;
+}
+
+h2 {
+    font-size: 60px
+    font-family: sans-serif;
+}
+
+
+element.style {
+    display: inline-block;
+    background: transparent;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.signout-hide {
+    visibility: hidden;
+}
+
+.signout-show {
+
+    visibility: visible;
+
+}
