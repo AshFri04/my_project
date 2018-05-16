@@ -85,7 +85,9 @@ def load_restaurants():
 
             bakery_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating, neighborhood_id=nh)
 
-    # Add bakery data to the database.
+            # gf_type_bakery = Restaurant_type(gf_type_id=3, restaurant_id=bakery_info)
+
+            # Add bakery data to the database.
             db.session.add(bakery_info)
     
     

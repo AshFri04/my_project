@@ -84,7 +84,7 @@ class GF_type(db.Model):
     gf_type = db.Column(db.String(50))
 
     # Relationship between GF_type, restaurants and estaurant_types.
-    restaurant_type = db.relationship("Restaurant", secondary="restaurant_types", backref="GF_type")
+    restaurant = db.relationship("Restaurant", secondary="restaurant_types", backref="GF_type")
 
 
     def __repr__(self):
@@ -102,6 +102,7 @@ class Restaurant_type(db.Model):
     restaurant_type_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     gf_type_id = db.Column(db.Integer, db.ForeignKey('gf_types.gf_type_id'))
     restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.restaurant_id'))
+
 
 
     def __repr__(self):

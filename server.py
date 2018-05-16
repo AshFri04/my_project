@@ -152,27 +152,50 @@ def sign_out():
 
 #     pass
 
-################################################################################
-
-@app.route("/only_gf")
-def only_gf():
-    """ Display restaurants that are Completely Gluten Free."""
-
-    pass
+# ################################################################################
 
 
-app.route("/restaurants_gf_options")
-def only_gf():
-    """ Display restaurants that have Gluten Free Options on their menu."""
+# # query restaurants table from there pass neigh id/ gf type
 
-    pass
-    
+@app.route("/restaurants")
+def display_restaurants():
+    """ """
 
-app.route("/bakery_gf_options")
-def only_gf():
-    """ Display bakeries that have Gluten Free Options on their menu."""
+    restaurants = Restaurant.query.filter_by(neighborhood_id=1).all()
 
-    pass
+    return render_template("restaurants.html", restaurants=restaurants)
+
+
+
+
+
+
+
+
+
+# ################################################################################
+# @app.route("/only_gf")
+# def only_gf():
+#     """ Display restaurants that are Completely Gluten Free."""
+
+#     pass
+
+
+# app.route("/restaurants_gf_options")
+# def only_gf():
+#     """ Display restaurants that have Gluten Free Options on their menu."""
+
+#     pass
+
+
+# app.route("/bakery_gf_options")
+# def only_gf():
+#     """ Display bakeries that have Gluten Free Options on their menu."""
+
+#     pass
+
+
+# # query restaurants table from there pass neigh id/ gf type
 
 
 
