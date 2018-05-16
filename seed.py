@@ -20,74 +20,6 @@ url = 'https://api.yelp.com/v3/businesses/search'
 headers = {'Authorization': 'Bearer %s' % api_key}
 
 
-def load_restaurants():
-    # """ Load restaurant data into database. """
-
-    neighborhood_list = Neighborhood.query.all()
-
-    for neighborhood in neighborhood_list:
-        # Make a GET request to the API
-        payload = {'location': neighborhood.neighborhood_name + ' san francisco', 'categories': 'gluten_free,bakeries'}
-
-        # r1 returns <Response 200>
-        r1 = requests.get(url, headers=headers, params=payload)
-
-        # results1.keys() is [u'region', u'total', u'businesses']
-        results1 = r1.json()
-
-        bakeries = results1['businesses']
-
-        for bakery in bakeries:
-            name = bakery['name']
-            address = bakery['location']['display_address']  # location key has a dict value
-            phone_number = bakery['display_phone']
-            picture = bakery['image_url']
-            website_url =bakery['url']
-            avg_rating = bakery['rating']
-
-    bakery_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating)
-
-    # Add bakery data to the database.
-    db.session.add(bakery_info)
-    db.session.commit()
-
-    for neighborhood in neighborhood_list:
-        # Make a GET request to the API
-        payload = {'location': neighborhood.neighborhood_name + 'san francisco', 'categories': 'gluten_free,restaurants'}
-
-        # r2 returns <Response 200>
-        r2 = requests.get(url, headers=headers, params=payload)
-
-        # results2.keys() is [u'region', u'total', u'businesses']
-        results2 = r2.json()
-
-        restaurants = results2['businesses']
-
-        for restaurant in restaurants:
-            name = restaurant['name']
-            address = restaurant['location']['display_address']  # location key has a dict value
-            phone_number = restaurant['display_phone']
-            picture = restaurant['image_url']
-            website_url =restaurant['url']
-            avg_rating = restaurant['rating']
-
-    restaurant_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating)
-
-    # Add restaurant data to the database.
-    db.session.add(restaurant_info)
-    db.session.commit()
-
-
-def set_val_gf_types_table():
-    """ Set the values to the table gf_types. """
-
-    completely_gf = GF_type(gf_type="Completely Gluten Free")
-    gf_options = GF_type(gf_type="Gluten Free Options")
-    gf_bakeries = GF_type(gf_type="Gluten Free Bakeries")
-
-    db.session.add_all([completely_gf, gf_options, gf_bakeries])
-    db.session.commit()
-
 
 def set_val_neighborhoods_table():
     """ Set the values to the table neighborhoods. """
@@ -115,13 +47,97 @@ def set_val_neighborhoods_table():
     
     n20 = Neighborhood(neighborhood_name="Richmond District", lat=37.778451, lng=-122.479047) # Inner/outer richmond
     n21 = Neighborhood(neighborhood_name="Sunset District", lat=37.758029, lng=-122.481450) # Inner/Outer sunset
-    n22 = Neighborhood(neighborhood_name="Parkside", lat=37.740284, -122.489240)
+    n22 = Neighborhood(neighborhood_name="Parkside", lat=37.740284, lng=-122.489240)
     n23 = Neighborhood(neighborhood_name="Lakeshore", lat=37.720691, lng=-122.482743)
     n24 = Neighborhood(neighborhood_name="Ocean View", lat=37.713333, lng=-122.456367)
     n25 = Neighborhood(neighborhood_name="Bayview", lat=37.729627, lng=-122.385299)
 
     db.session.add_all([n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13, n14, n15, n16, n17, n18, n19, n20, n21, n22, n23, n24, n25])
     db.session.commit()
+
+
+
+def load_restaurants():
+    """ Load restaurant and bakery data into database. """
+
+    neighborhood_list = Neighborhood.query.all()
+
+    for neighborhood in neighborhood_list:
+        # Make a GET request to the API
+        payload = {'location': neighborhood.neighborhood_name + ' san francisco', 'categories': 'gluten_free,bakeries'}
+
+        # r1 returns <Response 200>
+        r1 = requests.get(url, headers=headers, params=payload)
+
+        # results1.keys() is [u'region', u'total', u'businesses']
+        results1 = r1.json()
+
+        bakeries = results1['businesses']
+
+        for bakery in bakeries:
+            name = bakery['name']
+            address = bakery['location']['display_address']  # location key has a dict value
+            phone_number = bakery['display_phone']
+            picture = bakery['image_url']
+            website_url =bakery['url']
+            avg_rating = bakery['rating']
+
+            bakery_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating)
+
+    # Add bakery data to the database.
+            db.session.add(bakery_info)
+    
+    
+
+    for neighborhood in neighborhood_list:
+        # Make a GET request to the API
+        payload = {'location': neighborhood.neighborhood_name + 'san francisco', 'categories': 'gluten_free,restaurants'}
+
+        # r2 returns <Response 200>
+        r2 = requests.get(url, headers=headers, params=payload)
+
+        # results2.keys() is [u'region', u'total', u'businesses']
+        results2 = r2.json()
+
+        restaurants = results2['businesses']
+
+        for restaurant in restaurants:
+            name = restaurant['name']
+            address = restaurant['location']['display_address']  # location key has a dict value
+            phone_number = restaurant['display_phone']
+            picture = restaurant['image_url']
+            website_url =restaurant['url']
+            avg_rating = restaurant['rating']
+
+            restaurant_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating)
+
+    # Add restaurant data to the database.
+            db.session.add(restaurant_info)
+    db.session.commit()
+
+
+def set_val_gf_types_table():
+    """ Set the values to the table gf_types. """
+
+    completely_gf = GF_type(gf_type="Completely Gluten Free")
+    gf_options = GF_type(gf_type="Gluten Free Options")
+    gf_bakeries = GF_type(gf_type="Gluten Free Bakeries")
+
+    db.session.add_all([completely_gf, gf_options, gf_bakeries])
+    db.session.commit()
+
+
+
+def set_users_table():
+    """ Create fake user accounts in users table. """
+
+    user1 = User(fname="Ashley", lname="Freidel", email="a@gmail.com", zipcode=94133, password=123)
+
+    db.session.add(user1)
+    db.session.commit()
+
+
+
     
 
 
@@ -129,8 +145,10 @@ if __name__ == "__main__":
 
     connect_to_db(app)
 
+    set_val_neighborhoods_table()
     load_restaurants()
-    # set_val_gf_types_table()
-    # set_val_neighborhoods_table()
+    set_val_gf_types_table()
+    set_users_table()
+    
 
 

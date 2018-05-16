@@ -5,22 +5,22 @@
     <h1>Create a New Account</h1>
 
     <form action="/thankyou" method="POST">
-        First Name   <input type="text" name="firstname">
+        First Name   <input type="text" name="firstname" required>
       <br></br>
-        Last Name   <input type="text" name="lastname">
+        Last Name   <input type="text" name="lastname" required>
       <br></br>
-        Your Email   <input type="text" name="email">
+        Your Email   <input type="email" name="email" required>
       <br></br>
-        Confirm Email   <input type="text" name="confirm_email">
+        Confirm Email   <input type="email" name="confirm_email" required>
       <br></br>
-        Zipcode   <input type="text" name="zipcode">
+        Zipcode   <input type="text" name="zipcode" required>
       <br></br>
-        Password   <input type="text" name="password">
+        Password   <input type="password" name="password" required>
       <br></br>
-        Confirm Password   <input type="text" name="confirm_password">
+        Confirm Password   <input type="password" name="confirm_password" required>
 
       <br></br>
-        <input type="checkbox" name="terms" value="term"> Yes, I agree to Glutie.com Terms of Use
+        <input type="checkbox" name="terms" value="term" required> Yes, I agree to Glutie.com Terms of Use
       <br></br>
         <input type="submit" value="Sign Up">
     </form>

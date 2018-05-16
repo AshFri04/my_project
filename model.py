@@ -118,8 +118,8 @@ class Neighborhood(db.Model):
 
     neighborhood_id = db.Column(db.Integer, primary_key=True)
     neighborhood_name = db.Column(db.String(50))
-    lat = db.Column(db.Integer)
-    lng = db.Column(db.Integer)
+    lat = db.Column(db.Float)
+    lng = db.Column(db.Float)
 
 
     def __repr__(self):
