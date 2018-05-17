@@ -76,19 +76,27 @@ def load_restaurants():
 
         for bakery in bakeries:
             name = bakery['name']
-            address = bakery['location']['display_address']  # location key has a dict value
+            addresses = bakery['location']['display_address']  # location key has a dict value
             phone_number = bakery['display_phone']
             picture = bakery['image_url']
             website_url =bakery['url']
             avg_rating = bakery['rating']
             nh = neighborhood.neighborhood_id
 
-            bakery_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating, neighborhood_id=nh)
+            # Convert addresses (datatype is list) to a string for correct format to store in db
+            address = ' '.join(addresses)
 
-            # gf_type_bakery = Restaurant_type(gf_type_id=3, restaurant_id=bakery_info)
+            bakery_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating, neighborhood_id=nh)
 
             # Add bakery data to the database.
             db.session.add(bakery_info)
+            
+            db.session.flush()
+            bakery_info_id = bakery_info.restaurant_id
+            gf_type_bakery = Restaurant_type(gf_type_id=3, restaurant_id=bakery_info_id)
+
+            db.session.add(gf_type_bakery)
+            
     
     
 
@@ -131,7 +139,7 @@ def set_val_gf_types_table():
     db.session.commit()
 
 
-
+# Make a function to query restaurant ids 
 
 
 
@@ -143,9 +151,10 @@ if __name__ == "__main__":
 
     connect_to_db(app)
 
+    set_val_gf_types_table()
     set_val_neighborhoods_table()
     load_restaurants()
-    set_val_gf_types_table()
+    
 
     
 

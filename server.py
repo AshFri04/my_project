@@ -154,17 +154,33 @@ def sign_out():
 
 # ################################################################################
 
-
-# # query restaurants table from there pass neigh id/ gf type
+# Neighborhoods and their associated restaurants/bakeries routes
 
 @app.route("/restaurants")
-def display_restaurants():
-    """ """
+def display_restaurants_northbeach():
+    """ Display all restaurants that are in North Beach."""
 
     restaurants = Restaurant.query.filter_by(neighborhood_id=1).all()
+    # addresses = Restaurant.query.filter(Restaurant.neighborhood_id==1, Restaurant.address).all()
 
-    return render_template("restaurants.html", restaurants=restaurants)
+    # addresses = db.session.query(Restaurant).filter_by(neighborhood_id=1, address)
+   
+    # for address in addresses:
+    #     list(address)
 
+        # add this address back to the query to be in the appropriate area to parse through
+
+    return render_template("restaurants.html", restaurants=restaurants) #, addresses=lst_addresses)
+
+
+
+# @app.route("/restaurants")
+# def display_restaurants_russianhill():
+#     """ Display all restaurants that are in North Beach."""
+
+#     restaurants = Restaurant.query.filter_by(neighborhood_id=2).all()
+
+#     return render_template("restaurants.html", restaurants=restaurants)
 
 
 
