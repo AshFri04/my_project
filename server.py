@@ -156,31 +156,42 @@ def sign_out():
 
 # Neighborhoods and their associated restaurants/bakeries routes
 
+# @app.route("/restaurants")
+# def display_restaurants_northbeach():
+#     """ Display all restaurants that are in North Beach."""
+
+
+#     restaurants = db.session.query(Restaurant).join(Restaurant_type).filter(Restaurant.neighborhood_id==1, Restaurant_type.gf_type_id==2).all()
+
+#     return render_template("restaurants.html", restaurants=restaurants)
+
+
+# @app.route("/restaurants_and_bakeries")
+# def display_all_northbeach():
+#     """ Display all restaurants and bakeriesthat are in North Beach."""
+
+#     # if user clicks on north beach in search
+#     # return all restaurants and bakeries for that neighborhood
+#     # dict of neighborhood ids and their associated values
+
+
+
+#     restaurants = Restaurant.query.filter_by(neighborhood_id=1).all()
+
+#     return render_template("restaurants.html", restaurants=restaurants)
+
 @app.route("/restaurants")
 def display_restaurants_northbeach():
     """ Display all restaurants that are in North Beach."""
 
-    restaurants = Restaurant.query.filter_by(neighborhood_id=1).all()
-    # addresses = Restaurant.query.filter(Restaurant.neighborhood_id==1, Restaurant.address).all()
+    user_choice = request.args.get("neighborhood") # name=neighborhood on html side
 
-    # addresses = db.session.query(Restaurant).filter_by(neighborhood_id=1, address)
-   
-    # for address in addresses:
-    #     list(address)
+    restaurants = db.session.query(Restaurant).join(Restaurant_type).filter(Restaurant.neighborhood_id==user_choice, Restaurant_type.gf_type_id==2).all()
 
-        # add this address back to the query to be in the appropriate area to parse through
-
-    return render_template("restaurants.html", restaurants=restaurants) #, addresses=lst_addresses)
+    bakery = db.session.query(Restaurant).join(Restaurant_type).filter(Restaurant.neighborhood_id==user_choice, Restaurant_type.gf_type_id==3).all()
 
 
-
-# @app.route("/restaurants")
-# def display_restaurants_russianhill():
-#     """ Display all restaurants that are in North Beach."""
-
-#     restaurants = Restaurant.query.filter_by(neighborhood_id=2).all()
-
-#     return render_template("restaurants.html", restaurants=restaurants)
+    return render_template("restaurants.html", restaurants=restaurants)
 
 
 
