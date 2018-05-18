@@ -15,18 +15,7 @@ $(document).ready(function() {
 
 let button = document.querySelector('my-button');
 
-let neighborhoods = Map([
-   [ 1, 'North Beach' ],
-   [ 2, 'Russian Hill'],
 
-    ]);
-
-// if user chooses north beach,
-//     query neighborhood_id == neighborhoods.get(Map[1])
-//     return all restaurants in this neighborhood
-
-
-button.addEventListener('click');
 
 
 
