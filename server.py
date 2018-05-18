@@ -184,14 +184,14 @@ def sign_out():
 def display_restaurants_northbeach():
     """ Display all restaurants that are in North Beach."""
 
-    user_choice = request.args.get("neighborhood") # name=neighborhood on html side
+    user_choice = request.args.get("neighborhood") # (dropdown bar) name=neighborhood on html side
 
     restaurants = db.session.query(Restaurant).join(Restaurant_type).filter(Restaurant.neighborhood_id==user_choice, Restaurant_type.gf_type_id==2).all()
 
-    bakery = db.session.query(Restaurant).join(Restaurant_type).filter(Restaurant.neighborhood_id==user_choice, Restaurant_type.gf_type_id==3).all()
+    bakeries = db.session.query(Restaurant).join(Restaurant_type).filter(Restaurant.neighborhood_id==user_choice, Restaurant_type.gf_type_id==3).all()
 
 
-    return render_template("restaurants.html", restaurants=restaurants)
+    return render_template("restaurants.html", restaurants=restaurants, bakeries=bakeries)
 
 
 

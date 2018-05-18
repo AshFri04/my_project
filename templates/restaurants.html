@@ -19,7 +19,7 @@
 async defer>
 </script>
 
-
+<p>Restaurants</p>
 <div>
 {% for restaurant in restaurants %}
  <img class="restaurant_image" src="{{ restaurant.picture }}">
@@ -28,6 +28,22 @@ async defer>
       <div>{{ restaurant.address }} </div> 
       <div>
         <a href="{{ restaurant.website_url }}">Yelp Website: {{ restaurant.name }}</a>
+      </div>
+      <br>
+   
+  
+
+{% endfor %}
+<br></br>
+<p>Bakeries!</p>
+<div>
+{% for bakery in bakeries %}
+ <img class="bakery_image" src="{{ bakery.picture }}">
+  <div>{{ bakery.name }} |  Average Yelp Rating: {{ bakery.avg_rating }}</div>
+    <div> {{ bakery.phone_number }} </div>
+      <div>{{ bakery.address }} </div> 
+      <div>
+        <a href="{{ bakery.website_url }}">Yelp Website: {{ bakery.name }}</a>
       </div>
       <br>
    
