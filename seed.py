@@ -33,7 +33,6 @@ def load_restaurants():
 
         # results1.keys() is [u'region', u'total', u'businesses']
         results1 = r1.json()
-        print results1
 
         bakeries = results1['businesses']
 
@@ -50,12 +49,21 @@ def load_restaurants():
             longitude =bakery['coordinates']['longitude']
             price = bakery['price']
             id_b = bakery['id']
+
+            titles = bakery['categories']
             
+            alias = []
+            for title in titles:
+                if title['title']:
+                    alias.append(title['title'])
+
+
+            types_of_food = ' '.join(alias)
 
             # Convert addresses (datatype is list) to a string for correct format to store in db
             address = ' '.join(addresses)
        
-            bakery_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating, neighborhood_id=nh, latitude=latitude, longitude=longitude, price=price)
+            bakery_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating, neighborhood_id=nh, latitude=latitude, longitude=longitude, price=price, types_of_food=types_of_food)
             # Add bakery data to the database.
             db.session.add(bakery_info)
             
@@ -91,12 +99,21 @@ def load_restaurants():
             longitude =restaurant['coordinates']['longitude']
             price = restaurant['price']
             id_r = restaurant['id']
+
+            titles = restaurant['categories']
+
+            alias = []
+            for title in titles:
+                if title['title']:
+                    alias.append(title['title'])
+
+            types_of_food = ' '.join(alias)
           
 
             # Convert addresses (datatype is list) to a string for correct format to store in db
             address = ' '.join(addresses)
 
-            restaurant_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating, neighborhood_id=nh, latitude=latitude, longitude=longitude, price=price)
+            restaurant_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating, neighborhood_id=nh, latitude=latitude, longitude=longitude, price=price, types_of_food=types_of_food)
 
             # Add restaurant data to the database.
             db.session.add(restaurant_info)
@@ -163,6 +180,5 @@ if __name__ == "__main__":
 
     set_val_gf_types_table()
     set_val_neighborhoods_table()
-    load_bakeries()
-    #load_restaurants()
+    load_restaurants()
     

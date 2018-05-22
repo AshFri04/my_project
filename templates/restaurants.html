@@ -8,63 +8,57 @@
 <h2>Restaurants</h2>
 <br>
 <div>
-<div id="map">
-  {% for restaurant in restaurants %}
-  <script>
-  var map;
-  var restaurant_location = {{ restaurant.latitude }}, {{ restaurant.longitude }};
-
-  function initMap() {
-  map = new google.maps.Map(document.getElementById('map'), {
-  zoom: 12,
-  center: restaurant_location
-  });
-  </script>
- </div> 
+{% for restaurant in restaurants %}
   <img class="restaurant_image" src="{{ restaurant.picture }}">
-    <div>{{ restaurant.name }} |  Average Yelp Rating: {{ restaurant.avg_rating }}/5 Stars</div>
-    <div> {{ restaurant.phone_number }} </div>
-    <div>{{ restaurant.address }} </div> 
-    <div>
+    <div>{{ restaurant.name }}</div>
+    <div>{{ restaurant.types_of_food }}</div>
+    <div>Average Yelp Rating: {{ restaurant.avg_rating }}/5 Stars  |  {{ restaurant.price }}</div>
+    <div>Contact</div>
+      <div> {{ restaurant.phone_number }} </div>
+      <div>{{ restaurant.address }} </div> 
       <a href="{{ restaurant.website_url }}">Yelp Website: {{ restaurant.name }}</a>
-    </div>
-    <form action="/favorite" method="POST">
-      <div class="form-group">
-        <input id="fav" type="submit" value="Favorite">
-      </div>
-    </form> 
-  {% endfor %}
-<br>
+    
+    {% if "user_id" in session %}
+      <form action="/favorite" method="POST">
+        <div class="form-group">
+          <input type="hidden" name="restaurant_id" value="{{ restaurant.restaurant_id }}">
+            <input type="hidden" name="restaurant_name" value="{{ restaurant.name }}">
+          <input type="submit" value="Favorite">
+        </div>
+      </form> 
+    {% else %}
+    <h3>Create an Account to access other features</h3>
+    {% endif %}
+{% endfor %}
 </div>
+<br>
+
 
 <h2>Bakeries</h2>
 <br>
 <div>
-<div id="map">
   {% for bakery in bakeries %}
-  <script>
-  var map;
-  var bakery_location = {{ bakery.latitude }}, {{ bakery.longitude }};
-
-  function initMap() {
-  map = new google.maps.Map(document.getElementById('map'), {
-  zoom: 12,
-  center: bakery_location
-  });
-  </script>
-</div>
   <img class="bakery_image" src="{{ bakery.picture }}">
-    <div>{{ bakery.name }} |  Average Yelp Rating: {{ bakery.avg_rating }}/5 Stars</div>
-    <div> {{ bakery.phone_number }} </div>
-    <div>{{ bakery.address }} </div> 
+    <div>{{ bakery.name }}</div>
+    <div>{{ bakery.types_of_food }}</div>
+    <div>Average Yelp Rating: {{ bakery.avg_rating }}/5 Stars  |  {{ bakery.price }}</div>
     <div>
+      Contact
+      <div> {{ bakery.phone_number }} </div>
+      <div>{{ bakery.address }} </div> 
       <a href="{{ bakery.website_url }}">Yelp Website: {{ bakery.name }}</a>
     </div>
+    {% if "user_id" in session %}
     <form action="/favorite" method="POST">
       <div class="form-group">
-        <input id="fav" type="submit" value="Favorite">
+        <input type="hidden" name="bakery_id"  value="{{ bakery.bakery_id }}">
+        <input type="hidden" name="bakery_name" value="{{ bakery.name }}">
+        <input type="submit" value="Favorite">
       </div>
     </form> 
+    {% else %}
+    <h3>Create an Account to access other features</h3>
+    {% endif %}
   {% endfor %}
 </div>
 

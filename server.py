@@ -42,7 +42,7 @@ def register():
 def register_process():
     """ Process registration and thank the user for signing up. """
 
-    fname = request.form.get("firstname")
+    first_name = request.form.get("firstname")
     lname = request.form.get("lastname")
     email = request.form.get("email")
     confirm_email = request.form.get("confirm_email")
@@ -50,6 +50,9 @@ def register_process():
     password = request.form.get("password")
     confirm_password = request.form.get("confirm_password")
     terms = request.form.get("terms")
+
+# FIX BUG WITH ZIPCODE!!
+    fname = first_name.capitalize()
 
     password_hash = pbkdf2_sha256.hash(password)
 
@@ -85,7 +88,7 @@ def login():
     """ Display login form. """
 
     if session.get('user_id'):
-        return redirect('/login_mainpage1')
+        return redirect('/display_mainpage')
     
     return render_template("login.html")
 
@@ -113,7 +116,7 @@ def login_process():
 
 
 
-@app.route('/login_mainpage1')
+@app.route('/display_mainpage')
 def display_login_mainpage():
     """ Display the main page after user logs in. """
 
@@ -167,23 +170,29 @@ def display_profile():
 
 #     pass
 
-@app.route('/favorite')
+@app.route('/favorite', methods=["POST"])
 def add_favorite_restaurant():
     """ Adds a restaurant or bakery to user's favorites."""
 
     # Click on button (connected to restaurant) which saves to user favorites
     user_id = session["user_id"]
 
-    restaurant_id = request.form.get("restaurant_id")
+    rest_id = request.form.get("restaurant_id")
     restaurant_name = request.form.get("restaurant_name")
+    restaurant_id = int(rest_id)
 
-    fav_restaurant_db = Favorite_restaurant.query.filter_by(Favorite_restaurant.restaurant_id == restaurant_id).first()
+    print restaurant_id
+    print
+    print restaurant_name
+
+
+    fav_restaurant_db = Favorite_restaurant.query.filter(Favorite_restaurant.restaurant_id == restaurant_id).first()
 
     if fav_restaurant_db:
 
         flash("{} is already one of your favorites!".format(restaurant_name))
 
-        return redirect('restaurants.html')
+        return redirect('/restaurants')
 # ADD: Ajax call to redirect user back to restaurants.html
 
     else:
@@ -194,7 +203,7 @@ def add_favorite_restaurant():
 
         flash("{} is now in your favorites!".format(restaurant_name))
 
-        return redirect('restaurants.html')
+        return redirect('/restaurants')
 # ADD:  Ajax call to redirect user back to restaurants.html
 
 
@@ -234,11 +243,11 @@ def search_by_neighborhood():
     user_choice = request.args.get("neighborhood") # (dropdown bar) name=neighborhood on html side
 
     restaurants = db.session.query(Restaurant).join(Restaurant_type).filter(Restaurant.neighborhood_id==user_choice, Restaurant_type.gf_type_id==2).all()
+
     bakeries = db.session.query(Restaurant).join(Restaurant_type).filter(Restaurant.neighborhood_id==user_choice, Restaurant_type.gf_type_id==3).all()
 
+
     return render_template("restaurants.html", restaurants=restaurants, bakeries=bakeries)
-
-
 
 @app.route("/googlemaps")
 def display_map():

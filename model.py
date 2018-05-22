@@ -49,6 +49,7 @@ class Restaurant(db.Model):
     latitude = db.Column(db.String(255))
     longitude = db.Column(db.String(255))
     price = db.Column(db.String(255))
+    types_of_food = db.Column(db.String(255))
 
     
     # s_sunday = db.Column(db.String(100))
@@ -106,7 +107,7 @@ class GF_type(db.Model):
     __tablename__ = "gf_types"
 
     gf_type_id = db.Column(db.Integer, primary_key=True)
-    gf_type = db.Column(db.String(50))
+    gf_type = db.Column(db.String(100))
 
     # Relationship between GF_type, restaurants and estaurant_types.
     restaurant = db.relationship("Restaurant", secondary="restaurant_types", backref="GF_type")
