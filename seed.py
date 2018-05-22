@@ -11,13 +11,12 @@ from server import app
 
 # Key to access data via YELP Fusion API
 api_key = os.environ.get('YELP_ACCESS_KEY')
-client_id = os.environ.get('YELP_CLIENT_ID')   # added .get() and deleted []
+client_id = os.environ.get('YELP_CLIENT_ID')  
 
 
 #############################################################################
 
-url = 'https://api.yelp.com/v3/businesses/search'
-headers = {'Authorization': 'Bearer %s' % api_key}
+# Functions associated with seeding database
 
 
 def load_restaurants():
@@ -30,12 +29,14 @@ def load_restaurants():
         payload = {'location': neighborhood.neighborhood_name + ' san francisco', 'categories': 'gluten_free,bakeries'}
 
         # r1 returns <Response 200>
-        r1 = requests.get(url, headers=headers, params=payload)
+        r1 = requests.get('https://api.yelp.com/v3/businesses/search', headers={'Authorization': 'Bearer %s' % api_key}, params=payload)
 
         # results1.keys() is [u'region', u'total', u'businesses']
         results1 = r1.json()
+        print results1
 
         bakeries = results1['businesses']
+
 
         for bakery in bakeries:
             name = bakery['name']
@@ -45,12 +46,16 @@ def load_restaurants():
             website_url =bakery['url']
             avg_rating = bakery['rating']
             nh = neighborhood.neighborhood_id
+            latitude = bakery['coordinates']['latitude']
+            longitude =bakery['coordinates']['longitude']
+            price = bakery['price']
+            id_b = bakery['id']
+            
 
             # Convert addresses (datatype is list) to a string for correct format to store in db
             address = ' '.join(addresses)
-
-            bakery_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating, neighborhood_id=nh)
-
+       
+            bakery_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating, neighborhood_id=nh, latitude=latitude, longitude=longitude, price=price)
             # Add bakery data to the database.
             db.session.add(bakery_info)
             
@@ -59,21 +64,20 @@ def load_restaurants():
             gf_type_bakery = Restaurant_type(gf_type_id=3, restaurant_id=bakery_info_id)
 
             db.session.add(gf_type_bakery)
-            
-    
-    
+    db.session.commit()
+
 
     for neighborhood in neighborhood_list:
         # Make a GET request to the API
         payload = {'location': neighborhood.neighborhood_name + 'san francisco', 'categories': 'gluten_free,restaurants'}
 
         # r2 returns <Response 200>
-        r2 = requests.get(url, headers=headers, params=payload)
+        r3 = requests.get('https://api.yelp.com/v3/businesses/search', headers={'Authorization': 'Bearer %s' % api_key}, params=payload)
 
         # results2.keys() is [u'region', u'total', u'businesses']
-        results2 = r2.json()
+        results3 = r3.json()
 
-        restaurants = results2['businesses']
+        restaurants = results3['businesses']
 
         for restaurant in restaurants:
             name = restaurant['name']
@@ -83,11 +87,16 @@ def load_restaurants():
             website_url =restaurant['url']
             avg_rating = restaurant['rating']
             nh = neighborhood.neighborhood_id
+            latitude = restaurant['coordinates']['latitude']
+            longitude =restaurant['coordinates']['longitude']
+            price = restaurant['price']
+            id_r = restaurant['id']
+          
 
             # Convert addresses (datatype is list) to a string for correct format to store in db
             address = ' '.join(addresses)
 
-            restaurant_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating, neighborhood_id=nh)
+            restaurant_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating, neighborhood_id=nh, latitude=latitude, longitude=longitude, price=price)
 
             # Add restaurant data to the database.
             db.session.add(restaurant_info)
@@ -97,8 +106,6 @@ def load_restaurants():
             gf_type_restaurant = Restaurant_type(gf_type_id=2, restaurant_id=restaurant_info_id)
 
             db.session.add(gf_type_restaurant)
-
-    # Commit all restaurants and bakeries to the database.       
     db.session.commit()
 
 
@@ -150,15 +157,12 @@ def set_val_neighborhoods_table():
 
 
 
-
-    
-
-
 if __name__ == "__main__":
 
     connect_to_db(app)
 
     set_val_gf_types_table()
     set_val_neighborhoods_table()
-    load_restaurants()
+    load_bakeries()
+    #load_restaurants()
     

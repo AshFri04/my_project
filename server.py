@@ -95,7 +95,6 @@ def login():
 def login_process():
     """ Process login information; log a user into their account. """
 
-
     email = request.form.get('email')
     password = request.form.get('password')
     user = User.query.filter_by(email=email).first()
@@ -128,6 +127,22 @@ def sign_out():
         
     return render_template("sign_out.html")
 
+
+
+@app.route('/profile')
+def display_profile():
+    """ Display user profile. """
+
+    user_id = session['user_id']
+
+    fav_restaurants = Favorite_restaurant.query.filter_by(user_id=user_id).all()
+
+    return render_template('user_profile.html')
+
+ 
+
+
+
 # @app.route()
 # def delete_account():
 #     """ User deletes their account. """
@@ -151,6 +166,38 @@ def sign_out():
 #     """ User updates their account. """
 
 #     pass
+
+@app.route('/favorite')
+def add_favorite_restaurant():
+    """ Adds a restaurant or bakery to user's favorites."""
+
+    # Click on button (connected to restaurant) which saves to user favorites
+    user_id = session["user_id"]
+
+    restaurant_id = request.form.get("restaurant_id")
+    restaurant_name = request.form.get("restaurant_name")
+
+    fav_restaurant_db = Favorite_restaurant.query.filter_by(Favorite_restaurant.restaurant_id == restaurant_id).first()
+
+    if fav_restaurant_db:
+
+        flash("{} is already one of your favorites!".format(restaurant_name))
+
+        return redirect('restaurants.html')
+# ADD: Ajax call to redirect user back to restaurants.html
+
+    else:
+        new_fav_restaurant = Favorite_restaurant(restaurant_id=restaurant_id, user_id=user_id)
+
+        db.session.add(new_fav_restaurant)
+        db.session.commit()
+
+        flash("{} is now in your favorites!".format(restaurant_name))
+
+        return redirect('restaurants.html')
+# ADD:  Ajax call to redirect user back to restaurants.html
+
+
 
 # ################################################################################
 
@@ -181,17 +228,23 @@ def sign_out():
 #     return render_template("restaurants.html", restaurants=restaurants)
 
 @app.route("/restaurants")
-def display_restaurants_northbeach():
-    """ Display all restaurants that are in North Beach."""
+def search_by_neighborhood():
+    """ Display all restaurants and bakeries that are in the neighborhood the user choose."""
 
     user_choice = request.args.get("neighborhood") # (dropdown bar) name=neighborhood on html side
 
     restaurants = db.session.query(Restaurant).join(Restaurant_type).filter(Restaurant.neighborhood_id==user_choice, Restaurant_type.gf_type_id==2).all()
-
     bakeries = db.session.query(Restaurant).join(Restaurant_type).filter(Restaurant.neighborhood_id==user_choice, Restaurant_type.gf_type_id==3).all()
 
-
     return render_template("restaurants.html", restaurants=restaurants, bakeries=bakeries)
+
+
+
+@app.route("/googlemaps")
+def display_map():
+    """ """
+
+    return render_template("googlemaps.html")
 
 
 

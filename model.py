@@ -46,6 +46,31 @@ class Restaurant(db.Model):
     last_update = db.Column(db.DateTime)
     avg_rating = db.Column(db.Integer)
     neighborhood_id = db.Column(db.Integer, db.ForeignKey('neighborhoods.neighborhood_id'))
+    latitude = db.Column(db.String(255))
+    longitude = db.Column(db.String(255))
+    price = db.Column(db.String(255))
+
+    
+    # s_sunday = db.Column(db.String(100))
+    # e_sunday = db.Column(db.String(100))
+
+    # s_monday = db.Column(db.String(100))
+    # e_monday = db.Column(db.String(100))
+
+    # s_tuesday = db.Column(db.String(100))
+    # e_tuesday = db.Column(db.String(100))
+
+    # s_wednesday = db.Column(db.String(100))
+    # e_wednesday = db.Column(db.String(100))
+
+    # s_thursday = db.Column(db.String(100))
+    # e_thursday = db.Column(db.String(100))
+
+    # s_friday = db.Column(db.String(100))
+    # e_friday = db.Column(db.String(100))
+
+    # s_saturday = db.Column(db.String(100))
+    # e_saturday = db.Column(db.String(100))
 
     # Relationships between neighborhoods table and restaurants table in the database.
     neighborhood = db.relationship("Neighborhood", backref='restaurants')
