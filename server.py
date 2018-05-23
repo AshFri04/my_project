@@ -237,10 +237,11 @@ def search_by_neighborhood():
 
     restaurants = Restaurant.query.filter(Restaurant.neighborhood_id==user_choice).all()
 
+    neighborhood = Neighborhood.query.filter(Neighborhood.neighborhood_id==user_choice).first()
     # bakeries = db.session.query(Restaurant).join(Restaurant_type).filter(Restaurant.neighborhood_id==user_choice, Restaurant_type.gf_type_id==3).all()
 
 
-    return render_template("restaurants.html", restaurants=restaurants)
+    return render_template("restaurants.html", restaurants=restaurants, neighborhood=neighborhood)
 
 @app.route("/googlemaps")
 def display_map():
