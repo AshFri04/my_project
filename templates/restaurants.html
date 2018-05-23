@@ -34,37 +34,6 @@
 <br>
 
 
-<h2>Bakeries</h2>
-<br>
-<div>
-  {% for bakery in bakeries %}
-  <img class="bakery_image" src="{{ bakery.picture }}">
-    <div>{{ bakery.name }}</div>
-    <div>{{ bakery.types_of_food }}</div>
-    <div>Average Yelp Rating: {{ bakery.avg_rating }}/5 Stars  |  {{ bakery.price }}</div>
-    <div>
-      Contact
-      <div> {{ bakery.phone_number }} </div>
-      <div>{{ bakery.address }} </div> 
-      <a href="{{ bakery.website_url }}">Yelp Website: {{ bakery.name }}</a>
-    </div>
-    {% if "user_id" in session %}
-    <form class="favorite_form_bake" action="/favorite" method="POST" id={{ bakery.restaurant_id }}>
-      <div class="form-group">
-        <input id = "bakery-id-{{ bakery.restaurant_id }}" type="hidden" name="bakery_id"  value="{{ bakery.bakery_id }}">
-        <input id = "bakery-name-{{ bakery.restaurant_id }}" type="hidden" name="bakery_name" value="{{ bakery.name }}">
-        <input type="submit" value="Favorite">
-      </div>
-    </form> 
-    {% else %}
-    <h3>Create an Account to access other features</h3>
-    {% endif %}
-  {% endfor %}
-</div>
-
-<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-<script src="/static/js/submit_favorites.js"></script>
-
 
 
 

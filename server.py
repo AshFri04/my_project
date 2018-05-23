@@ -184,15 +184,12 @@ def add_favorite_restaurant():
 
     if fav_restaurant_db:
 
-        print restaurant_id
-        print restaurant_name
         # Way to confirm on the front end that this AJAX request/response was successful
         return "{} is already one of your favorites!".format(restaurant_name)
 
 
     else:
-        print restaurant_id
-        print restaurant_name
+       
         new_fav_restaurant = Favorite_restaurant(restaurant_id=restaurant_id, user_id=user_id)
 
         db.session.add(new_fav_restaurant)
@@ -238,12 +235,12 @@ def search_by_neighborhood():
 
     user_choice = request.args.get("neighborhood") # (dropdown bar) name=neighborhood on html side
 
-    restaurants = db.session.query(Restaurant).join(Restaurant_type).filter(Restaurant.neighborhood_id==user_choice, Restaurant_type.gf_type_id==2).all()
+    restaurants = Restaurant.query.filter(Restaurant.neighborhood_id==user_choice).all()
 
-    bakeries = db.session.query(Restaurant).join(Restaurant_type).filter(Restaurant.neighborhood_id==user_choice, Restaurant_type.gf_type_id==3).all()
+    # bakeries = db.session.query(Restaurant).join(Restaurant_type).filter(Restaurant.neighborhood_id==user_choice, Restaurant_type.gf_type_id==3).all()
 
 
-    return render_template("restaurants.html", restaurants=restaurants, bakeries=bakeries)
+    return render_template("restaurants.html", restaurants=restaurants)
 
 @app.route("/googlemaps")
 def display_map():
