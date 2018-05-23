@@ -172,39 +172,35 @@ def display_profile():
 
 @app.route('/favorite', methods=["POST"])
 def add_favorite_restaurant():
-    """ Adds a restaurant or bakery to user's favorites."""
+    """Adds a restaurant to user's favorites in db when user clicks favorites button."""
 
-    # Click on button (connected to restaurant) which saves to user favorites
     user_id = session["user_id"]
 
     rest_id = request.form.get("restaurant_id")
     restaurant_name = request.form.get("restaurant_name")
     restaurant_id = int(rest_id)
 
-    print restaurant_id
-    print
-    print restaurant_name
-
-
     fav_restaurant_db = Favorite_restaurant.query.filter(Favorite_restaurant.restaurant_id == restaurant_id).first()
 
     if fav_restaurant_db:
 
-        flash("{} is already one of your favorites!".format(restaurant_name))
+        print restaurant_id
+        print restaurant_name
+        # Way to confirm on the front end that this AJAX request/response was successful
+        return "{} is already one of your favorites!".format(restaurant_name)
 
-        return redirect('/restaurants')
-# ADD: Ajax call to redirect user back to restaurants.html
 
     else:
+        print restaurant_id
+        print restaurant_name
         new_fav_restaurant = Favorite_restaurant(restaurant_id=restaurant_id, user_id=user_id)
 
         db.session.add(new_fav_restaurant)
         db.session.commit()
 
-        flash("{} is now in your favorites!".format(restaurant_name))
+        # Way to confirm on the front end that this AJAX request/response was successful
+        return "{} is now in your favorites!".format(restaurant_name)
 
-        return redirect('/restaurants')
-# ADD:  Ajax call to redirect user back to restaurants.html
 
 
 

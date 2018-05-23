@@ -19,10 +19,10 @@
       <a href="{{ restaurant.website_url }}">Yelp Website: {{ restaurant.name }}</a>
     
     {% if "user_id" in session %}
-      <form action="/favorite" method="POST">
+      <form class="favorite_form_rest" action="/favorite" method="POST" id={{ restaurant.restaurant_id }}>
         <div class="form-group">
-          <input type="hidden" name="restaurant_id" value="{{ restaurant.restaurant_id }}">
-            <input type="hidden" name="restaurant_name" value="{{ restaurant.name }}">
+          <input id = "restaurant-id-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_id" value="{{ restaurant.restaurant_id }}">
+            <input id = "restaurant-name-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_name" value="{{ restaurant.name }}">
           <input type="submit" value="Favorite">
         </div>
       </form> 
@@ -49,10 +49,10 @@
       <a href="{{ bakery.website_url }}">Yelp Website: {{ bakery.name }}</a>
     </div>
     {% if "user_id" in session %}
-    <form action="/favorite" method="POST">
+    <form class="favorite_form_bake" action="/favorite" method="POST" id={{ bakery.restaurant_id }}>
       <div class="form-group">
-        <input type="hidden" name="bakery_id"  value="{{ bakery.bakery_id }}">
-        <input type="hidden" name="bakery_name" value="{{ bakery.name }}">
+        <input id = "bakery-id-{{ bakery.restaurant_id }}" type="hidden" name="bakery_id"  value="{{ bakery.bakery_id }}">
+        <input id = "bakery-name-{{ bakery.restaurant_id }}" type="hidden" name="bakery_name" value="{{ bakery.name }}">
         <input type="submit" value="Favorite">
       </div>
     </form> 
@@ -62,9 +62,10 @@
   {% endfor %}
 </div>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBi3TXl5rieFcFdscrRjL8d4L9H4IwfHEw&callback=initMap&libraries=geometry"
-async defer>
-</script>
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src="/static/js/submit_favorites.js"></script>
+
+
 
 
 
