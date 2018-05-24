@@ -3,7 +3,7 @@
 {% block content %}
 
 <div id="map"></div>
- <script
+ <script 
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBi3TXl5rieFcFdscrRjL8d4L9H4IwfHEw">
 </script>
 
@@ -33,13 +33,16 @@
         </div>
 
         <div>
-          <input type="hidden" class="content" value="{{ restaurant.name }} {{ restaurant.types_of_food }}">
+          <input type="hidden" class="rest_name" value="{{ restaurant.name }}">
+        </div>
+        <div>
+          <input type="hidden" class="rest_type" value="{{ restaurant.types_of_food }}">
         </div>
         
     
 
     {% if "user_id" in session %}
-      <form class="favorite_form_rest" action="/favorite" method="POST" id={{ restaurant.restaurant_id }}>
+      <form class="favorite_form_rest" action="/favorite" method="POST" id="{{ restaurant.restaurant_id }}">
         <div class="form-group">
           <input id = "restaurant-id-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_id" value="{{ restaurant.restaurant_id }}">
             <input id = "restaurant-name-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_name" value="{{ restaurant.name }}">
