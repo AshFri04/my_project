@@ -11,7 +11,7 @@ console.log(neighborhood_lng)
 
 let map = new google.maps.Map(document.querySelector('#map'), {
       center: {lat: parseFloat(neighborhood_lat), lng: parseFloat(neighborhood_lng)},
-      zoom:14,
+      zoom:15,
       mapTypeId: 'roadmap'
 
 });

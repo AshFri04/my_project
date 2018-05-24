@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template, request, redirect, session, flash
+from flask import Flask, render_template, request, redirect, session, flash, jsonify
 
 from model import connect_to_db, db, User, Restaurant, Favorite_restaurant, GF_type, Restaurant_type, Neighborhood
 from flask_debugtoolbar import DebugToolbarExtension
@@ -242,6 +242,26 @@ def search_by_neighborhood():
 
 
     return render_template("restaurants.html", restaurants=restaurants, neighborhood=neighborhood)
+
+@app.route('/restaurant.json')
+def restaurant_info():
+    """ JSON information about restaurants. """
+
+    neighborhood = request.form.get("neighborhood_id")
+    
+    restaurants = Restaurant.query.filter(Restaurant.neighborhood_id==neighborhood).all()
+
+    all_rest_info = {}
+
+    for restaurant in restaurants:
+        rest_info = {
+        "name": restaurant.name,
+        "type_of_food": restaurant.type_of_food
+        }
+    
+        all_rest_info[restaurant.restaurant_id] = rest_info
+
+    return jsonify(all_rest_info)
 
 @app.route("/googlemaps")
 def display_map():

@@ -2,7 +2,7 @@
 
 #from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-
+import pdb
 db = SQLAlchemy()
 
 #############################################################################
@@ -50,28 +50,7 @@ class Restaurant(db.Model):
     longitude = db.Column(db.String(255))
     price = db.Column(db.String(255))
     types_of_food = db.Column(db.String(255))
-
-    
-    # s_sunday = db.Column(db.String(100))
-    # e_sunday = db.Column(db.String(100))
-
-    # s_monday = db.Column(db.String(100))
-    # e_monday = db.Column(db.String(100))
-
-    # s_tuesday = db.Column(db.String(100))
-    # e_tuesday = db.Column(db.String(100))
-
-    # s_wednesday = db.Column(db.String(100))
-    # e_wednesday = db.Column(db.String(100))
-
-    # s_thursday = db.Column(db.String(100))
-    # e_thursday = db.Column(db.String(100))
-
-    # s_friday = db.Column(db.String(100))
-    # e_friday = db.Column(db.String(100))
-
-    # s_saturday = db.Column(db.String(100))
-    # e_saturday = db.Column(db.String(100))
+    hours_of_operation = db.Column(db.JSON)
 
     # Relationships between neighborhoods table and restaurants table in the database.
     neighborhood = db.relationship("Neighborhood", backref='restaurants')

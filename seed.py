@@ -36,7 +36,6 @@ def load_restaurants():
 
         bakeries = results1['businesses']
 
-
         for bakery in bakeries:
             name = bakery['name']
             addresses = bakery['location']['display_address']  # location key has a dict value
@@ -56,14 +55,30 @@ def load_restaurants():
             for title in titles:
                 if title['title']:
                     alias.append(title['title'])
-
-
+            # Convert alias (datatype is list) to a string for correct format to store in db      
             types_of_food = ' '.join(alias)
 
             # Convert addresses (datatype is list) to a string for correct format to store in db
             address = ' '.join(addresses)
+
+            # Second request to API to get hours of operation data
+            url = 'https://api.yelp.com/v3/businesses/{}'.format(id_b)
+            headers = {'Authorization': 'Bearer %s' % api_key}
+            r2 = requests.get(url, headers=headers)
+            results2 = r2.json()
+
+            data = results2.get('hours')
+
+            if data:
+                dictionary = data[0]
+                lst = dictionary.get('open')
+                if lst:
+                    hours_of_operation = lst               
+                else:
+                    print dictionary.keys()
        
-            bakery_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating, neighborhood_id=nh, latitude=latitude, longitude=longitude, price=price, types_of_food=types_of_food)
+            bakery_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating, neighborhood_id=nh, latitude=latitude, longitude=longitude, price=price, types_of_food=types_of_food, hours_of_operation=hours_of_operation)
+
             # Add bakery data to the database.
             db.session.add(bakery_info)
             
@@ -106,14 +121,29 @@ def load_restaurants():
             for title in titles:
                 if title['title']:
                     alias.append(title['title'])
-
+            # Convert alias (datatype is list) to a string for correct format to store in db 
             types_of_food = ' '.join(alias)
-          
 
             # Convert addresses (datatype is list) to a string for correct format to store in db
             address = ' '.join(addresses)
 
-            restaurant_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating, neighborhood_id=nh, latitude=latitude, longitude=longitude, price=price, types_of_food=types_of_food)
+            # Second request to API to get hours of operation data
+            url = 'https://api.yelp.com/v3/businesses/{}'.format(id_b)
+            headers = {'Authorization': 'Bearer %s' % api_key}
+            r2 = requests.get(url, headers=headers)
+            results2 = r2.json()
+
+            data = results2.get('hours')
+
+            if data:
+                dictionary = data[0]
+                lst = dictionary.get('open')
+                if lst:
+                    hours_of_operation = lst
+                else:
+                    print dictionary.keys()
+
+            restaurant_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating, neighborhood_id=nh, latitude=latitude, longitude=longitude, price=price, types_of_food=types_of_food, hours_of_operation=hours_of_operation)
 
             # Add restaurant data to the database.
             db.session.add(restaurant_info)

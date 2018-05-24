@@ -8,6 +8,8 @@
 </script>
 
  <div> 
+  <input type="hidden" class="hood_id" value= "{{ neighborhood.neighborhood_id }}">
+
   <input type="hidden" class="hood_lat" value= "{{ neighborhood.lat }}">
 </div>
   <div> 
@@ -28,6 +30,10 @@
         
         <div> 
           <input type="hidden" class="coordinates" value= "{{ restaurant.latitude }} {{ restaurant.longitude }}">
+        </div>
+
+        <div>
+          <input type="hidden" class="content" value="{{ restaurant.name }} {{ restaurant.types_of_food }}">
         </div>
         
     
