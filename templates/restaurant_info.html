@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+{% if "pickup" in restaurant.transaction %}
+<form class="pickup" action="{{ restaurant.website }}" method="POST">
+   <div class="form-group">
+     <!--  <input id = "restaurant-id-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_id" value="{{ restaurant.restaurant_id }}">
+      <input id = "restaurant-name-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_name" value="{{ restaurant.name }}"> -->
+      <input type="submit" value="Pick up">
+  </div>
+</form>
+ 
+{% elif "delivery" in restaurant.transaction %}
+<form class="delivery" action="{{ restaurant.website }}" method="POST">
+   <div class="form-group">
+     <!--  <input id = "restaurant-id-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_id" value="{{ restaurant.restaurant_id }}">
+      <input id = "restaurant-name-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_name" value="{{ restaurant.name }}"> -->
+      <input type="submit" value="Delivery">
+  </div>
+</form>
+ 
+{% elif "restaurant_reservation" in restaurant.transaction %}
+<form class="reservation" action="{{ restaurant.website }}" method="POST">
+   <div class="form-group">
+     <!--  <input id = "restaurant-id-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_id" value="{{ restaurant.restaurant_id }}">
+      <input id = "restaurant-name-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_name" value="{{ restaurant.name }}"> -->
+      <input type="submit" value="Reservation">
+  </div>
+</form>
+{% endif %} 
+   <div>Contact</div>
+      <div> {{ restaurant.phone_number }} </div>
+      <div>{{ restaurant.address }} </div> 
+   
+
+
+<div>Monday:    {{ m_hours }}</div> 
+<div>Tuesday:   {{ t_hours }}</div>
+<div>Wednesday: {{ w_hours }}</div>
+<div>Thursday:  {{ th_hours }}</div>
+<div>Friday:    {{ f_hours }}</div>
+<div>Saturday:  {{ sa_hours }}</div>
+<div>Sunday:    {{ su_hours }}</div>
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+{% endblock %}

@@ -15,43 +15,42 @@
   <div> 
   <input type="hidden" class="hood_lng" value= "{{ neighborhood.lng }}">
 </div>
+
 <h2>Restaurants</h2>
 <br>
 <div>
 {% for restaurant in restaurants %}
-  <img class="restaurant_image" src="{{ restaurant.picture }}">
-    <div>{{ restaurant.name }}</div>
+   <img class="restaurant_image" src="{{ restaurant.picture }}">
+    <form class="rest-info" action="/rest_info" method="POST" id="{{ restaurant.restaurant_id }}">
+    <div>
+        <input id = "rest-id-{{ restaurant.restaurant_id }}" type="hidden" name="rest_id" value="{{ restaurant.restaurant_id }}">
+        <input id = "rest-name-{{ restaurant.restaurant_id }}" type="hidden" name="rest_name" value="{{ restaurant.name }}">
+        <input type="submit" value="{{ restaurant.name }}"></div><div>{{ restaurant.price }}</div>
+    </form> 
+    <div>Average Yelp Rating: {{ restaurant.avg_rating }}/5 Stars</div>
     <div>{{ restaurant.types_of_food }}</div>
-    <div>Average Yelp Rating: {{ restaurant.avg_rating }}/5 Stars  |  {{ restaurant.price }}</div>
-    <div>Contact</div>
-      <div> {{ restaurant.phone_number }} </div>
-      <div>{{ restaurant.address }} </div> 
-      <a href="{{ restaurant.website_url }}">Yelp Website: {{ restaurant.name }}</a>
-        
+  
         <div> 
           <input type="hidden" class="coordinates" value= "{{ restaurant.latitude }} {{ restaurant.longitude }}">
         </div>
-
         <div>
           <input type="hidden" class="rest_name" value="{{ restaurant.name }}">
         </div>
         <div>
           <input type="hidden" class="rest_type" value="{{ restaurant.types_of_food }}">
         </div>
-        
-    
 
-    {% if "user_id" in session %}
-      <form class="favorite_form_rest" action="/favorite" method="POST" id="{{ restaurant.restaurant_id }}">
+        {% if "user_id" in session %}
+        <form class="favorite_form_rest" action="/favorite" method="POST" id="{{ restaurant.restaurant_id }}">
         <div class="form-group">
           <input id = "restaurant-id-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_id" value="{{ restaurant.restaurant_id }}">
             <input id = "restaurant-name-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_name" value="{{ restaurant.name }}">
           <input type="submit" value="Favorite">
         </div>
-      </form> 
-    {% else %}
-    <h3>Create an Account to access other features</h3>
-    {% endif %}
+        </form> 
+        {% else %}
+          <h3>Create an Account to access other features</h3>
+        {% endif %}
 {% endfor %}
 </div>
 <br>

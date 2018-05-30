@@ -7,6 +7,8 @@ from flask_debugtoolbar import DebugToolbarExtension
 
 from passlib.hash import pbkdf2_sha256
 
+from datetime import datetime
+
 app = Flask(__name__)
 
 # Required to use Flask sessions and the debug toolbar
@@ -142,9 +144,139 @@ def display_profile():
 
     return render_template('user_profile.html')
 
- 
 
 
+
+@app.route('/rest_info', methods=["POST"])
+def display_transactions():
+    """ Display restaurant information."""
+
+    user_id = session["user_id"]
+    rest_id = request.form.get("rest_id")
+
+    restaurant = Restaurant.query.filter_by(restaurant_id=rest_id).first()
+    
+    try:
+        # Start time
+        mon_start = restaurant.hours_of_operation[0]["start"]
+        m_start_hour = mon_start[:-2]
+        m_start_minute = mon_start[-2:]
+        m_start = m_start_hour + ':' + m_start_minute
+        # End time
+        mon_end = restaurant.hours_of_operation[0]["end"]
+        m_end_hour = mon_end[:-2]
+        m_end_minute = mon_end[-2:]
+        m_end = m_end_hour + ':' + m_end_minute
+        # Hours of Operation
+        m_hours = datetime.strptime(m_start,'%H:%M').strftime('%I:%M %p') + " - " + datetime.strptime(m_end,'%H:%M').strftime('%I:%M %p')
+    except:
+        m_hours = "Closed"
+
+
+    try:
+        # Start time
+        tues_start = restaurant.hours_of_operation[1]["start"]
+        t_start_hour = tues_start[:-2]
+        t_start_minute = tues_start[-2:]
+        t_start = t_start_hour + ':' + t_start_minute
+        # End time
+        tues_end = restaurant.hours_of_operation[1]["end"]
+        t_end_hour = tues_end[:-2]
+        t_end_minute = tues_end[-2:]
+        t_end = t_end_hour + ':' + t_end_minute
+        # Hours of Operation
+        t_hours = datetime.strptime(t_start,'%H:%M').strftime('%I:%M %p') + " - " + datetime.strptime(t_end,'%H:%M').strftime('%I:%M %p')
+    except:
+        t_hours = 'Closed'
+
+
+    try:
+        # Start time
+        wedn_start = restaurant.hours_of_operation[2]["start"]
+        w_start_hour = wedn_start[:-2]
+        w_start_minute = wedn_start[-2:]
+        w_start = w_start_hour + ':' + w_start_minute
+        # End time
+        wedn_end = restaurant.hours_of_operation[2]["end"]
+        w_end_hour = wedn_end[:-2]
+        w_end_minute = wedn_end[-2:]
+        w_end = w_end_hour + ':' + w_end_minute
+        # Hours of Operation
+        w_hours = datetime.strptime(w_start,'%H:%M').strftime('%I:%M %p') + " - " + datetime.strptime(w_end,'%H:%M').strftime('%I:%M %p')
+    except:
+        w_hours = 'Closed'
+
+
+    try:
+        # Start time
+        thurs_start = restaurant.hours_of_operation[3]["start"]
+        th_start_hour = thurs_start[:-2]
+        th_start_minute = thurs_start[-2:]
+        th_start = th_start_hour + ':' + th_start_minute
+        # End time
+        thurs_end = restaurant.hours_of_operation[3]["end"]
+        th_end_hour = thurs_end[:-2]
+        th_end_minute = thurs_end[-2:]
+        th_end = th_end_hour + ':' + th_end_minute
+        # Hours of Operation
+        th_hours = datetime.strptime(th_start,'%H:%M').strftime('%I:%M %p') + " - " + datetime.strptime(th_end,'%H:%M').strftime('%I:%M %p')
+    except:
+        th_hours = 'Closed'
+
+
+    try:
+        # Start time
+        fri_start = restaurant.hours_of_operation[4]["start"]
+        f_start_hour = fri_start[:-2]
+        f_start_minute = fri_start[-2:]
+        f_start = f_start_hour + ':' + f_start_minute
+        # End time
+        fri_end = restaurant.hours_of_operation[4]["end"]
+        f_end_hour = fri_end[:-2]
+        f_end_minute = fri_end[-2:]
+        f_end = f_end_hour + ':' + f_end_minute
+        # Hours of Operation
+        f_hours = datetime.strptime(f_start,'%H:%M').strftime('%I:%M %p') + " - " + datetime.strptime(f_end,'%H:%M').strftime('%I:%M %p')
+    except:
+        f_hours = 'Closed'
+
+    try:    
+        # Start time
+        sat_start = restaurant.hours_of_operation[5]["start"]
+        sa_start_hour = sat_start[:-2]
+        sa_start_minute = sat_start[-2:]
+        sa_start = sa_start_hour + ':' + sa_start_minute
+        # End time
+        sat_end = restaurant.hours_of_operation[5]["end"]
+        sa_end_hour = sat_end[:-2]
+        sa_end_minute = sat_end[-2:]
+        sa_end = sa_end_hour + ':' + sa_end_minute
+        # Hours of Operation
+        sa_hours = datetime.strptime(sa_start,'%H:%M').strftime('%I:%M %p') + " - " + datetime.strptime(sa_end,'%H:%M').strftime('%I:%M %p')
+    except:
+        sa_hours = 'Closed'
+
+
+    try:
+        # Start time
+        sun_start = restaurant.hours_of_operation[6]["start"]
+        s_start_hour = sun_start[:-2]
+        s_start_minute = sun_start[-2:]
+        su_start = s_start_hour + ':' + s_start_minute
+        # End time
+        sun_end = restaurant.hours_of_operation[6]["end"]
+        s_end_hour = sun_end[:-2]
+        s_end_minute = sun_end[-2:]
+        su_end = s_end_hour + ':' + s_end_minute
+        # Hours of Operation
+        su_hours = datetime.strptime(su_start,'%H:%M').strftime('%I:%M %p') + " - " + datetime.strptime(su_end,'%H:%M').strftime('%I:%M %p')
+    except:
+        su_hours = 'Closed'
+
+
+    return render_template("restaurant_info.html", restaurant=restaurant, m_hours=m_hours, t_hours=t_hours, w_hours=w_hours, th_hours=th_hours, f_hours=f_hours, sa_hours=sa_hours, su_hours=su_hours)
+
+   
 
 # @app.route()
 # def delete_account():
@@ -205,29 +337,8 @@ def add_favorite_restaurant():
 
 # Neighborhoods and their associated restaurants/bakeries routes
 
-# @app.route("/restaurants")
-# def display_restaurants_northbeach():
-#     """ Display all restaurants that are in North Beach."""
 
 
-#     restaurants = db.session.query(Restaurant).join(Restaurant_type).filter(Restaurant.neighborhood_id==1, Restaurant_type.gf_type_id==2).all()
-
-#     return render_template("restaurants.html", restaurants=restaurants)
-
-
-# @app.route("/restaurants_and_bakeries")
-# def display_all_northbeach():
-#     """ Display all restaurants and bakeriesthat are in North Beach."""
-
-#     # if user clicks on north beach in search
-#     # return all restaurants and bakeries for that neighborhood
-#     # dict of neighborhood ids and their associated values
-
-
-
-#     restaurants = Restaurant.query.filter_by(neighborhood_id=1).all()
-
-#     return render_template("restaurants.html", restaurants=restaurants)
 
 @app.route("/restaurants")
 def search_by_neighborhood():
@@ -240,34 +351,33 @@ def search_by_neighborhood():
     neighborhood = Neighborhood.query.filter(Neighborhood.neighborhood_id==user_choice).first()
     # bakeries = db.session.query(Restaurant).join(Restaurant_type).filter(Restaurant.neighborhood_id==user_choice, Restaurant_type.gf_type_id==3).all()
 
-
     return render_template("restaurants.html", restaurants=restaurants, neighborhood=neighborhood)
 
-@app.route('/restaurant.json')
-def restaurant_info():
-    """ JSON information about restaurants. """
+# @app.route('/restaurant.json')
+# def restaurant_info():
+#     """ JSON information about restaurants. """
 
-    neighborhood = request.form.get("neighborhood_id")
+#     neighborhood = request.form.get("neighborhood_id")
     
-    restaurants = Restaurant.query.filter(Restaurant.neighborhood_id==neighborhood).all()
+#     restaurants = Restaurant.query.filter(Restaurant.neighborhood_id==neighborhood).all()
 
-    all_rest_info = {}
+#     all_rest_info = {}
 
-    for restaurant in restaurants:
-        rest_info = {
-        "name": restaurant.name,
-        "type_of_food": restaurant.type_of_food
-        }
+#     for restaurant in restaurants:
+#         rest_info = {
+#         "name": restaurant.name,
+#         "type_of_food": restaurant.type_of_food
+#         }
     
-        all_rest_info[restaurant.restaurant_id] = rest_info
+#         all_rest_info[restaurant.restaurant_id] = rest_info
 
-    return jsonify(all_rest_info)
+#     return jsonify(all_rest_info)
 
-@app.route("/googlemaps")
-def display_map():
-    """ """
+# @app.route("/googlemaps")
+# def display_map():
+#     """ """
 
-    return render_template("googlemaps.html")
+#     return render_template("googlemaps.html")
 
 
 

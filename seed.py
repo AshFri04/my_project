@@ -47,6 +47,8 @@ def load_restaurants():
             latitude = bakery['coordinates']['latitude']
             longitude =bakery['coordinates']['longitude']
             price = bakery['price']
+            transactions = bakery['transactions']
+            closed = bakery['is_closed']
             id_b = bakery['id']
 
             titles = bakery['categories']
@@ -77,7 +79,7 @@ def load_restaurants():
                 else:
                     print dictionary.keys()
        
-            bakery_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating, neighborhood_id=nh, latitude=latitude, longitude=longitude, price=price, types_of_food=types_of_food, hours_of_operation=hours_of_operation)
+            bakery_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating, neighborhood_id=nh, latitude=latitude, longitude=longitude, price=price, transactions=transactions, closed=closed, types_of_food=types_of_food, hours_of_operation=hours_of_operation)
 
             # Add bakery data to the database.
             db.session.add(bakery_info)
@@ -113,6 +115,8 @@ def load_restaurants():
             latitude = restaurant['coordinates']['latitude']
             longitude =restaurant['coordinates']['longitude']
             price = restaurant['price']
+            transactions = restaurant['transactions']
+            closed = restaurant['is_closed']
             id_r = restaurant['id']
 
             titles = restaurant['categories']
@@ -128,7 +132,7 @@ def load_restaurants():
             address = ' '.join(addresses)
 
             # Second request to API to get hours of operation data
-            url = 'https://api.yelp.com/v3/businesses/{}'.format(id_b)
+            url = 'https://api.yelp.com/v3/businesses/{}'.format(id_r)
             headers = {'Authorization': 'Bearer %s' % api_key}
             r2 = requests.get(url, headers=headers)
             results2 = r2.json()
@@ -143,7 +147,7 @@ def load_restaurants():
                 else:
                     print dictionary.keys()
 
-            restaurant_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating, neighborhood_id=nh, latitude=latitude, longitude=longitude, price=price, types_of_food=types_of_food, hours_of_operation=hours_of_operation)
+            restaurant_info = Restaurant(name=name, address=address, phone_number=phone_number, picture=picture, website_url=website_url, avg_rating=avg_rating, neighborhood_id=nh, latitude=latitude, longitude=longitude, transactions=transactions, closed=closed, price=price, types_of_food=types_of_food, hours_of_operation=hours_of_operation)
 
             # Add restaurant data to the database.
             db.session.add(restaurant_info)

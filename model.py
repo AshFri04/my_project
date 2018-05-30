@@ -37,10 +37,10 @@ class Restaurant(db.Model):
     __tablename__ = "restaurants"
 
     restaurant_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(100))
-    address = db.Column(db.String(100))
-    phone_number = db.Column(db.String(100))
-    picture = db.Column(db.String(100))
+    name = db.Column(db.String(255))
+    address = db.Column(db.String(255))
+    phone_number = db.Column(db.String(255))
+    picture = db.Column(db.String(255))
     menu_url= db.Column(db.String(255))
     website_url = db.Column(db.String(255))
     last_update = db.Column(db.DateTime)
@@ -48,6 +48,8 @@ class Restaurant(db.Model):
     neighborhood_id = db.Column(db.Integer, db.ForeignKey('neighborhoods.neighborhood_id'))
     latitude = db.Column(db.String(255))
     longitude = db.Column(db.String(255))
+    transactions = db.Column(db.JSON)
+    closed = db.Column(db.String(255))
     price = db.Column(db.String(255))
     types_of_food = db.Column(db.String(255))
     hours_of_operation = db.Column(db.JSON)
@@ -59,7 +61,7 @@ class Restaurant(db.Model):
     def __repr__(self):
         """ Provide helpful representation when printed. """
 
-        return "<Restaurant restaurant_id={} name={} phone_number={} picture={} menu_url={} website_url={} last_update={} avg_rating={} neighborhood_id={} gf_type_id={}>".format(self.restaurant_id, self.name, self.phone_number, self.picture, self.menu_url, self.website_url, self.last_update, self.avg_rating, self.neighborhood_id, self.gf_type_id)
+        return "<Restaurant restaurant_id={} name={} phone_number={} picture={} menu_url={} website_url={} last_update={} avg_rating={} neighborhood_id={} closed={}>".format(self.restaurant_id, self.name, self.phone_number, self.picture, self.menu_url, self.website_url, self.last_update, self.avg_rating, self.neighborhood_id, self.closed)
 
 
 
