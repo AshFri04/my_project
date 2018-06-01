@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div id="map"></div>
+ <script 
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBi3TXl5rieFcFdscrRjL8d4L9H4IwfHEw">
+</script>
+
+
+<h2>{{ restaurant.name }} is a Glutie!</h2>
+<br>
+<div>
+   <img class="restaurant_image" src="{{ restaurant.picture }}">
+    <form class="rest-info" action="/rest_info" method="POST" id="{{ restaurant.restaurant_id }}">
+    <div>
+        <input id = "rest-id-{{ restaurant.restaurant_id }}" type="hidden" name="rest_id" value="{{ restaurant.restaurant_id }}">
+        <input id = "rest-name-{{ restaurant.restaurant_id }}" type="hidden" name="rest_name" value="{{ restaurant.name }}">
+        <input type="submit" value="{{ restaurant.name }}"></div><div>{{ restaurant.price }}</div>
+    </form> 
+    <div>Average Yelp Rating: {{ restaurant.avg_rating }}/5 Stars</div>
+    <div>{{ restaurant.types_of_food }}</div>
+  
+        <div> 
+          <input type="hidden" class="coordinates" value= "{{ restaurant.latitude }} {{ restaurant.longitude }}">
+        </div>
+        <div>
+          <input type="hidden" class="rest_name" value="{{ restaurant.name }}">
+        </div>
+        <div>
+          <input type="hidden" class="rest_type" value="{{ restaurant.types_of_food }}">
+        </div>
+
+        {% if "user_id" in session %}
+        <form class="favorite_form_rest" action="/favorite" method="POST" id="{{ restaurant.restaurant_id }}">
+        <div class="form-group">
+          <input id = "restaurant-id-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_id" value="{{ restaurant.restaurant_id }}">
+            <input id = "restaurant-name-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_name" value="{{ restaurant.name }}">
+          <input type="submit" value="Favorite">
+        </div>
+        </form> 
+        {% else %}
+          <h3>Create an Account to access other features</h3>
+        {% endif %}
+
+</div>
+<br>
+
+
+
+
+
+
+{% endblock %}
