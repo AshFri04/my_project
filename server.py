@@ -1,21 +1,32 @@
 import os
 
-from flask import Flask, render_template, request, redirect, session, flash, jsonify
+from flask import Flask, render_template, request, redirect, session, flash, jsonify, url_for
+from flask_uploads import UploadSet, configure_uploads, IMAGES
+from flask_debugtoolbar import DebugToolbarExtension
 
 from model import connect_to_db, db, User, Restaurant, Favorite_restaurant, GF_type, Restaurant_type, Neighborhood
-from flask_debugtoolbar import DebugToolbarExtension
 
 from passlib.hash import pbkdf2_sha256
 
 from datetime import datetime
+
+from random import choice
+
+from werkzeug.utils import secure_filename
+
 
 app = Flask(__name__)
 
 # Required to use Flask sessions and the debug toolbar
 app.secret_key = 'ABC'
 
+photos = UploadSet('photos', IMAGES)
+app.config['UPLOADED_PHOTOS_DEST'] = 'static/images'
+configure_uploads(app, photos)
+
 api_key = os.environ['YELP_ACCESS_KEY']
 client_id = os.environ['YELP_CLIENT_ID']
+
 
 ################################################################################
 
@@ -90,7 +101,7 @@ def login():
     """ Display login form. """
 
     if session.get('user_id'):
-        return redirect('/display_mainpage')
+        return redirect('/profile')
     
     return render_template("login.html")
 
@@ -109,20 +120,21 @@ def login_process():
             session['user_id'] = user.user_id
             session['email'] = user.email
             session['fname'] =user.fname
+# CREATE AJAX!!
             flash("Great to have you back, {}!".format(user.fname))
-            return render_template("login_mainpage.html")
-
+            return redirect("/profile")
+# CREATE AJAX!
 # Why doesn't the else work here
     flash("The email or password you've entered does not match any of our accounts. \n Please try again.")
     return redirect('/login')
 
 
 
-@app.route('/display_mainpage')
-def display_login_mainpage():
-    """ Display the main page after user logs in. """
+# @app.route('/display_mainpage')
+# def display_login_mainpage():
+#     """ Display the main page after user logs in. """
 
-    return render_template("login_mainpage.html")
+#     return render_template("login_mainpage.html")
 
 @app.route('/sign_out')
 def sign_out():
@@ -133,6 +145,9 @@ def sign_out():
     return render_template("sign_out.html")
 
 
+################################################################################
+
+# User Profile Routes
 
 @app.route('/profile')
 def display_profile():
@@ -140,9 +155,48 @@ def display_profile():
 
     user_id = session['user_id']
 
-    fav_restaurants = Favorite_restaurant.query.filter_by(user_id=user_id).all()
+    user_object = User.query.filter_by(user_id=user_id).first()
+    fav_restaurants = user_object.favorite_restaurants
 
-    return render_template('user_profile.html')
+    restaurants = Restaurant.query.all()
+
+    random_restaurant = choice(restaurants)
+
+    return render_template('user_profile.html', restaurants=fav_restaurants, user=user_object, random=random_restaurant)
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/upload', methods=['GET', 'POST'])
+def upload():
+    """ """
+    user_id = session.get('user_id')
+    path = str(user_id) + '.jpg'
+    if request.method == 'POST' and 'photo' in request.files:
+       request.files['photo'].filename = path
+       filename = photos.save(request.files['photo'])
+       user = User.query.get(user_id)
+       user.photo = '/' + app.config['UPLOADED_PHOTOS_DEST'] + '/' + path
+       db.session.commit()
+
+    flash("You've successfully loaded your photo to your profile!")
+    return redirect('/profile')
+
+
+
+        # file = request.files['file']
+        # (if user does not select file, browser also)
+        # (submit an empty part without filename)
+        # if file.filename == '':
+        #     flash('No selected file')
+        #     return redirect(request.url)
+        # if file and allowed_file(file.filename):
+        #     filename = secure_filename(file.filename)
+        #     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        #     return redirect(url_for('uploaded_file',
+        #                             filename=filename))
 
 
 
@@ -353,6 +407,102 @@ def search_by_neighborhood():
 
     return render_template("restaurants.html", restaurants=restaurants, neighborhood=neighborhood)
 
+
+
+@app.route("/is-glutie")
+def display_if_glutie():
+    """ Display glutie restaurant that user typed in. """
+
+
+    rest_objects = Restaurant.query.all()
+  
+
+    user_choice = request.args.get("place").title()
+  
+    restaurant = None
+
+    for r in rest_objects:
+        # rest = restaurant.name
+        # restaurants.append(rest)
+        if user_choice in r.name:
+            restaurant = r
+
+    if restaurant:
+        return render_template("found-glutie.html", restaurant=restaurant)
+    else:
+        return render_template("googlemaps.html")
+
+
+
+@app.route("/restaurants-all")
+def display_all_restaurants():
+    """ Display all restaurants in San Francisco;
+
+        Sort by neighborhood, open now, delivery, pickup, reservation & price. """
+
+    food_types = ('Southern', 'Seafood', 'American', 'Tapas/Small Plates', 'French', 'Pizza', 'Breakfast', 'Wings', 'Moroccan', 'Burgers', 'Sandwiches', 'Mexican')
+
+    restaurants = []
+
+    rest_objects = Restaurant.query.all()
+
+    for restaurant in rest_objects:
+        food1 = restaurant.types_of_food
+        foods = food1.split()
+        print foods
+        print
+        for food in foods:
+            if food in food_types:
+                restaurants.append(restaurant)
+                break
+
+    return render_template("restaurants-all.html", restaurants=restaurants)
+
+
+
+@app.route("/bakeries-all")
+def display_all_bakeries():
+    """ Display all bakeries in San Francisco;
+
+        Sort by neighborhood, open now, delivery, pickup, reservation & price. """
+
+
+    restaurants = Restaurant.query.filter(Restaurant.types_of_food.in_(['bakery', 'bakeries', 'Bakeries', 'Bakery'])).all()
+
+    neighborhood = Neighborhood.query.filter(Neighborhood.neighborhood_id).all()
+
+    return render_template("restaurants.html", restaurants=restaurants, neighborhood=neighborhood)
+
+
+
+@app.route("/bars-all")
+def display_all_bars():
+    """ Display all bakeries in San Francisco;
+
+        Sort by neighborhood, open now, delivery, pickup, reservation & price. """
+
+
+    restaurants = Restaurant.query.filter(Restaurant.types_of_food.in_(['bar', 'Bar'])).all()
+
+    neighborhood = Neighborhood.query.filter(Neighborhood.neighborhood_id).all()
+
+    return render_template("restaurants.html", restaurants=restaurants, neighborhood=neighborhood)
+
+
+
+@app.route("/coffee-shops-all")
+def display_all_coffee_shops():
+    """ Display all coffee shops in San Francisco;
+
+        Sort by neighborhood, open now, delivery, pickup, reservation & price. """
+
+
+    restaurants = Restaurant.query.filter(Restaurant.types_of_food.in_(['coffee', 'tea', 'Coffee', 'Tea', 'Sandwiches'])).all()
+    # (or if cafe in name) Sandwiches?
+    neighborhood = Neighborhood.query.filter(Neighborhood.neighborhood_id).all()
+
+    return render_template("restaurants.html", restaurants=restaurants, neighborhood=neighborhood)
+
 # @app.route('/restaurant.json')
 # def restaurant_info():
 #     """ JSON information about restaurants. """
@@ -373,11 +523,11 @@ def search_by_neighborhood():
 
 #     return jsonify(all_rest_info)
 
-# @app.route("/googlemaps")
-# def display_map():
-#     """ """
+@app.route("/googlemaps")
+def display_map():
+    """ """
 
-#     return render_template("googlemaps.html")
+    return render_template("googlemaptest.html")
 
 
 

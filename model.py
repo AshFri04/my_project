@@ -61,7 +61,7 @@ class Restaurant(db.Model):
     def __repr__(self):
         """ Provide helpful representation when printed. """
 
-        return "<Restaurant restaurant_id={} name={} phone_number={} picture={} menu_url={} website_url={} last_update={} avg_rating={} neighborhood_id={} closed={}>".format(self.restaurant_id, self.name, self.phone_number, self.picture, self.menu_url, self.website_url, self.last_update, self.avg_rating, self.neighborhood_id, self.closed)
+        return "<Restaurant restaurant_id={} name={} phone_number={} picture={} menu_url={} website_url={} last_update={} avg_rating={} neighborhood_id={} transactions={} closed={} price={} types_of_food={} hours_of_operation={}>".format(self.restaurant_id, self.name, self.phone_number, self.picture, self.menu_url, self.website_url, self.last_update, self.avg_rating, self.neighborhood_id, self.transactions, self.closed, self.price, self.types_of_food, self.hours_of_operation)
 
 
 

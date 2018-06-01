@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- User can upload their profile photo -->
+<div class='container'>
+<div id='photo-container'>
+    <div class="page-header">
+        <h1>Upload Your profile photo</h1>
+    </div>
+    <form method=POST enctype=multipart/form-data action="{{ url_for('upload') }}">
+        <input type='file' name='photo'>
+        <input type="submit" class='btn btn-primary' value="Submit">
+    </form>
+</div>
+</div>
+
+<!-- Displays a random restaurant for the user to try -->
+<div>Ready to try a new Glutie?</div>
+ <img class="random_image" src="{{ random.picture }}">
+<div>{{ random.name }}  {{ random.price }}</div>
+<div>{{ random.avg_rating }}</div>
+
+
+<!-- Displays user's favorites -->
+<div>{{ user.fname }}'s Favorites</div>
+<div>
+  {% for restaurant in restaurants %}
+  <img class="restaurant_image" src="{{ restaurant.picture }}">
+
+
+    <form class="rest-info" action="/rest_info" method="POST" id="{{ restaurant.restaurant_id }}">
+      <div>
+        <input id = "rest-id-{{ restaurant.restaurant_id }}" type="hidden" name="rest_id" value="{{ restaurant.restaurant_id }}">
+        <input id = "rest-name-{{ restaurant.restaurant_id }}" type="hidden" name="rest_name" value="{{ restaurant.name }}">
+        <input type="submit" value="{{ restaurant.name }}">
+      </div>
+    </form> 
+
+  <div>Average Yelp Rating: {{ restaurant.avg_rating }}/5 Stars</div>
+  <div>{{ restaurant.types_of_food }}</div>
+
+  {% endfor %}
+</div>
+
+<!-- User can make a reservation via OpenTable and grab a Lyft to their restaurant of choice -->s
+<a href="https://www.opentable.com/san-francisco-restaurants"> Make a Reservation!</a>
+<br>
+<a href="https://help.lyft.com/access/unauthenticated">Grab a Lyft to your Restaurant!</a>
+
+{% endblock %}
