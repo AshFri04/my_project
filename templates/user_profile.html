@@ -14,6 +14,10 @@
 </div>
 </div>
 
+
+
+
+
 <!-- Displays a random restaurant for the user to try -->
 <div>Ready to try a new Glutie?</div>
  <img class="random_image" src="{{ random.picture }}">
@@ -22,6 +26,7 @@
 
 
 <!-- Displays user's favorites -->
+{% if fav_restaurant %}
 <div>{{ user.fname }}'s Favorites</div>
 <div>
   {% for restaurant in restaurants %}
@@ -38,10 +43,14 @@
 
   <div>Average Yelp Rating: {{ restaurant.avg_rating }}/5 Stars</div>
   <div>{{ restaurant.types_of_food }}</div>
-
   {% endfor %}
+{% else %}
+<div>{{ user.fname }}, you don't have any favorites! Explore restaurants and bakeries to add to your favorite's list!</div>
+ <a class="btn btn-default btn-lg index-btn" href="/search" 
+  role="button">Explore</a>
+{% endif %}
 </div>
-
+<br>
 <!-- User can make a reservation via OpenTable and grab a Lyft to their restaurant of choice -->
 <a href="https://www.opentable.com/san-francisco-restaurants"> Make a Reservation!</a>
 <br>

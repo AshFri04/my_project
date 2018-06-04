@@ -2,24 +2,12 @@
 
 {% block content %}
 
-<div id="map"></div>
- <script 
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBi3TXl5rieFcFdscrRjL8d4L9H4IwfHEw">
-</script>
 
- <div> 
-  <input type="hidden" class="hood_id" value= "{{ neighborhood.neighborhood_id }}">
 
-  <input type="hidden" class="hood_lat" value= "{{ neighborhood.lat }}">
-</div>
-  <div> 
-  <input type="hidden" class="hood_lng" value= "{{ neighborhood.lng }}">
-</div>
 
-<h2>Restaurants</h2>
-<br>
 <div>
-{% for restaurant in restaurants %}
+{% if results %}
+{% for restaurant in results %}
    <img class="restaurant_image" src="{{ restaurant.picture }}" alt="This is a user photo.">
     <form class="rest-info" action="/rest_info" method="POST" id="{{ restaurant.restaurant_id }}">
     <div>
@@ -52,15 +40,11 @@
           <h3>Create an Account to access other features</h3>
         {% endif %}
 {% endfor %}
+{% else %}
+<h1>No restaurants found.</h1>
+{% endif %}
 </div>
-<br>
-
-
-
-
 
 
 {% endblock %}
-
-
 

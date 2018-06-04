@@ -96,6 +96,15 @@ def register_process():
 
 
 
+# @app.route('/upload-photo', methods=["POST"])
+# def upload_photo:
+#     """ """
+
+
+
+
+
+
 @app.route('/login', methods=["GET"])
 def login():
     """ Display login form. """
@@ -130,11 +139,6 @@ def login_process():
 
 
 
-# @app.route('/display_mainpage')
-# def display_login_mainpage():
-#     """ Display the main page after user logs in. """
-
-#     return render_template("login_mainpage.html")
 
 @app.route('/sign_out')
 def sign_out():
@@ -179,6 +183,7 @@ def upload():
        filename = photos.save(request.files['photo'])
        user = User.query.get(user_id)
        user.photo = '/' + app.config['UPLOADED_PHOTOS_DEST'] + '/' + path
+    
        db.session.commit()
 
     flash("You've successfully loaded your photo to your profile!")
@@ -387,6 +392,7 @@ def add_favorite_restaurant():
 
 
 
+
 # ################################################################################
 
 # Neighborhoods and their associated restaurants/bakeries routes
@@ -403,8 +409,7 @@ def search_by_neighborhood():
     restaurants = Restaurant.query.filter(Restaurant.neighborhood_id==user_choice).all()
 
     neighborhood = Neighborhood.query.filter(Neighborhood.neighborhood_id==user_choice).first()
-    # bakeries = db.session.query(Restaurant).join(Restaurant_type).filter(Restaurant.neighborhood_id==user_choice, Restaurant_type.gf_type_id==3).all()
-
+  
     return render_template("restaurants.html", restaurants=restaurants, neighborhood=neighborhood)
 
 
@@ -415,8 +420,6 @@ def display_if_glutie():
 
 
     rest_objects = Restaurant.query.all()
-  
-
     user_choice = request.args.get("place").title()
   
     restaurant = None
@@ -428,10 +431,115 @@ def display_if_glutie():
             restaurant = r
 
     if restaurant:
-        return render_template("found-glutie.html", restaurant=restaurant)
+        return render_template("found-glutie.html", restaurant=restaurant, restaurants=rest_objects)
     else:
-        return render_template("googlemaps.html")
+        return render_template("googlemaptest.html", restaurant=rest_objects)
 
+
+
+@app.route("/search")
+def display_options():
+    """ """
+
+    return render_template("search-categories.html")
+
+
+
+
+@app.route("/search-results")
+def display_search_results():
+    """ """
+
+    restaurant = request.args.get("restaurants")
+    bakery = request.args.get("bakeries")
+    bar = request.args.get("bars")
+    coffee_shop = request.args.get("coffee-shops")
+
+    # open_now = request.args.get("open")
+    price = request.args.get("price")
+    neighborhood = request.args.get("neighborhood")
+
+    rest_objects = Restaurant.query.all()
+    results = set()
+    restaurants = []
+    
+    if restaurant:
+        # If user chooses restaurants
+        food_types = ('Southern', 'Seafood', 'American', 'Tapas/Small Plates', 'French', 'Pizza', 'Breakfast', 'Wings', 'Moroccan', 'Burgers', 'Sandwiches', 'Mexican')
+        for restaurant in rest_objects:
+            food1 = restaurant.types_of_food
+            foods = food1.split()
+            if 'Bakeries' not in foods and "Cafe" not in foods and "Coffee" not in foods: 
+                for food in foods:
+                    if food in food_types:
+                        restaurants.append(restaurant)
+       
+        if price:
+            rest_prices = Restaurant.query.filter(Restaurant.price==price).all()
+            for rest in rest_prices:
+                if rest in restaurants and rest not in results:
+                    results.add(rest)
+#BUG: PRINTS DUPLICATES ^
+    bakeries = set()
+    if bakery:
+        # If user chooses bakeries
+        bakery_names = ['Bakeries', 'Bakery']
+        for bakery in rest_objects:
+            bakery1 = bakery.types_of_food
+            treats = bakery1.split()
+            # print treats
+            for treat in treats:
+                if treat in bakery_names:
+                    bakeries.add(bakery)
+            
+        if price:
+            bakery_prices = Restaurant.query.filter(Restaurant.price==price).all()
+            for b in bakery_prices:
+                if b in bakeries and b not in results:
+                    print b
+                    results.add(b)
+    bars = set()
+    if bar:
+        # If user chooses bars
+        bar_names = ['Bars', 'Bar', 'Wine', 'Cocktail']
+        for bar in rest_objects:
+            bar1 = bar.types_of_food
+            drinks = bar1.split()
+            for drink in drinks:
+                if drink in bar_names:
+                    bars.add(bar)
+                    
+        if price:
+            bar_prices = Restaurant.query.filter(Restaurant.price==price).all()
+            for bar in bar_prices:
+                if bar in bars and bar not in results:
+                    results.add(bar)
+
+    coffee_shops = set()
+    if coffee_shop:
+        # If user chooses coffee shops
+        shops_names = ('coffee', 'tea', 'Coffee', 'Tea', 'Sandwiches')
+        for shop in rest_objects:
+            coffee1 = shop.types_of_food
+            shops = coffee1.split()
+            for shop in shops:
+                if shop in shops_names:
+                    coffee_shops.add(shop)
+                    
+        if price:
+            print price
+            coffee_prices = Restaurant.query.filter(Restaurant.price==price).all()
+            for coffee in coffee_prices:
+                if coffee in coffee_shops and coffee not in results:
+                    results.add(coffee)
+                    print coffee
+
+
+    return render_template("search-categories.html", results=results)
+                   
+   
+
+   
 
 
 @app.route("/restaurants-all")
@@ -449,12 +557,12 @@ def display_all_restaurants():
     for restaurant in rest_objects:
         food1 = restaurant.types_of_food
         foods = food1.split()
-        print foods
-        print
+       
         for food in foods:
             if food in food_types:
                 restaurants.append(restaurant)
                 break
+
 
     return render_template("restaurants-all.html", restaurants=restaurants)
 
