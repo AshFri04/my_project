@@ -457,12 +457,20 @@ def display_search_results():
 
     # open_now = request.args.get("open")
     price = request.args.get("price")
-    neighborhood = request.args.get("neighborhood")
+    neighborhood = request.args.get("neighborhoods")
 
-    rest_objects = Restaurant.query.all()
-    results = set()
-    restaurants = []
+    if neighborhood == 'False':
+        rest_objects = Restaurant.query.all()
+    else:
+        rest_objects = Restaurant.query.filter(Restaurant.neighborhood_id==neighborhood).all()
     
+
+    results = set()
+
+
+
+    
+    restaurants = set()
     if restaurant:
         # If user chooses restaurants
         food_types = ('Southern', 'Seafood', 'American', 'Tapas/Small Plates', 'French', 'Pizza', 'Breakfast', 'Wings', 'Moroccan', 'Burgers', 'Sandwiches', 'Mexican')
@@ -472,7 +480,7 @@ def display_search_results():
             if 'Bakeries' not in foods and "Cafe" not in foods and "Coffee" not in foods: 
                 for food in foods:
                     if food in food_types:
-                        restaurants.append(restaurant)
+                        restaurants.add(restaurant)
        
         if price:
             rest_prices = Restaurant.query.filter(Restaurant.price==price).all()
@@ -536,10 +544,7 @@ def display_search_results():
 
 
     return render_template("search-categories.html", results=results)
-                   
-   
 
-   
 
 
 @app.route("/restaurants-all")
