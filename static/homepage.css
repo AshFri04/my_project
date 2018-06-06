@@ -89,9 +89,27 @@ h2 {
 #button:hover {
     background-color: #DCB239; /* WhiteSmoke  */
     color: #F5F5F5;
+
 }
 
+::placeholder {
+    color: #DCB239;
+    opacity: 1; /* Firefox */
+}
 
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color: #DCB239;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+   color: #DCB239;
+}
+#or {
+    color: #DCB239;
+    font-weight: bolder;
+    font-family: 'Nanum Myeongjo', serif;
+
+}
 
 
 
