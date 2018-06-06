@@ -39,8 +39,6 @@ for (let restaurantType of restaurantTypes) {
     
 
 for (let i = 0; i < (locationDetails.length); i++) {
-    // Change myImageURL to an icon involving eating symbol
-    let myImageURL = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
     let locationDetail = locationDetails[i].split(' ');
     let latitude = parseFloat(locationDetail[0]);
     let longitude = parseFloat(locationDetail[1]);
@@ -54,7 +52,7 @@ for (let i = 0; i < (locationDetails.length); i++) {
         position: restaurant,
         map: map,
         title: restName,
-        icon: myImageURL
+        icon: '/static/images/icon.png'
     });
 
     

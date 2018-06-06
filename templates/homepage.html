@@ -20,8 +20,7 @@
           <br>
           <br>
           <br> 
-         <!--  <br>
-          <br> -->
+    
           
         <h1>Glutie</h1>
         <h2>San Francisco Gluten-Free Restaurant & Bakery Finder without all the Bloat</h2>
@@ -36,19 +35,20 @@
 
         <a id="text-for-styling"class="btn btn-default btn-lg index-btn" href="/signup" 
         role="button">Sign Up &raquo;</a>
-        <div class="col-xs-2">
-        </div>
+        <!-- <div class="col text-center vertical-center"> -->
+        <!-- </div> -->
         {% endif %}
-    <br></br>
+      <br>
+      <br>
+      <hr>
 
 
         <form action="/is-glutie" id="text-for-styling2">
-          Check to see if a restaurant has gluten-free options? 
-          <input id="box" type="text" name="place" placeholder="Type a Restaurant" required> 
+          Check to see if a restaurant has gluten-free options: 
+          <input id="box" type="text" name="place" placeholder="Type Restaurant Name" required> 
           <input id="button" class="btn btn-default btn-lg index-btn" type="submit" value="Find Me Glutie">
         </form>
-       
-       <div id="or">OR,</div>
+      
       
       <!--   <div class="dropdown">
           <button class="dropbtn">Gluten-Free in your neighborhood?</button>
@@ -81,11 +81,11 @@
           </div>
         </div>  -->
 
-         <form action="/restaurants" id="text-for-styling2" class="btn btn-default btn-lg index-btn">
-          Gluten-Free in your neighborhood?
-          <select name="neighborhood">
+         <form action="/restaurants" id="text-for-styling2" class="btn btn-default btn-lg index-btn" placeholder="hi">
+          Check to see if there is a Glutie in your neighborhood:
+          <select name="neighborhood" required>
      <!-- Neighborhoods are displayed in alphabetical order for user -->
-            <option value="25">Neighborhoods</option>
+            <option value="" disabled selected hidden>Click & Pick</option>
             <option value="25">Bayview</option>
             <option value="17">Bernal Heights</option>
             <option value="15">Castro</option>
@@ -119,6 +119,9 @@
       </div>
     </div>
   </div>
+  <br>
+  <br>
+  <br>
 
 
 

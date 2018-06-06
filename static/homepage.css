@@ -49,7 +49,6 @@ body  {
     color: #F5F5F5;
     font-family: 'Nanum Myeongjo', serif;
     font-size: 23px;
-   
     font-weight: bolder;
     /*text-shadow: 2px 2px 8px #DCB239;*/
 }
@@ -90,34 +89,49 @@ h2 {
     background-color: #DCB239; /* WhiteSmoke  */
     color: #F5F5F5;
 
+
 }
 
 ::placeholder {
     color: #DCB239;
     opacity: 1; /* Firefox */
+    text-align: center;
+    t
 }
 
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
    color: #DCB239;
+   text-align: center;
 }
+
 
 ::-ms-input-placeholder { /* Microsoft Edge */
    color: #DCB239;
+   text-align: center;
+
 }
-#or {
+
+hr {
+    display: block;
+    height: 1px;
+    width: 85%;
+    border: 0;
+    border-top: 3px solid #DCB239;
+    margin: 1em 0;
+    padding: 0; 
+    size: 1;
+}
+
+select:invalid {
     color: #DCB239;
-    font-weight: bolder;
     font-family: 'Nanum Myeongjo', serif;
-
+    
+    box-sizing: content-box;    
+    width: 219px;
+    height: 40px;
+    padding: 20px;    
+   
 }
-
-
-
-
-
-
-
-
 
 
 /* Style The Dropdown Button */
