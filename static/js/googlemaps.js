@@ -52,7 +52,7 @@ for (let i = 0; i < (locationDetails.length); i++) {
         position: restaurant,
         map: map,
         title: restName,
-        icon: '/static/images/icon.png'
+        icon: '/static/images/map_icon.png'
     });
 
     

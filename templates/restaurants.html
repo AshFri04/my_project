@@ -3,10 +3,12 @@
 {% block content %}
 
 <div class="container">
-  <div class="row align-itms-center">
-    <div class="col-xs-4">
 
-<!-- Search bar -->
+  <!--////// ROW //////-->
+
+  <div class="row">
+    <div class="col">
+      <!-- Search bar -->
       <form action="/search-results" required>
         <input type="checkbox" name="restaurants" value="True">Restaurants
         <input type="checkbox" name="bakeries" value="True">Bakeries
@@ -14,20 +16,21 @@
         <input type="checkbox" name="coffee-shops" value="True">Coffee Shops<br>
         <input type="checkbox" name="open" value="True">Open Now?<br>
         
-        Search By Price:
+        <div>Search By Price:</div>
         <select name="price">
-          <!-- Neighborhoods are displayed in alphabetical order for user-->
           <option value="$">Inexpensive</option>
           <option value="$$">Moderately Inexpensive</option>
           <option value="$$$">Expensive</option>
           <option value="$$$$">High End</option>
         </select><br>
     </div>
-      <div class="col-xs-4">
-        Gluten-Free in your neighborhood?
-        Search By:
+
+
+    <div class="col">
+      Gluten-Free in your neighborhood?
+      Search By:
         <select name="neighborhoods">
-         Neighborhoods are displayed in alphabetical order for user
+         <!-- Neighborhoods are displayed in alphabetical order for user -->
           <option value="False">Choose a Location</option>
           <option value="25">Bayview</option>
           <option value="17">Bernal Heights</option>
@@ -55,54 +58,37 @@
           <option value="21">Sunset District</option>
           <option value="18">Twin Peaks</option>
         </select><br>
-      </div>
-        <div class="col-xs-4">
           <input type="submit" value="Find Me Glutie">
-        </form>
-        </div>
-      </div>
-
-  <!-- map -->
-  w
-    <div class="row align-items-center">
-      <div class="col">
-        <div id="map"></div>
-          <script 
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBi3TXl5rieFcFdscrRjL8d4L9H4IwfHEw">
-          </script>
-        <div> 
-          <input type="hidden" class="hood_id" value= "{{ neighborhood.neighborhood_id }}">
-          <input type="hidden" class="hood_lat" value= "{{ neighborhood.lat }}">
-          <input type="hidden" class="hood_lng" value= "{{ neighborhood.lng }}">
-        </div>
-      </div>
+        
     </div>
+  </div>
+      
 
-<!-- restaurants -->
+<!--////// ROW //////-->
 
-   <div class="row align-items-center">
-     <div class="col-xs-4">
+
+   <div class="row">
+    <!-- restaurants -->
+     <div id="scroll" class="col">
         <h2>Restaurants</h2> <br>
           {% for restaurant in restaurants %}
-             <img class="restaurant_image" src="{{ restaurant.picture }}" alt="This is a user photo.">
-      </div>
-      <div class="col-xs-4">
-        <form class="rest-info" action="/rest_info" method="POST" id="{{ restaurant.restaurant_id }}">
-          <input id = "rest-id-{{ restaurant.restaurant_id }}" type="hidden" name="rest_id" value="{{ restaurant.restaurant_id }}">
-          <input id = "rest-name-{{ restaurant.restaurant_id }}" type="hidden" name="rest_name" value="{{ restaurant.name }}">
-          <input type="submit" value="{{ restaurant.name }}"><div>{{ restaurant.price }}</div>
-        </form> 
-          <div>Average Yelp Rating: {{ restaurant.avg_rating }}/5 Stars</div>
+          <img class="restaurant_image" src="{{ restaurant.picture }}" alt="This is a user photo.">
+            <form class="rest-info" action="/rest_info" method="POST" id="{{ restaurant.restaurant_id }}">
+              <input id = "rest-id-{{ restaurant.restaurant_id }}" type="hidden" name="rest_id" value="{{ restaurant.restaurant_id }}">
+              <input id = "rest-name-{{ restaurant.restaurant_id }}" type="hidden" name="rest_name" value="{{ restaurant.name }}">
+              <input type="submit" value="{{ restaurant.name }}"><div>{{ restaurant.price }}</div>
+            </form> 
+            <div>Average Yelp Rating: {{ restaurant.avg_rating }}/5 Stars</div>
             <div>{{ restaurant.types_of_food }}</div>
-              <div> 
-                <input type="hidden" class="coordinates" value= "{{ restaurant.latitude }} {{ restaurant.longitude }}">
-                <input type="hidden" class="rest_name" value="{{ restaurant.name }}">
-                <input type="hidden" class="rest_type" value="{{ restaurant.types_of_food }}">
-              </div>
+            <div> 
+              <input type="hidden" class="coordinates" value= "{{ restaurant.latitude }} {{ restaurant.longitude }}">
+              <input type="hidden" class="rest_name" value="{{ restaurant.name }}">
+              <input type="hidden" class="rest_type" value="{{ restaurant.types_of_food }}">
+            </div>
+      
 
-<!-- Add Favorites -->
-        </div>
-        <div class="col-xs-4">
+      <!-- Add Favorites -->
+       
             {% if "user_id" in session %}
               <form class="favorite_form_rest" action="/favorite" method="POST" id="{{ restaurant.restaurant_id }}">
                 <div class="form-group">
@@ -115,8 +101,23 @@
                 <h3>Create an Account to access other features</h3>
               {% endif %}
             {% endfor %}
-        </div>
+      </div>
+  
+     <!-- map -->
+      <div class="col">
+        <div id="map"></div>
+          <script 
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBi3TXl5rieFcFdscrRjL8d4L9H4IwfHEw">
+          </script>
+          <div> 
+            <input type="hidden" class="hood_id" value= "{{ neighborhood.neighborhood_id }}">
+            <input type="hidden" class="hood_lat" value= "{{ neighborhood.lat }}">
+            <input type="hidden" class="hood_lng" value= "{{ neighborhood.lng }}">
+          </div>
+      </div>
+
     </div>
+  </div>
 </div>
 
 

@@ -205,6 +205,9 @@ def upload():
         #                             filename=filename))
 
 
+def convert_military_to_pretty_time(start_time, end_time):
+
+     datetime.datetime.strptime(x,'%H:%M').strftime('%I:%M %p') + " - " + datetime.datetime.strptime(x,'%H:%M').strftime('%I:%M %p')
 
 
 @app.route('/rest_info', methods=["POST"])
@@ -216,6 +219,28 @@ def display_transactions():
 
     restaurant = Restaurant.query.filter_by(restaurant_id=rest_id).first()
     rest_hours = restaurant.hours_of_operation
+
+    # day_mappings = { 0: "Sunday", 1: "Monday", 2: "Tuesday", 3: "Wednesday", 4: "Thursday", 5: "Friday", 6: "Saturday" }
+
+    # # Ex: [ 0, 3, 4 ]
+    # days_that_have_schedules = map(lambda x: day_mappings[x], rest_hours)
+    # # Ex: [ 1, 2, 5, 6 ]
+    # days_missing_schedules = set(day_mappings.keys()) - set(days_that_have_schedules)
+
+    # # Ex: [ { "start": 0800, "end": 2000, "day": "Monday"}, { "start": 0700, "end": 2200, "day": "Tuesday"} ]
+    # open_hours = map(lambda x: { "hours": convert_military_to_pretty_time(x["start"], x["end"]), "day": day_mappings[x]}, day_mappings)
+
+    # # Ex: [ { "start": 0000, "end": 0000, "day": "Wednesday"} ]
+    # closed_hours = map(lambda x: { "hours": "closed", "day": day_mappings[x]}, days_missing_schedules)
+    # hours_of_op = open_hours + closed_hours
+    # hours_of_op_map = {}
+    # map(lambda x: { hours_of_op_map[x["day"]] = x }, hours_of_op)
+
+    # today = day_mappings[datetime.date.today().strftime("%w")]
+    # if today in open_hours and ():
+    #     then its open now
+
+    # { "Monday": { "start": 0800, "end": 2000, "day": "Monday"}, "Tuesday": { "start": 0000, "end": 0000, "day"}}
   
     # for hours in rest_hours[0:]:
     #     if hours["day"] == 0 and datetime.date.today().strftime("%w") == '0':
@@ -249,14 +274,14 @@ def display_transactions():
     #         sa_start = hours['start'][:-2] + ":" + hours['start'][-2:]
     #         sa_end = hours['end'][:-2] + ":" + hours['end'][-2:]
     #         sa_hours = datetime.datetime.strptime(sa_start,'%H:%M').strftime('%I:%M %p') + " - " + datetime.datetime.strptime(sa_end,'%H:%M').strftime('%I:%M %p')
-        # else:
-        #     su_hours = "Closed"
-        #     m_hours = "Closed"
-        #     t_hours = "Closed"
-        #     w_hours = "Closed"
-        #     th_hours = "Closed"
-        #     f_hours = "Closed"
-        #     sa_hours = "Closed"
+    #     else:
+    #         su_hours = "Closed"
+    #         m_hours = "Closed"
+    #         t_hours = "Closed"
+    #         w_hours = "Closed"
+    #         th_hours = "Closed"
+    #         f_hours = "Closed"
+    #         sa_hours = "Closed"
 
 
   
