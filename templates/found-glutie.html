@@ -1,37 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<!-- 
-
-
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBi3TXl5rieFcFdscrRjL8d4L9H4IwfHEw&callback=initMap"
-  type="text/javascript"></script>
-<script>
-function initMap() {
-  var myLatLng = {lat: {{ restaurant.latitude }} lng: {{ restaurant.longitude }}};
-
-  var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 14,
-    center: myLatLng
-  });
-
-  var marker = new google.maps.Marker({
-    position: myLatLng,
-    map: map,
-    title: {{ restaurant.name }}
-  });
-}
-</script>
-
-<div id="map"></div> -->
 
 
 
+<!-- Search bar -->
 <form action="/search-results" required>
   <input type="checkbox" name="restaurants" value="True">Restaurants
   <input type="checkbox" name="bakeries" value="True">Bakeries
   <input type="checkbox" name="bars" value="True">Bars
   <input type="checkbox" name="coffee-shops" value="True">Coffee Shops
+  <br>
+  <input type="checkbox" name="open" value="True">Open Now?
   
 <br>
   Search By Price:

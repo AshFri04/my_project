@@ -1,17 +1,152 @@
 body  {
     margin: 0;
+    background: url("/static/images/background.jpg") no-repeat center center fixed;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-color: transparent;
+    /*color: #fff;
+    text-shadow: 0 0 10px #000;*/
 
 }
+/*
+.container {
+    background: url(glutie-homepage.jpg) no-repeat center center fixed;
+    background-size: cover;
+}
+*/
+
+.vertical-center {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  height: 80%;
+  width: 80%;
+}
+
+#text-for-styling {
+    /* lemon */
+    color: #DCB239;
+    /*color: #F5F5F5;*/
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 28px;   
+    font-weight: 900;
+    /*text-shadow: 2px 2px 8px #DCB239;*/
+     -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+
+#text-for-styling:hover {
+    background-color: #DCB239; /* lemon */
+    color: white;
+}
+
+#text-for-styling2 {
+    /*lemon*/
+    /*color: #DCB239;*/
+    color: #F5F5F5;
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 23px;
+   
+    font-weight: bolder;
+    /*text-shadow: 2px 2px 8px #DCB239;*/
+}
+
 
 h1 {
-    font-size: 100px
-    font-family: sans-serif;
-    color: blue;
+    font-size: 175px;
+    /*font-family: 'Tangerine', cursive;*/
+      /*font-family: "Lobster", cursive;*/
+    font-family: 'Dancing Script', cursive;
+    /*color: #FF383F;*/
+    color: white;
+    font-weight: bolder;
+    /*text-shadow: 2px 2px 8px #FC4A1A;*/
+    /*text-shadow: 2px 2px 8px #F5F5F5*/
+ 
+
+   
 }
 
 h2 {
-    font-size: 60px
-    font-family: sans-serif;
+    font-size: 40px;
+    font-family: 'Nanum Myeongjo', serif;
+    /*font-family: 'Dancing Script', cursive;*/
+    color: white;
+
+    /*color: #FC4A1A;*/
+    font-weight: bolder;
+   
+}
+
+#button {
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+#button:hover {
+    background-color: #DCB239; /* WhiteSmoke  */
+    color: #F5F5F5;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* Style The Dropdown Button */
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
 }
 
 
@@ -32,3 +167,4 @@ element.style {
     visibility: visible;
 
 }
+

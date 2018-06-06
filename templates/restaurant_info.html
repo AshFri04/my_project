@@ -2,6 +2,61 @@
 
 {% block content %}
 
+<!-- Search bar -->
+<form action="/search-results" required>
+  <input type="checkbox" name="restaurants" value="True">Restaurants
+  <input type="checkbox" name="bakeries" value="True">Bakeries
+  <input type="checkbox" name="bars" value="True">Bars
+  <input type="checkbox" name="coffee-shops" value="True">Coffee Shops
+  <br>
+  <input type="checkbox" name="open" value="True">Open Now?
+  
+<br>
+  Search By Price:
+  <select name="price">
+    <!-- Neighborhoods are displayed in alphabetical order for user-->
+    <option value="$">Inexpensive</option>
+    <option value="$$">Moderately Inexpensive</option>
+    <option value="$$$">Expensive</option>
+    <option value="$$$$">High End</option>
+  </select>
+ 
+
+<br>
+   Gluten-Free in your neighborhood?
+  Search By:
+  <select name="neighborhoods">
+   Neighborhoods are displayed in alphabetical order for user
+    <option value="False">Choose a Location</option>
+    <option value="25">Bayview</option>
+    <option value="17">Bernal Heights</option>
+    <option value="15">Castro</option>
+    <option value="11">China Town</option>
+    <option value="5">Cow Hollow</option>
+    <option value="10">Financial District</option>
+    <option value="3">Fisherman's Wharf</option>
+    <option value="19">Haight Ashbury</option>
+    <option value="23">Lakeshore</option>
+    <option value="4">Marina</option>
+    <option value="13">Mission</option>
+    <option value="9">Nob Hill</option>
+    <option value="16">Noe Valley</option>
+    <option value="1">North Beach</option>
+    <option value="24">Ocean View</option>
+    <option value="8">Pacific Heights</option>
+    <option value="22">Parkside</option>
+    <option value="14">Potrero Hill</option>
+    <option value="6">Presidio Heights</option>
+    <option value="20">Richmond District</option>
+    <option value="2">Russian Hill</option>
+    <option value="7">Seacliff</option>
+    <option value="12">South of Market</option>
+    <option value="21">Sunset District</option>
+    <option value="18">Twin Peaks</option>
+  </select> 
+  <br>
+  <input type="submit" value="Find Me Glutie">
+</form>
 
 
 {% if "pickup" in restaurant.transaction %}

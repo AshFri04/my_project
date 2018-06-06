@@ -214,6 +214,52 @@ def display_transactions():
     rest_id = request.form.get("rest_id")
 
     restaurant = Restaurant.query.filter_by(restaurant_id=rest_id).first()
+    rest_hours = restaurant.hours_of_operation
+  
+    # for hours in rest_hours[0:]:
+    #     if hours["day"] == 0 and datetime.date.today().strftime("%w") == '0':
+    #         su_start = hours['start'][:-2] + ":" + hours['start'][-2:]
+    #         su_end = hours['end'][:-2] + ":" + hours['end'][-2:]
+    #         su_hours = datetime.datetime.strptime(su_start,'%H:%M').strftime('%I:%M %p') + " - " + datetime.datetime.strptime(su_end,'%H:%M').strftime('%I:%M %p')
+    #     elif hours["day"] == 1 and datetime.date.today().strftime("%w") == '1':
+    #         m_start = hours['start'][:-2] + ":" + hours['start'][-2:]
+          
+    #         m_end = hours['end'][:-2] + ":" + hours['end'][-2:]
+            
+    #         m_hours = datetime.datetime.strptime(m_start,'%H:%M').strftime('%I:%M %p') + " - " + datetime.datetime.strptime(m_end,'%H:%M').strftime('%I:%M %p')
+          
+    #     elif hours["day"] == 2 and datetime.date.today().strftime("%w") == '2':
+    #         t_start = hours['start'][:-2] + ":" + hours['start'][-2:]
+    #         t_end = hours['end'][:-2] + ":" + hours['end'][-2:]
+    #         t_hours = datetime.datetime.strptime(t_start,'%H:%M').strftime('%I:%M %p') + " - " + datetime.datetime.strptime(t_end,'%H:%M').strftime('%I:%M %p')
+    #     elif hours["day"] == 3 and datetime.date.today().strftime("%w") == '3':
+    #         w_start = hours['start'][:-2] + ":" + hours['start'][-2:]
+    #         w_end = hours['end'][:-2] + ":" + hours['end'][-2:]
+    #         w_hours = datetime.datetime.strptime(w_start,'%H:%M').strftime('%I:%M %p') + " - " + datetime.datetime.strptime(w_end,'%H:%M').strftime('%I:%M %p')
+    #     elif hours["day"] == 4 and datetime.date.today().strftime("%w") == '4':
+    #         th_start = hours['start'][:-2] + ":" + hours['start'][-2:]
+    #         th_end = hours['end'][:-2] + ":" + hours['end'][-2:]
+    #         th_hours = datetime.datetime.strptime(th_start,'%H:%M').strftime('%I:%M %p') + " - " + datetime.datetime.strptime(th_end,'%H:%M').strftime('%I:%M %p')
+    #     elif hours["day"] == 5 and datetime.date.today().strftime("%w") == '5':
+    #         f_start = hours['start'][:-2] + ":" + hours['start'][-2:]
+    #         f_end = hours['end'][:-2] + ":" + hours['end'][-2:]
+    #         f_hours = datetime.datetime.strptime(f_start,'%H:%M').strftime('%I:%M %p') + " - " + datetime.datetime.strptime(f_end,'%H:%M').strftime('%I:%M %p')
+    #     elif hours["day"] == 6 and datetime.date.today().strftime("%w") == '6':
+    #         sa_start = hours['start'][:-2] + ":" + hours['start'][-2:]
+    #         sa_end = hours['end'][:-2] + ":" + hours['end'][-2:]
+    #         sa_hours = datetime.datetime.strptime(sa_start,'%H:%M').strftime('%I:%M %p') + " - " + datetime.datetime.strptime(sa_end,'%H:%M').strftime('%I:%M %p')
+        # else:
+        #     su_hours = "Closed"
+        #     m_hours = "Closed"
+        #     t_hours = "Closed"
+        #     w_hours = "Closed"
+        #     th_hours = "Closed"
+        #     f_hours = "Closed"
+        #     sa_hours = "Closed"
+
+
+  
+        
     
     try:
         # Start time
@@ -455,7 +501,7 @@ def display_search_results():
     bar = request.args.get("bars")
     coffee_shop = request.args.get("coffee-shops")
 
-    # open_now = request.args.get("open")
+    open_now = request.args.get("open")
     price = request.args.get("price")
     neighborhood = request.args.get("neighborhoods")
 
@@ -465,12 +511,60 @@ def display_search_results():
         rest_objects = Restaurant.query.filter(Restaurant.neighborhood_id==neighborhood).all()
     
 
-    results = set()
+    results = []
+    open_restaurants = []
+
+    if open_now:
+        for restaurant in results:
+            rest_hours = restaurant.hours_of_operation
+            for hours in rest_hours[0:]:
+                if hours["day"] == 0 and datetime.date.today().strftime("%w") == '0':
+                    time = str(datetime.datetime.now()).split(" ")
+                    time1 = time[1][0:5].split(":")
+                    time2 = "".join(time1)
+                    if int(time2) in range(int(hours['start']), int(hours['end']) + 1):
+                        open_restaurants.append(restaurant)
+                elif hours["day"] == 1 and datetime.date.today().strftime("%w") == '1':
+                    time = str(datetime.datetime.now()).split(" ")
+                    time1 = time[1][0:5].split(":")
+                    time2 = "".join(time1)
+                    if int(time2) in range(int(hours['start']), int(hours['end']) + 1):
+                        open_restaurants.append(restaurant)
+                elif hours["day"] == 2 and datetime.date.today().strftime("%w") == '2':
+                    time = str(datetime.datetime.now()).split(" ")
+                    time1 = time[1][0:5].split(":")
+                    time2 = "".join(time1)
+                    if int(time2) in range(int(hours['start']), int(hours['end']) + 1):
+                        open_restaurants.append(restaurant)
+                elif hours["day"] == 3 and datetime.date.today().strftime("%w") == '3':
+                    time = str(datetime.datetime.now()).split(" ")
+                    time1 = time[1][0:5].split(":")
+                    time2 = "".join(time1)
+                    if int(time2) in range(int(hours['start']), int(hours['end']) + 1):
+                        open_restaurants.append(restaurant)
+                elif hours["day"] == 4 and datetime.date.today().strftime("%w") == '4':
+                    time = str(datetime.datetime.now()).split(" ")
+                    time1 = time[1][0:5].split(":")
+                    time2 = "".join(time1)
+                    if int(time2) in range(int(hours['start']), int(hours['end']) + 1):
+                        open_restaurants.append(restaurant)
+                elif hours["day"] == 5 and datetime.date.today().strftime("%w") == '5':
+                    time = str(datetime.datetime.now()).split(" ")
+                    time1 = time[1][0:5].split(":")
+                    time2 = "".join(time1)
+                    if int(time2) in range(int(hours['start']), int(hours['end']) + 1):
+                        open_restaurants.append(restaurant)
+                elif hours["day"] == 6 and datetime.date.today().strftime("%w") == 6:
+                    time = str(datetime.datetime.now()).split(" ")
+                    time1 = time[1][0:5].split(":")
+                    time2 = "".join(time1)
+                    if int(time2) in range(int(hours['start']), int(hours['end']) + 1):
+                        open_restaurants.append(restaurant)
 
 
 
     
-    restaurants = set()
+    restaurants = []
     if restaurant:
         # If user chooses restaurants
         food_types = ('Southern', 'Seafood', 'American', 'Tapas/Small Plates', 'French', 'Pizza', 'Breakfast', 'Wings', 'Moroccan', 'Burgers', 'Sandwiches', 'Mexican')
@@ -480,15 +574,15 @@ def display_search_results():
             if 'Bakeries' not in foods and "Cafe" not in foods and "Coffee" not in foods: 
                 for food in foods:
                     if food in food_types:
-                        restaurants.add(restaurant)
+                        restaurants.append(restaurant)
        
         if price:
             rest_prices = Restaurant.query.filter(Restaurant.price==price).all()
             for rest in rest_prices:
                 if rest in restaurants and rest not in results:
-                    results.add(rest)
+                    results.append(rest)
 #BUG: PRINTS DUPLICATES ^
-    bakeries = set()
+    bakeries = []
     if bakery:
         # If user chooses bakeries
         bakery_names = ['Bakeries', 'Bakery']
@@ -498,15 +592,15 @@ def display_search_results():
             # print treats
             for treat in treats:
                 if treat in bakery_names:
-                    bakeries.add(bakery)
+                    bakeries.append(bakery)
             
         if price:
             bakery_prices = Restaurant.query.filter(Restaurant.price==price).all()
             for b in bakery_prices:
                 if b in bakeries and b not in results:
                     print b
-                    results.add(b)
-    bars = set()
+                    results.append(b)
+    bars = []
     if bar:
         # If user chooses bars
         bar_names = ['Bars', 'Bar', 'Wine', 'Cocktail']
@@ -515,15 +609,15 @@ def display_search_results():
             drinks = bar1.split()
             for drink in drinks:
                 if drink in bar_names:
-                    bars.add(bar)
+                    bars.append(bar)
                     
         if price:
             bar_prices = Restaurant.query.filter(Restaurant.price==price).all()
             for bar in bar_prices:
                 if bar in bars and bar not in results:
-                    results.add(bar)
+                    results.append(bar)
 
-    coffee_shops = set()
+    coffee_shops = []
     if coffee_shop:
         # If user chooses coffee shops
         shops_names = ('coffee', 'tea', 'Coffee', 'Tea', 'Sandwiches')
@@ -532,18 +626,16 @@ def display_search_results():
             shops = coffee1.split()
             for shop in shops:
                 if shop in shops_names:
-                    coffee_shops.add(shop)
+                    coffee_shops.append(shop)
                     
         if price:
             print price
             coffee_prices = Restaurant.query.filter(Restaurant.price==price).all()
             for coffee in coffee_prices:
                 if coffee in coffee_shops and coffee not in results:
-                    results.add(coffee)
-                    print coffee
-
-
-    return render_template("search-categories.html", results=results)
+                    results.append(coffee)
+                   
+    return render_template("search-categories.html", results=results, open_restaurants=results)
 
 
 
