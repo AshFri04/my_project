@@ -26,7 +26,7 @@
 
 
 <!-- Displays user's favorites -->
-{% if fav_restaurant %}
+{% if fav_restaurant != None %}
 <div>{{ user.fname }}'s Favorites</div>
 <div>
   {% for restaurant in restaurants %}

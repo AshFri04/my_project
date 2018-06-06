@@ -161,6 +161,7 @@ def display_profile():
 
     user_object = User.query.filter_by(user_id=user_id).first()
     fav_restaurants = user_object.favorite_restaurants
+    # print fav_restaurantss
 
     restaurants = Restaurant.query.all()
 
