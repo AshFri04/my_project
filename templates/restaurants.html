@@ -6,16 +6,36 @@
 
   <!--////// ROW //////-->
 
-  <div class="row">
-    <div class="col">
+ <div class="row">
+    <div class="col-xs-6">
       <!-- Search bar -->
       <form action="/search-results" required>
-        <input type="checkbox" name="restaurants" value="True">Restaurants
-        <input type="checkbox" name="bakeries" value="True">Bakeries
-        <input type="checkbox" name="bars" value="True">Bars
-        <input type="checkbox" name="coffee-shops" value="True">Coffee Shops<br>
-        <input type="checkbox" name="open" value="True">Open Now?<br>
+
+        <div class="form-check form-check-inline">
+          <input type="checkbox" name="restaurants" id="rest-checkbox"value="True">
+          <label class="form-check-label" for="rest-checkbox">Restaurants</label>
+        </div>
+
+        <div class="form-check form-check-inline">
+          <input type="checkbox" name="bakeries" id="bake-checkbox"value="True">
+          <label class="form-check-label" for="bake-checkbox">Bakeries</label>
+        </div>
+
+        <div class="form-check form-check-inline">
+          <input type="checkbox" name="bars" id="bar-checkbox" value="True">
+          <label class="form-check-label" for="bar-checkbox">Bars</label>
+        </div>
+
+        <div class="form-check form-check-inline">
+          <input type="checkbox" name="coffee-shops" id="coffee-checkbox"value="True">
+          <label class="form-check-label" for="coffee-checkbox">Coffee Shops</label>
+        </div><br>
+
+        <div class="form-check">
+          <input type="checkbox" name="open" id="open-checkbox"value="True"><label class="form-check-label" for="open-checkbox">Open Now</label>
+        </div><br>
         
+      <div class="form-group">
         <div>Search By Price:</div>
         <select name="price">
           <option value="$">Inexpensive</option>
@@ -23,7 +43,9 @@
           <option value="$$$">Expensive</option>
           <option value="$$$$">High End</option>
         </select><br>
+      </div>
     </div>
+
 
 
     <div class="col">
@@ -67,19 +89,48 @@
 <!--////// ROW //////-->
 
 
-   <div class="row">
-    <!-- restaurants -->
-     <div id="scroll" class="col">
+<div class="row">
+  <!-- restaurants -->
+    <div id="scroll" class="col">
         <h2>Restaurants</h2> <br>
-          {% for restaurant in restaurants %}
-          <img class="restaurant_image" src="{{ restaurant.picture }}" alt="This is a user photo.">
+
+<!--////// ROW within Column //////-->
+
+        <div class="row">
+          
+            {% for restaurant in restaurants %}
+            <div class="row rest-info">
+            <div class="col">
+             <img class="restaurant_image" src="{{ restaurant.picture }}" alt="This is a user photo.">
+            </div>
+
+          <div class="col">
             <form class="rest-info" action="/rest_info" method="POST" id="{{ restaurant.restaurant_id }}">
               <input id = "rest-id-{{ restaurant.restaurant_id }}" type="hidden" name="rest_id" value="{{ restaurant.restaurant_id }}">
               <input id = "rest-name-{{ restaurant.restaurant_id }}" type="hidden" name="rest_name" value="{{ restaurant.name }}">
-              <input type="submit" value="{{ restaurant.name }}"><div>{{ restaurant.price }}</div>
+              <input type="submit" value="{{ restaurant.name }}">
+              <span>{{ restaurant.price }}</span>
             </form> 
-            <div>Average Yelp Rating: {{ restaurant.avg_rating }}/5 Stars</div>
-            <div>{{ restaurant.types_of_food }}</div>
+            <span>Average Yelp Rating: {{ restaurant.avg_rating }}/5 Stars</span>
+            <span>{{ restaurant.types_of_food }}</span>
+
+             <!-- Add Favorites -->
+       
+            {% if "user_id" in session %}
+              <form class="favorite_form_rest" action="/favorite" method="POST" id="{{ restaurant.restaurant_id }}">
+                <!-- <div class="form-group"> -->
+                  <input id = "restaurant-id-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_id" value="{{ restaurant.restaurant_id }}">
+                  <input id = "restaurant-name-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_name" value="{{ restaurant.name }}">
+                  <button type="submit" id="fav-button">
+                  <i class="fas fa-heart"></i>
+                  </button>
+              </form> 
+              {% else %}
+                <h3>Create an Account to access other features</h3>
+              {% endif %}
+            </div>
+
+            <!-- for restaurant location on map -->
             <div> 
               <input type="hidden" class="coordinates" value= "{{ restaurant.latitude }} {{ restaurant.longitude }}">
               <input type="hidden" class="rest_name" value="{{ restaurant.name }}">
@@ -87,22 +138,12 @@
             </div>
       
 
-      <!-- Add Favorites -->
-       
-            {% if "user_id" in session %}
-              <form class="favorite_form_rest" action="/favorite" method="POST" id="{{ restaurant.restaurant_id }}">
-                <div class="form-group">
-                  <input id = "restaurant-id-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_id" value="{{ restaurant.restaurant_id }}">
-                  <input id = "restaurant-name-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_name" value="{{ restaurant.name }}">
-                  <input type="submit" value="Favorite">
-                </div>
-              </form> 
-              {% else %}
-                <h3>Create an Account to access other features</h3>
-              {% endif %}
+            </div>
             {% endfor %}
-      </div>
-  
+         
+      
+    </div>
+  </div>
      <!-- map -->
       <div class="col">
         <div id="map"></div>
