@@ -6,7 +6,7 @@
 /*NavBar background color*/
 .navbar {
     background-color: #a6a6a6;    /*Gray - Shade:Light*/
-    height: 72px;
+    height: 100px;
     
 
 }
@@ -17,7 +17,7 @@
 .navbar-brand {
     color: white;
     font-family: 'Dancing Script', cursive;
-    font-size: 60px;
+    font-size: 80px;
     line-height: 0px;
     font-weight: bolder;
     margin-left: 20px;
