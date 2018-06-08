@@ -1,10 +1,10 @@
 
 
 .restaurant_image {
-    width: 270px;
-    height: 250px;
-    padding-bottom: 25px;
-    margin-left: 30px;
+    width: 251px;
+    height: 241px;
+    padding-bottom: 15px;
+    margin-left: 20px;
 }
 
 .restaurant_image .fas {
@@ -34,13 +34,14 @@
 
 #scroll {
     border: 5px solid #F5F5F5; /* Color - WhiteSmoke  */ 
-    width: 500px;
+    width: 600px;
     overflow: scroll;
     height: 600px;
-    margin-left: 150px;
     padding-bottom: 25px;
     padding-top: 25px;
     padding-left: 25px;
+    margin-top: 73px;
+    margin-right: 20px;
 }
 
 body  {
@@ -51,7 +52,7 @@ body  {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-color: transparent;
-    margin-bottom: 150px;
+    margin-bottom: 100px;
 }
 
 
@@ -91,9 +92,10 @@ body  {
 
 #column-background {
     background-color: #f2f2f2;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     margin-right: 30px;
     width: 462px;
+    padding-left: 17px;
 }
 
 /*Scroll Box content style*/
@@ -122,7 +124,13 @@ body  {
     font-weight: 900;
     padding-top: 14px;
 }
-
+.container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: 200px;
+    margin-left: 175px;
+}
 
 
 
