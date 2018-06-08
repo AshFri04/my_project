@@ -121,6 +121,7 @@
            <!--  </div> -->
 
           <div class="col" id="column-background">
+
              <!-- Add Favorites -->
        
             {% if "user_id" in session %}
@@ -141,14 +142,15 @@
               <input id = "rest-id-{{ restaurant.restaurant_id }}" type="hidden" name="rest_id" value="{{ restaurant.restaurant_id }}">
               <input id = "rest-name-{{ restaurant.restaurant_id }}" type="hidden" name="rest_name" value="{{ restaurant.name }}">
               <input type="submit" id="rest-name-style" value="{{ restaurant.name }}">
-            </form> <span id="price-icon">{{ restaurant.price }}</span>
-            <div>{{ restaurant.types_of_food }}</div>
-
+            </form> 
+            <span id="food-types">{{ restaurant.types_of_food }}</span><span id="price-icon">{{ restaurant.price }}</span>
+            <div>
               <i id="yelp"class="fab fa-yelp"></i><span id="rating">Yelp Rating |  </span>
             {% for i in range(restaurant.avg_rating) %}
             <i id="star"class="fas fa-star"></i>
             {% endfor %}
             </div>
+          </div>
 
             <!-- for restaurant location on map -->
             <div> 

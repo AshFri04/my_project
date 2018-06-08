@@ -7,8 +7,6 @@
 .navbar {
     background-color: #a6a6a6;    /*Gray - Shade:Light*/
     height: 100px;
-    
-
 }
 
 
@@ -21,6 +19,7 @@
     line-height: 0px;
     font-weight: bolder;
     margin-left: 20px;
+    text-shadow: 5px 2px #233237;
     
 }
 

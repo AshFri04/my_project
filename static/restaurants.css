@@ -53,12 +53,19 @@ body  {
     background-color: transparent;
     margin-bottom: 150px;
 }
-/*#price-icon {
-    color: #F5F5F5;
-}*/
+
+
+#price-icon {
+    color: #233237;
+    font-weight: 100;
+    margin-left: 13px;}
 
 #fav-button {
     color: #A52A2A;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-color: #f5f5f5;
 }
 
 #fav-button:hover {
@@ -69,7 +76,8 @@ body  {
 #yelp {
     color: #A52A2A;  /*Brown (Actually Red)*/ 
     font-size: 28px;
-    margin-right: 10px;
+    margin-right: 8px;
+    margin-top: 5px;
 }
 
 #star {
@@ -77,7 +85,7 @@ body  {
 }
 
 #rating {
-    color: #A9A9A9;
+    color: #233237;
     font-family: 'Raleway', sans-serif; 
 }
 
@@ -90,21 +98,31 @@ body  {
 
 /*Scroll Box content style*/
 #rest-name-style {
-    color: #A52A2A;  /*Brown (Actually Red)*/ 
+    color: #233237;
+    font-weight: 900; 
     background:none!important;
-    color:inherit;
     border:none;
     padding:0!important;
     font: inherit;
     /*border is optional*/
     border-bottom:1px solid #444;
     cursor: pointer;
+    margin-top: 50px;
+    margin-bottom: 9px
     
 }
 
 #rest-name-style:hover {
     color: #DCB239;  /*lemon*/
 }
+
+#food-types {
+    color: #233237;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 900;
+    padding-top: 14px;
+}
+
 
 
 
