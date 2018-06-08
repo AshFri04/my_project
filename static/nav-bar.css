@@ -6,20 +6,19 @@
 /*NavBar background color*/
 .navbar {
     background-color: #a6a6a6;    /*Gray - Shade:Light*/
+    height: 72px;
     
 
 }
 
-.navbar-header {
-    height: 75px;
-}
+
 
 /*Glutie Styling*/
 .navbar-brand {
     color: white;
     font-family: 'Dancing Script', cursive;
     font-size: 60px;
-    line-height: 60px;
+    line-height: 0px;
     font-weight: bolder;
     margin-left: 20px;
     
