@@ -1,6 +1,118 @@
 
+
+/* //////  Nav Bar Styling  //////*/
+
+
+/*NavBar background color*/
 .navbar {
+    background-color: #a6a6a6;    /*Gray - Shade:Light*/
     
-    background-color: #565656;
+
 }
+
+.navbar-header {
+    height: 75px;
+}
+
+/*Glutie Styling*/
+.navbar-brand {
+    color: white;
+    font-family: 'Dancing Script', cursive;
+    font-size: 60px;
+    line-height: 60px;
+    font-weight: bolder;
+    margin-left: 20px;
+    
+}
+
+.navbar-brand:hover {
+    color: #DCB239;  /*lemon*/
+}
+
+#About {
+    color: white;
+    font-family: 'Raleway', sans-serif;
+    font-size: 25px;
+    margin-top: 20px;
+    margin-left: 25px
+}
+
+#About:hover {
+    color: #DCB239;  /*lemon*/
+}
+
+#My-Profile {
+    color: white;
+    font-family: 'Raleway', sans-serif;
+    font-size: 25px;
+    margin-top: 20px;
+    margin-right: 15px;
+}
+
+#My-Profile:hover {
+    color: #DCB239;  /*lemon*/
+}
+
+#Sign-Out {
+    color: white;
+    font-family: 'Raleway', sans-serif;
+    font-size: 25px;
+    margin-right: 40px;
+    margin-top: 20px;
+    margin-left: 15px
+}
+
+#Sign-Out:hover {
+    color: #DCB239;  /*lemon*/
+}
+
+#pipe {
+    color: white;
+    font-size: 25px;
+    margin-top: 27px;
+}
+
+
+
+/*Checkbox style*/
+.form-check-label {
+    font-family: 'Raleway', sans-serif;
+    font-size: 15px;
+
+}
+
+/*Dropdown style*/
+.input-group-text {
+    display: flex;
+    padding: .375rem .75rem;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    font-family: 'Raleway', sans-serif;
+}
+
+[type=reset], [type=submit], button, html [type=button] {
+    -webkit-appearance: button;
+    font-family: 'Raleway', sans-serif;
+}
+
+[type=submit]:hover {
+    background-color: #DCB239; /* WhiteSmoke  */
+    color: #F5F5F5;
+}
+
+
+
+
+
+
+
+
 

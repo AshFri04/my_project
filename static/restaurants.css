@@ -1,19 +1,46 @@
 
 
 .restaurant_image {
-    max-width: 700px;
-    height: 150px;
-    border: 5px solid #F5F5F5;  /*Color is called gunmetal */
+    width: 270px;
+    height: 250px;
+    padding-bottom: 25px;
+    margin-left: 30px;
+}
 
+.restaurant_image .fas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: #555;
+    color: white;
+    font-size: 16px;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+}
+
+}
+#pic-in-column {
+    padding-right: 0px;
+}
+
+.rest-info {
+    font-family: 'Raleway', sans-serif;
 }
 
 #scroll {
-    border: 5px solid #F5F5F5;  /*Color is called gunmetal #233237;*/
-    height: 600px;
+    border: 5px solid #F5F5F5; /* Color - WhiteSmoke  */ 
     width: 500px;
-    overflow: scroll
-
-
+    overflow: scroll;
+    height: 600px;
+    margin-left: 150px;
+    padding-bottom: 25px;
+    padding-top: 25px;
+    padding-left: 25px;
 }
 
 body  {
@@ -24,29 +51,61 @@ body  {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-color: transparent;
-    /*color: #fff;
-    text-shadow: 0 0 10px #000;*/
-
+    margin-bottom: 150px;
 }
+/*#price-icon {
+    color: #F5F5F5;
+}*/
+
 #fav-button {
     color: #A52A2A;
- 
-
 }
 
 #fav-button:hover {
-    background-color: #DCB239; /* WhiteSmoke  */
+    background-color: #DCB239; 
     color: #F5F5F5;
 }
 
-
-/*Nav Bar Styling*/
-
-.navbar-brand {
-    color: #984B43
+#yelp {
+    color: #A52A2A;  /*Brown (Actually Red)*/ 
+    font-size: 28px;
+    margin-right: 10px;
 }
 
-.rest-info {
-    background-color: white;
-
+#star {
+    color: #A52A2A;  /*Brown (Actually Red)*/ 
 }
+
+#rating {
+    color: #A9A9A9;
+    font-family: 'Raleway', sans-serif; 
+}
+
+#column-background {
+    background-color: #f2f2f2;
+    margin-bottom: 30px;
+    margin-right: 30px;
+    width: 462px;
+}
+
+/*Scroll Box content style*/
+#rest-name-style {
+    color: #A52A2A;  /*Brown (Actually Red)*/ 
+    background:none!important;
+    color:inherit;
+    border:none;
+    padding:0!important;
+    font: inherit;
+    /*border is optional*/
+    border-bottom:1px solid #444;
+    cursor: pointer;
+    
+}
+
+#rest-name-style:hover {
+    color: #DCB239;  /*lemon*/
+}
+
+
+
+

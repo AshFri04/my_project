@@ -7,10 +7,11 @@
   <link rel="stylesheet" type="text/css" href="static/restaurants.css">
   <link rel="stylesheet" type="text/css" href="static/googlemaps.css">
   <link rel="stylesheet" type="text/css" href="static/nav-bar.css">
+  <link href="https://fonts.googleapis.com/css?family=Dancing+Script|Great+Vibes|Lato|Lobster|Nanum+Myeongjo|Old+Standard+TT|Raleway|Tangerine" rel="stylesheet">
   <title>Glutie</title>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light">
+<nav class="navbar navbar-expand-lg">
 
   <a class="navbar-brand" href="/">Glutie</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls  ="navbarNav" aria-expanded="  false" aria-label="Toggle navigation">
@@ -22,7 +23,7 @@
         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
       </li> -->
       <li class="nav-item active">
-        <a class="nav-link" href="#">About</a>
+        <a class="nav-link" id="About" href="#">About</a>
       </li>
       {% if "user_id" not in session %}
       <li class="nav-item active">
@@ -35,23 +36,23 @@
         {% if "user_id" in session %}
           <li><a href="/login_mainpage{{ session['user_id'] }}"></a></li>
           <li class="nav-item active">
-            <a class="nav-link" href="/profile">My Profile</a>
+            <a class="nav-link" id="My-Profile" href="/profile">My Profile</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link">|</a>
+            <p id="pipe">|</p>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="/sign_out"> Sign Out</a>
+            <a class="nav-link" id="Sign-Out" href="/sign_out"> Sign Out</a>
           </li>
         {% else %}
           <li class="nav-item active">
-            <a class="nav-link" href="/login">Login</a>
+            <a class="nav-link" id="Login"href="/login">Login</a>
           </li>
           <li class="nav-item">
             <a class="nav-link">|</a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="/signup">Sign Up</a>
+            <a class="nav-link" id="Sign-Up" href="/signup">Sign Up</a>
           </li>
         {% endif %}
 

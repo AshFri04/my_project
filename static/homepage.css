@@ -10,12 +10,6 @@ body  {
     text-shadow: 0 0 10px #000;*/
 
 }
-/*
-.container {
-    background: url(glutie-homepage.jpg) no-repeat center center fixed;
-    background-size: cover;
-}
-*/
 
 .vertical-center {
   position: absolute;
@@ -26,9 +20,7 @@ body  {
 }
 
 #text-for-styling {
-    /* lemon */
-    color: #DCB239;
-    /*color: #F5F5F5;*/
+    color: #DCB239;   /* lemon */
     font-family: 'Nanum Myeongjo', serif;
     font-size: 28px;   
     font-weight: 900;
@@ -58,7 +50,7 @@ h1 {
     font-size: 175px;
     /*font-family: 'Tangerine', cursive;*/
       /*font-family: "Lobster", cursive;*/
-    font-family: 'Dancing Script', cursive;
+
     /*color: #FF383F;*/
     color: white;
     font-weight: bolder;
@@ -86,7 +78,7 @@ h2 {
 }
 
 #button:hover {
-    background-color: #DCB239; /* WhiteSmoke  */
+    background-color: #DCB239; 
     color: #F5F5F5;
 
 
