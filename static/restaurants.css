@@ -1,4 +1,5 @@
 
+/* //////  Styling: Displaying Restaurant Information ////// */
 
 .restaurant_image {
     width: 251px;
@@ -23,7 +24,7 @@
     text-align: center;
 }
 
-}
+
 #pic-in-column {
     padding-right: 0px;
 }
@@ -33,7 +34,7 @@
 }
 
 #scroll {
-    border: 5px solid #F5F5F5; /* Color - WhiteSmoke  */ 
+    border: 5px solid #F5F5F5; /* WhiteSmoke  */ 
     width: 600px;
     overflow: scroll;
     height: 600px;
@@ -57,36 +58,37 @@ body  {
 
 
 #price-icon {
-    color: #233237;
+    color: #233237;  /* GunMetal (Emerald Green) */
     font-weight: 100;
-    margin-left: 13px;}
+    margin-left: 13px;
+}
 
 #fav-button {
-    color: #A52A2A;
+    color: #A52A2A;  /* Brown (Actually Red) */ 
     position: absolute;
     top: 0;
     right: 0;
-    border-color: #f5f5f5;
+    border-color: #F5F5F5;  /* WhiteSmoke  */ 
 }
 
 #fav-button:hover {
-    background-color: #DCB239; 
-    color: #F5F5F5;
+    background-color: #DCB239;   /* Lemon */
+    color: #F5F5F5;   /* WhiteSmoke  */ 
 }
 
 #yelp {
-    color: #A52A2A;  /*Brown (Actually Red)*/ 
+    color: #A52A2A;  /* Brown (Actually Red) */ 
     font-size: 28px;
     margin-right: 8px;
     margin-top: 5px;
 }
 
 #star {
-    color: #A52A2A;  /*Brown (Actually Red)*/ 
+    color: #A52A2A;  /* Brown (Actually Red) */ 
 }
 
 #rating {
-    color: #233237;
+    color: #233237;  /* GunMetal (Emerald Green) */
     font-family: 'Raleway', sans-serif; 
 }
 
@@ -100,7 +102,7 @@ body  {
 
 /*Scroll Box content style*/
 #rest-name-style {
-    color: #233237;
+    color: #233237;  /* GunMetal (Emerald Green) */
     font-weight: 900; 
     background:none!important;
     border:none;
@@ -110,20 +112,20 @@ body  {
     border-bottom:1px solid #444;
     cursor: pointer;
     margin-top: 50px;
-    margin-bottom: 9px
-    
+    margin-bottom: 9px;
 }
 
 #rest-name-style:hover {
-    color: #DCB239;  /*lemon*/
+    color: #DCB239;  /* Lemon */
 }
 
 #food-types {
-    color: #233237;
+    color: #233237;   /* GunMetal (Emerald Green) */
     font-family: 'Raleway', sans-serif;
     font-weight: 900;
     padding-top: 14px;
 }
+
 .container {
     width: 100%;
     padding-right: 15px;

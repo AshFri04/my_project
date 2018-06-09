@@ -1,3 +1,7 @@
+
+
+/*////// Landing Page Styling //////*/
+
 body  {
     margin: 0;
     background: url("/static/images/background.jpg") no-repeat center center fixed;
@@ -6,21 +10,19 @@ body  {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-color: transparent;
-    /*color: #fff;
-    text-shadow: 0 0 10px #000;*/
-
 }
 
 .vertical-center {
-  position: absolute;
-  top: 55%; left: 50%;
-  transform: translate(-50%,-50%);
-  height: 80%;
-  width: 80%;
+    position: absolute;
+    top: 55%; 
+    left: 50%;
+    transform: translate(-50%,-50%);
+    height: 80%;
+    width: 80%;
 }
 
 #text-for-styling {
-    color: #DCB239;   /* lemon */
+    color: #DCB239;   /* Lemon */
     font-family: 'Nanum Myeongjo', serif;
     font-size: 28px;   
     font-weight: 900;
@@ -31,14 +33,12 @@ body  {
 
 
 #text-for-styling:hover {
-    background-color: #DCB239; /* lemon */
+    background-color: #DCB239; /* Lemon */
     color: white;
 }
 
 #text-for-styling2 {
-    /*lemon*/
-    /*color: #DCB239;*/
-    color: #F5F5F5;
+    color: #F5F5F5;  /* WhiteSmoke */
     font-family: 'Nanum Myeongjo', serif;
     font-size: 23px;
     font-weight: bolder;
@@ -48,29 +48,16 @@ body  {
 
 h1 {
     font-size: 175px;
-    /*font-family: 'Tangerine', cursive;*/
-      /*font-family: "Lobster", cursive;*/
     font-family: 'Dancing Script', cursive;
-
-    /*color: #FF383F;*/
     color: white;
     font-weight: bolder;
-    /*text-shadow: 2px 2px 8px #FC4A1A;*/
-    /*text-shadow: 2px 2px 8px #F5F5F5*/
- 
-
-   
-}
+ }
 
 h2 {
     font-size: 40px;
     font-family: 'Nanum Myeongjo', serif;
-    /*font-family: 'Dancing Script', cursive;*/
     color: white;
-
-    /*color: #FC4A1A;*/
     font-weight: bolder;
-   
 }
 
 #button {
@@ -79,29 +66,25 @@ h2 {
 }
 
 #button:hover {
-    background-color: #DCB239; 
-    color: #F5F5F5;
-
-
+    background-color: #DCB239; /* Lemon */
+    color: #F5F5F5;  /* WhiteSmoke */
 }
 
+
 ::placeholder {
-    color: #DCB239;
+    color: #DCB239;  /* Lemon */
     opacity: 1; /* Firefox */
     text-align: center;
-    t
 }
 
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
-   color: #DCB239;
+   color: #DCB239;  /* Lemon */
    text-align: center;
 }
 
-
 ::-ms-input-placeholder { /* Microsoft Edge */
-   color: #DCB239;
+   color: #DCB239;  /* Lemon */
    text-align: center;
-
 }
 
 hr {
@@ -109,22 +92,27 @@ hr {
     height: 1px;
     width: 85%;
     border: 0;
-    border-top: 3px solid #DCB239;
+    border-top: 3px solid #DCB239;  /* Lemon */
     margin: 1em 0;
     padding: 0; 
     size: 1;
 }
 
 select:invalid {
-    color: #DCB239;
+    color: #DCB239;    /* Lemon */
     font-family: 'Nanum Myeongjo', serif;
-    
     box-sizing: content-box;    
     width: 219px;
     height: 40px;
     padding: 20px;    
-   
 }
+
+
+
+
+
+/*################################################################################*/
+
 
 
 
