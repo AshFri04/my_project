@@ -2,79 +2,83 @@
 
 {% block content %}
 
+FIX: LINE 23, 26, 72-77
+
+
 <div class="container">
       
-
 <!--////// ROW //////-->
 
+  <div class="row" id="row">
 
-<div class="row" id="row">
-  <!-- restaurants -->
+  <!--//////   Restaurants within the SCROLL.  ////// -->
     <div id="scroll" class="col">
-      
 
 <!--////// ROW within Column //////-->
 
         <div class="row">
           
           {% for restaurant in restaurants %}
-          <div class="row">
-            <!-- had rest-info in this class above -->
-
-            <!-- <div class="col" id="pic-in-column"> -->
+<!--#SHOULD BE A Colunm? -->
+           <div class="row">
              <img class="restaurant_image" src="{{ restaurant.picture }}" alt="This is a user photo.">
-           <!--  </div> -->
-
-          <div class="col" id="column-background">
+           <!-- </div> -->
+           <div class="col" id="column-background">
 
              <!-- Add Favorites -->
        
             {% if "user_id" in session %}
               <form class="favorite_form_rest" action="/favorite" method="POST" id="{{ restaurant.restaurant_id }}">
-                  <input id = "restaurant-id-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_id" value="{{ restaurant.restaurant_id }}">
-                  <input id = "restaurant-name-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_name" value="{{ restaurant.name }}">
-                  <button type="submit" id="fav-button">
+                <input id = "restaurant-id-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_id" value="{{ restaurant.restaurant_id }}">
+                <input id = "restaurant-name-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_name" value="{{ restaurant.name }}">
+                <button type="submit" id="fav-button">
                   <i class="fas fa-heart"></i>
-                  </button>
+                </button>
               </form>
-              {% else %}
-              <!-- <div class="form-group"> -->
-                  <input id = "restaurant-id-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_id" value="{{ restaurant.restaurant_id }}">
-                  <input id = "restaurant-name-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_name" value="{{ restaurant.name }}">
-                  <button type="hidden" id="fav-button">
+            {% else %}   <!-- Hide Favorite Button -->
+                <input id = "restaurant-id-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_id" value="{{ restaurant.restaurant_id }}">
+                <input id = "restaurant-name-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_name" value="{{ restaurant.name }}">
+                <button type="hidden" id="fav-button">
                   <i class="fas fa-heart"></i>
-                
-              {% endif %}
-
-
-            <form class="rest-info" action="/rest_info" method="POST" id="{{ restaurant.restaurant_id }}">
-              <input id = "rest-id-{{ restaurant.restaurant_id }}" type="hidden" name="rest_id" value="{{ restaurant.restaurant_id }}">
-              <input id = "rest-name-{{ restaurant.restaurant_id }}" type="hidden" name="rest_name" value="{{ restaurant.name }}">
-              <input type="submit" id="rest-name-style" value="{{ restaurant.name }}">
-            </form> 
-            <span id="food-types">{{ restaurant.types_of_food }}</span><span id="price-icon">{{ restaurant.price }}</span>
+                </button>
+            {% endif %}
+              <form class="rest-info" action="/rest_info" method="POST" id="{{ restaurant.restaurant_id }}">
+                <input id = "rest-id-{{ restaurant.restaurant_id }}" type="hidden" name="rest_id" value="{{ restaurant.restaurant_id }}">
+                <input id = "rest-name-{{ restaurant.restaurant_id }}" type="hidden" name="rest_name" value="{{ restaurant.name }}">
+                <input type="submit" id="rest-name-style" value="{{ restaurant.name }}">
+              </form> 
+              <span id="food-types">{{ restaurant.types_of_food }}</span><span id="price-icon">{{ restaurant.price }}</span>
             <div>
               <i id="yelp"class="fab fa-yelp"></i><span id="rating">Yelp Rating |  </span>
-            {% for i in range(restaurant.avg_rating) %}
-            <i id="star"class="fas fa-star"></i>
-            {% endfor %}
+              {% for i in range(restaurant.avg_rating) %}
+                <i id="star"class="fas fa-star"></i>
+              {% endfor %}
             </div>
+
+          <!-- Ending Row Within Colum  -->
           </div>
 
-            <!-- for restaurant location on map -->
-            <div> 
-              <input type="hidden" class="coordinates" value= "{{ restaurant.latitude }} {{ restaurant.longitude }}">
-              <input type="hidden" class="rest_name" value="{{ restaurant.name }}">
-              <input type="hidden" class="rest_type" value="{{ restaurant.types_of_food }}">
+
+
+              <!-- Restaurant Location on Map -->
+              <div> 
+                <input type="hidden" class="coordinates" value= "{{ restaurant.latitude }} {{ restaurant.longitude }}">
+                <input type="hidden" class="rest_name" value="{{ restaurant.name }}">
+                <input type="hidden" class="rest_type" value="{{ restaurant.types_of_food }}">
+              </div>
+
+              <!-- End Scroll Row -->
             </div>
-          </div>
             {% endfor %}
-          
-      
+    
+<!-- DELETE THIS TWO DIV?       -->
+   <!--    
     </div>
-  </div>
-     <!-- map -->
+  </div> -->
+
+     <!-- Map Column-->
       <div class="col">
+
         <div id="map"></div>
           <script 
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBi3TXl5rieFcFdscrRjL8d4L9H4IwfHEw">
@@ -84,6 +88,7 @@
             <input type="hidden" class="hood_lat" value= "{{ neighborhood.lat }}">
             <input type="hidden" class="hood_lng" value= "{{ neighborhood.lng }}">
           </div>
+
       </div>
 
     </div>
