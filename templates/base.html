@@ -1,43 +1,44 @@
 <!DOCTYPE html>
+
 <html>
+
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
- 
   <link rel="stylesheet" type="text/css" href="static/restaurants.css">
   <link rel="stylesheet" type="text/css" href="static/googlemaps.css">
   <link rel="stylesheet" type="text/css" href="static/nav-bar.css">
   <link href="https://fonts.googleapis.com/css?family=Dancing+Script|Great+Vibes|Lato|Lobster|Nanum+Myeongjo|Old+Standard+TT|Raleway|Tangerine" rel="stylesheet">
+
   <title>Glutie</title>
 </head>
+
 <body>
-<nav class="navbar navbar-expand-lg">
+  <nav class="navbar navbar-expand-lg">
 
-  <a class="navbar-brand" href="/">Glutie</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls ="navbarNav" aria-expanded="  false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-    </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav mr-auto">
-     <!--  <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li> -->
-      <li class="nav-item active">
-        <a class="nav-link" id="About" href="#">About</a>
-      </li>
-   <!--    {% if "user_id" not in session %}
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Why Sign Up?</a>
-      </li>
-      {% endif %} -->
+<!-- Content on RIGHT side of NavBar -->    
+
+    <a class="navbar-brand" href="/">Glutie</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls ="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" id="About" href="#">About</a>
+        </li>
     
-     <li class="nav-item active">
-        <a class="nav-link" id="Filter-Search" href="#">Filter Your Search</a>
-    </li>
+        <li class="nav-item active">
+          <a class="nav-link" id="Filter-Search" href="#">Filter Your Search</a>
+        </li>
+      </ul>
 
-</ul>
-    <ul class="navbar-nav ml auto"
-      <li class="nav-item">
+<!-- Content on LEFT side of NavBar -->
+
+      <ul class="navbar-nav ml auto">
+        <li class="nav-item">
         {% if "user_id" in session %}
           <li><a href="/login_mainpage{{ session['user_id'] }}"></a></li>
           <li class="nav-item active">
@@ -60,17 +61,16 @@
             <a class="nav-link" id="Sign-Up" href="/signup">Sign Up</a>
           </li>
         {% endif %}
-
-      </li>
-    </ul>
-  </div>
-</nav>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
 {% with messages = get_flashed_messages() %}
-    {% for message in messages %}
-      {{ message }}
-    {% endfor %}
-  {% endwith %}
+  {% for message in messages %}
+    {{ message }}
+  {% endfor %}
+{% endwith %}
 
 
 {% block content %} BODY CONTENT GOES HERE {% endblock %}
@@ -86,7 +86,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
 
-
-
 </body>
 </html>
+

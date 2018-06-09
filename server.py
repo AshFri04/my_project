@@ -28,8 +28,15 @@ api_key = os.environ['YELP_ACCESS_KEY']
 client_id = os.environ['YELP_CLIENT_ID']
 
 
+# FIX: 
+
+# 1.) Line 616 (4 While Loops - check len(): might not need +1. Also, check if above for loop is also causing duplicates) Line 69, Line 125 - AJAX calls/ see what this is doing, LINE 204 (HOURS OF OPERATION)
+
+# 2.) Add user pic to profile?
+
 ################################################################################
 
+# Landing Page
 
 @app.route('/')
 def homepage():
@@ -41,7 +48,6 @@ def homepage():
 ################################################################################
 
 # Account related routes
-
 
 @app.route('/signup')
 def register():
@@ -96,22 +102,13 @@ def register_process():
 
 
 
-# @app.route('/upload-photo', methods=["POST"])
-# def upload_photo:
-#     """ """
-
-
-
-
-
-
 @app.route('/login', methods=["GET"])
 def login():
     """ Display login form. """
 
     if session.get('user_id'):
         return redirect('/profile')
-    
+
     return render_template("login.html")
 
 
@@ -139,13 +136,12 @@ def login_process():
 
 
 
-
 @app.route('/sign_out')
 def sign_out():
     """ Sign out of user's account. """
-    
+
     session.clear()
-        
+   
     return render_template("sign_out.html")
 
 
@@ -161,7 +157,6 @@ def display_profile():
 
     user_object = User.query.filter_by(user_id=user_id).first()
     fav_restaurants = user_object.favorite_restaurants
-    # print fav_restaurantss
 
     restaurants = Restaurant.query.all()
 
@@ -170,25 +165,26 @@ def display_profile():
     return render_template('user_profile.html', restaurants=fav_restaurants, user=user_object, random=random_restaurant)
 
 
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/upload', methods=['GET', 'POST'])
-def upload():
-    """ """
-    user_id = session.get('user_id')
-    path = str(user_id) + '.jpg'
-    if request.method == 'POST' and 'photo' in request.files:
-       request.files['photo'].filename = path
-       filename = photos.save(request.files['photo'])
-       user = User.query.get(user_id)
-       user.photo = '/' + app.config['UPLOADED_PHOTOS_DEST'] + '/' + path
+# def allowed_file(filename):
+#     return '.' in filename and \
+#            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+# @app.route('/upload', methods=['GET', 'POST'])
+# def upload():
+#     """ """
+#     user_id = session.get('user_id')
+#     path = str(user_id) + '.jpg'
+#     if request.method == 'POST' and 'photo' in request.files:
+#        request.files['photo'].filename = path
+#        filename = photos.save(request.files['photo'])
+#        user = User.query.get(user_id)
+#        user.photo = '/' + app.config['UPLOADED_PHOTOS_DEST'] + '/' + path
     
-       db.session.commit()
+#        db.session.commit()
 
-    flash("You've successfully loaded your photo to your profile!")
-    return redirect('/profile')
+#     flash("You've successfully loaded your photo to your profile!")
+#     return redirect('/profile')
 
 
 
@@ -203,6 +199,292 @@ def upload():
         #     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         #     return redirect(url_for('uploaded_file',
         #                             filename=filename))
+
+
+# @app.route()
+# def delete_account():
+#     """ User deletes their account. """
+
+#     pass
+
+# @app.route()
+# def change_password():
+#     """ User changes their password. """
+
+#     pass
+
+# @app.route()
+# def change_email():
+#     """ User changes their email. """
+
+#     pass
+
+# @app.route()
+# def update_account():
+#     """ User updates their account. """
+
+#     pass
+
+@app.route('/favorite', methods=["POST"])
+def add_favorite_restaurant():
+    """Adds a restaurant to user's favorites in db when user clicks favorites button."""
+
+    user_id = session["user_id"]
+
+    rest_id = request.form.get("restaurant_id")
+    restaurant_name = request.form.get("restaurant_name")
+    restaurant_id = int(rest_id)
+
+    fav_restaurant_db = Favorite_restaurant.query.filter(Favorite_restaurant.restaurant_id == restaurant_id).first()
+
+    if fav_restaurant_db:
+
+        # Way to confirm on the front end that this AJAX request/response was successful
+        return "{} is already one of your favorites!".format(restaurant_name)
+
+
+    else:
+
+        new_fav_restaurant = Favorite_restaurant(restaurant_id=restaurant_id, user_id=user_id)
+
+        db.session.add(new_fav_restaurant)
+        db.session.commit()
+
+        # Way to confirm on the front end that this AJAX request/response was successful
+        return "{} is now in your favorites!".format(restaurant_name)
+
+
+################################################################################
+
+# Routes initiated with User clicks on option 1 & 2 on Homepage
+
+
+@app.route("/is-glutie")
+def display_if_glutie():
+    """ Display restaurant that user typed in - checking to see if its a Glutie or not. """
+
+
+    rest_objects = Restaurant.query.all()
+    user_choice = request.args.get("place").title()
+  
+    restaurant = None
+
+    for r in rest_objects:
+        if user_choice in r.name:
+            restaurant = r
+
+    if restaurant:
+        return render_template("found-glutie.html", restaurant=restaurant, restaurants=rest_objects)
+    else:
+        return render_template("googlemaptest.html", restaurant=rest_objects)
+
+
+
+@app.route("/restaurants")
+def search_by_neighborhood():
+    """ Display all restaurants and bakeries that are in the neighborhood the user choose."""
+
+
+    user_choice = request.args.get("neighborhood") # (dropdown bar) name=neighborhood on html side
+
+    restaurants = Restaurant.query.filter(Restaurant.neighborhood_id==user_choice).all()
+
+    neighborhood = Neighborhood.query.filter(Neighborhood.neighborhood_id==user_choice).first()
+  
+    return render_template("restaurants.html", restaurants=restaurants, neighborhood=neighborhood)
+
+
+################################################################################
+
+# Routes used with User is searching by using the 'Filter By Search' option
+
+@app.route("/search")
+def display_options():
+    """ """
+
+    return render_template("search-categories.html")
+
+
+
+
+@app.route("/search-results")
+def display_search_results():
+    """ """
+
+    restaurant = request.args.get("restaurants")
+    bakery = request.args.get("bakeries")
+    bar = request.args.get("bars")
+    coffee_shop = request.args.get("coffee-shops")
+
+    open_now = request.args.get("open")
+    price = request.args.get("price")
+    neighborhood = request.args.get("neighborhoods")
+
+    if neighborhood == 'False':
+        rest_objects = Restaurant.query.all()
+    else:
+        rest_objects = Restaurant.query.filter(Restaurant.neighborhood_id==neighborhood).all()
+    
+
+    results = []
+    open_restaurants = []
+
+    if open_now:
+        for restaurant in results:
+            rest_hours = restaurant.hours_of_operation
+            for hours in rest_hours[0:]:
+                if hours["day"] == 0 and datetime.date.today().strftime("%w") == '0':
+                    time = str(datetime.datetime.now()).split(" ")
+                    time1 = time[1][0:5].split(":")
+                    time2 = "".join(time1)
+                    if int(time2) in range(int(hours['start']), int(hours['end']) + 1):
+                        open_restaurants.append(restaurant)
+                elif hours["day"] == 1 and datetime.date.today().strftime("%w") == '1':
+                    time = str(datetime.datetime.now()).split(" ")
+                    time1 = time[1][0:5].split(":")
+                    time2 = "".join(time1)
+                    if int(time2) in range(int(hours['start']), int(hours['end']) + 1):
+                        open_restaurants.append(restaurant)
+                elif hours["day"] == 2 and datetime.date.today().strftime("%w") == '2':
+                    time = str(datetime.datetime.now()).split(" ")
+                    time1 = time[1][0:5].split(":")
+                    time2 = "".join(time1)
+                    if int(time2) in range(int(hours['start']), int(hours['end']) + 1):
+                        open_restaurants.append(restaurant)
+                elif hours["day"] == 3 and datetime.date.today().strftime("%w") == '3':
+                    time = str(datetime.datetime.now()).split(" ")
+                    time1 = time[1][0:5].split(":")
+                    time2 = "".join(time1)
+                    if int(time2) in range(int(hours['start']), int(hours['end']) + 1):
+                        open_restaurants.append(restaurant)
+                elif hours["day"] == 4 and datetime.date.today().strftime("%w") == '4':
+                    time = str(datetime.datetime.now()).split(" ")
+                    time1 = time[1][0:5].split(":")
+                    time2 = "".join(time1)
+                    if int(time2) in range(int(hours['start']), int(hours['end']) + 1):
+                        open_restaurants.append(restaurant)
+                elif hours["day"] == 5 and datetime.date.today().strftime("%w") == '5':
+                    time = str(datetime.datetime.now()).split(" ")
+                    time1 = time[1][0:5].split(":")
+                    time2 = "".join(time1)
+                    if int(time2) in range(int(hours['start']), int(hours['end']) + 1):
+                        open_restaurants.append(restaurant)
+                elif hours["day"] == 6 and datetime.date.today().strftime("%w") == 6:
+                    time = str(datetime.datetime.now()).split(" ")
+                    time1 = time[1][0:5].split(":")
+                    time2 = "".join(time1)
+                    if int(time2) in range(int(hours['start']), int(hours['end']) + 1):
+                        open_restaurants.append(restaurant)
+
+
+
+    
+    restaurants = []
+    if restaurant:
+        # If user chooses restaurants
+        food_types = ('Southern', 'Seafood', 'American', 'Tapas/Small Plates', 'French', 'Pizza', 'Breakfast', 'Wings', 'Moroccan', 'Burgers', 'Sandwiches', 'Mexican')
+        for restaurant in rest_objects:
+            food1 = restaurant.types_of_food
+            foods = food1.split()
+            if 'Bakeries' not in foods and "Cafe" not in foods and "Coffee" not in foods: 
+                for food in foods:
+                    if food in food_types:
+                        restaurants.append(restaurant)
+       
+        if price:
+            rest_prices = Restaurant.query.filter(Restaurant.price==price).all()
+            for rest in rest_prices:
+                if rest in restaurants and rest not in results:
+                    results.append(rest)
+
+            # while restaurants < len(restaurants+1):
+            #     if restaurants in rest_prices:
+            #         results.append(restaurants)
+            #     elif restaurants not in rest_prices:
+            #         continue
+
+
+#BUG: PRINTS DUPLICATES - try this while loop ^
+
+
+    bakeries = []
+    if bakery:
+        # If user chooses bakeries
+        bakery_names = ['Bakeries', 'Bakery']
+        for bakery in rest_objects:
+            bakery1 = bakery.types_of_food
+            treats = bakery1.split()
+            # print treats
+            for treat in treats:
+                if treat in bakery_names:
+                    bakeries.append(bakery)
+            
+        if price:
+            bakery_prices = Restaurant.query.filter(Restaurant.price==price).all()
+            for b in bakery_prices:
+                if b in bakeries and b not in results:
+                    print b
+                    results.append(b)
+
+            # while bakeries < len(bakeries+1):
+            #     if bakeries in bakery_prices:
+            #         results.append(bakeries)
+            #     elif bakeries not in bakery_prices:
+            #         continue
+
+
+    bars = []
+    if bar:
+        # If user chooses bars
+        bar_names = ['Bars', 'Bar', 'Wine', 'Cocktail']
+        for bar in rest_objects:
+            bar1 = bar.types_of_food
+            drinks = bar1.split()
+            for drink in drinks:
+                if drink in bar_names:
+                    bars.append(bar)
+                    
+        if price:
+            bar_prices = Restaurant.query.filter(Restaurant.price==price).all()
+            for bar in bar_prices:
+                if bar in bars and bar not in results:
+                    results.append(bar)
+
+            # while bars < len(bars+1):
+            #     if bars in bar_prices:
+            #         results.append(bars)
+            #     elif bars not in bar_prices:
+            #         continue
+
+    coffee_shops = []
+    if coffee_shop:
+        # If user chooses coffee shops
+        shops_names = ('coffee', 'tea', 'Coffee', 'Tea', 'Sandwiches')
+        for shop in rest_objects:
+            coffee1 = shop.types_of_food
+            shops = coffee1.split()
+            for shop in shops:
+                if shop in shops_names:
+                    coffee_shops.append(shop)
+                    
+        if price:
+            print price
+            coffee_prices = Restaurant.query.filter(Restaurant.price==price).all()
+            for coffee in coffee_prices:
+                if coffee in coffee_shops and coffee not in results:
+                    results.append(coffee)
+
+            # while coffee_shops < len(coffee_shops+1):
+            #     if coffee_shops in coffee_prices:
+            #         results.append(coffee_shops)
+            #     elif coffee_shops not in coffee_prices:
+            #         continue
+                   
+    return render_template("search-categories.html", results=results, open_restaurants=results)
+
+
+################################################################################
+
 
 
 def convert_military_to_pretty_time(start_time, end_time):
@@ -409,262 +691,6 @@ def display_transactions():
 
    
 
-# @app.route()
-# def delete_account():
-#     """ User deletes their account. """
-
-#     pass
-
-# @app.route()
-# def change_password():
-#     """ User changes their password. """
-
-#     pass
-
-# @app.route()
-# def change_email():
-#     """ User changes their email. """
-
-#     pass
-
-# @app.route()
-# def update_account():
-#     """ User updates their account. """
-
-#     pass
-
-@app.route('/favorite', methods=["POST"])
-def add_favorite_restaurant():
-    """Adds a restaurant to user's favorites in db when user clicks favorites button."""
-
-    user_id = session["user_id"]
-
-    rest_id = request.form.get("restaurant_id")
-    restaurant_name = request.form.get("restaurant_name")
-    restaurant_id = int(rest_id)
-
-    fav_restaurant_db = Favorite_restaurant.query.filter(Favorite_restaurant.restaurant_id == restaurant_id).first()
-
-    if fav_restaurant_db:
-
-        # Way to confirm on the front end that this AJAX request/response was successful
-        return "{} is already one of your favorites!".format(restaurant_name)
-
-
-    else:
-       
-        new_fav_restaurant = Favorite_restaurant(restaurant_id=restaurant_id, user_id=user_id)
-
-        db.session.add(new_fav_restaurant)
-        db.session.commit()
-
-        # Way to confirm on the front end that this AJAX request/response was successful
-        return "{} is now in your favorites!".format(restaurant_name)
-
-
-
-
-
-# ################################################################################
-
-# Neighborhoods and their associated restaurants/bakeries routes
-
-
-
-
-@app.route("/restaurants")
-def search_by_neighborhood():
-    """ Display all restaurants and bakeries that are in the neighborhood the user choose."""
-
-    user_choice = request.args.get("neighborhood") # (dropdown bar) name=neighborhood on html side
-
-    restaurants = Restaurant.query.filter(Restaurant.neighborhood_id==user_choice).all()
-
-    neighborhood = Neighborhood.query.filter(Neighborhood.neighborhood_id==user_choice).first()
-  
-    return render_template("restaurants.html", restaurants=restaurants, neighborhood=neighborhood)
-
-
-
-@app.route("/is-glutie")
-def display_if_glutie():
-    """ Display glutie restaurant that user typed in. """
-
-
-    rest_objects = Restaurant.query.all()
-    user_choice = request.args.get("place").title()
-  
-    restaurant = None
-
-    for r in rest_objects:
-        # rest = restaurant.name
-        # restaurants.append(rest)
-        if user_choice in r.name:
-            restaurant = r
-
-    if restaurant:
-        return render_template("found-glutie.html", restaurant=restaurant, restaurants=rest_objects)
-    else:
-        return render_template("googlemaptest.html", restaurant=rest_objects)
-
-
-
-@app.route("/search")
-def display_options():
-    """ """
-
-    return render_template("search-categories.html")
-
-
-
-
-@app.route("/search-results")
-def display_search_results():
-    """ """
-
-    restaurant = request.args.get("restaurants")
-    bakery = request.args.get("bakeries")
-    bar = request.args.get("bars")
-    coffee_shop = request.args.get("coffee-shops")
-
-    open_now = request.args.get("open")
-    price = request.args.get("price")
-    neighborhood = request.args.get("neighborhoods")
-
-    if neighborhood == 'False':
-        rest_objects = Restaurant.query.all()
-    else:
-        rest_objects = Restaurant.query.filter(Restaurant.neighborhood_id==neighborhood).all()
-    
-
-    results = []
-    open_restaurants = []
-
-    if open_now:
-        for restaurant in results:
-            rest_hours = restaurant.hours_of_operation
-            for hours in rest_hours[0:]:
-                if hours["day"] == 0 and datetime.date.today().strftime("%w") == '0':
-                    time = str(datetime.datetime.now()).split(" ")
-                    time1 = time[1][0:5].split(":")
-                    time2 = "".join(time1)
-                    if int(time2) in range(int(hours['start']), int(hours['end']) + 1):
-                        open_restaurants.append(restaurant)
-                elif hours["day"] == 1 and datetime.date.today().strftime("%w") == '1':
-                    time = str(datetime.datetime.now()).split(" ")
-                    time1 = time[1][0:5].split(":")
-                    time2 = "".join(time1)
-                    if int(time2) in range(int(hours['start']), int(hours['end']) + 1):
-                        open_restaurants.append(restaurant)
-                elif hours["day"] == 2 and datetime.date.today().strftime("%w") == '2':
-                    time = str(datetime.datetime.now()).split(" ")
-                    time1 = time[1][0:5].split(":")
-                    time2 = "".join(time1)
-                    if int(time2) in range(int(hours['start']), int(hours['end']) + 1):
-                        open_restaurants.append(restaurant)
-                elif hours["day"] == 3 and datetime.date.today().strftime("%w") == '3':
-                    time = str(datetime.datetime.now()).split(" ")
-                    time1 = time[1][0:5].split(":")
-                    time2 = "".join(time1)
-                    if int(time2) in range(int(hours['start']), int(hours['end']) + 1):
-                        open_restaurants.append(restaurant)
-                elif hours["day"] == 4 and datetime.date.today().strftime("%w") == '4':
-                    time = str(datetime.datetime.now()).split(" ")
-                    time1 = time[1][0:5].split(":")
-                    time2 = "".join(time1)
-                    if int(time2) in range(int(hours['start']), int(hours['end']) + 1):
-                        open_restaurants.append(restaurant)
-                elif hours["day"] == 5 and datetime.date.today().strftime("%w") == '5':
-                    time = str(datetime.datetime.now()).split(" ")
-                    time1 = time[1][0:5].split(":")
-                    time2 = "".join(time1)
-                    if int(time2) in range(int(hours['start']), int(hours['end']) + 1):
-                        open_restaurants.append(restaurant)
-                elif hours["day"] == 6 and datetime.date.today().strftime("%w") == 6:
-                    time = str(datetime.datetime.now()).split(" ")
-                    time1 = time[1][0:5].split(":")
-                    time2 = "".join(time1)
-                    if int(time2) in range(int(hours['start']), int(hours['end']) + 1):
-                        open_restaurants.append(restaurant)
-
-
-
-    
-    restaurants = []
-    if restaurant:
-        # If user chooses restaurants
-        food_types = ('Southern', 'Seafood', 'American', 'Tapas/Small Plates', 'French', 'Pizza', 'Breakfast', 'Wings', 'Moroccan', 'Burgers', 'Sandwiches', 'Mexican')
-        for restaurant in rest_objects:
-            food1 = restaurant.types_of_food
-            foods = food1.split()
-            if 'Bakeries' not in foods and "Cafe" not in foods and "Coffee" not in foods: 
-                for food in foods:
-                    if food in food_types:
-                        restaurants.append(restaurant)
-       
-        if price:
-            rest_prices = Restaurant.query.filter(Restaurant.price==price).all()
-            for rest in rest_prices:
-                if rest in restaurants and rest not in results:
-                    results.append(rest)
-#BUG: PRINTS DUPLICATES ^
-    bakeries = []
-    if bakery:
-        # If user chooses bakeries
-        bakery_names = ['Bakeries', 'Bakery']
-        for bakery in rest_objects:
-            bakery1 = bakery.types_of_food
-            treats = bakery1.split()
-            # print treats
-            for treat in treats:
-                if treat in bakery_names:
-                    bakeries.append(bakery)
-            
-        if price:
-            bakery_prices = Restaurant.query.filter(Restaurant.price==price).all()
-            for b in bakery_prices:
-                if b in bakeries and b not in results:
-                    print b
-                    results.append(b)
-    bars = []
-    if bar:
-        # If user chooses bars
-        bar_names = ['Bars', 'Bar', 'Wine', 'Cocktail']
-        for bar in rest_objects:
-            bar1 = bar.types_of_food
-            drinks = bar1.split()
-            for drink in drinks:
-                if drink in bar_names:
-                    bars.append(bar)
-                    
-        if price:
-            bar_prices = Restaurant.query.filter(Restaurant.price==price).all()
-            for bar in bar_prices:
-                if bar in bars and bar not in results:
-                    results.append(bar)
-
-    coffee_shops = []
-    if coffee_shop:
-        # If user chooses coffee shops
-        shops_names = ('coffee', 'tea', 'Coffee', 'Tea', 'Sandwiches')
-        for shop in rest_objects:
-            coffee1 = shop.types_of_food
-            shops = coffee1.split()
-            for shop in shops:
-                if shop in shops_names:
-                    coffee_shops.append(shop)
-                    
-        if price:
-            print price
-            coffee_prices = Restaurant.query.filter(Restaurant.price==price).all()
-            for coffee in coffee_prices:
-                if coffee in coffee_shops and coffee not in results:
-                    results.append(coffee)
-                   
-    return render_template("search-categories.html", results=results, open_restaurants=results)
-
-
-
 @app.route("/restaurants-all")
 def display_all_restaurants():
     """ Display all restaurants in San Francisco;
@@ -753,51 +779,6 @@ def display_all_coffee_shops():
 #         all_rest_info[restaurant.restaurant_id] = rest_info
 
 #     return jsonify(all_rest_info)
-
-@app.route("/googlemaps")
-def display_map():
-    """ """
-
-    return render_template("googlemaptest.html")
-
-
-
-
-
-
-
-
-# ################################################################################
-# @app.route("/only_gf")
-# def only_gf():
-#     """ Display restaurants that are Completely Gluten Free."""
-
-#     pass
-
-
-# app.route("/restaurants_gf_options")
-# def only_gf():
-#     """ Display restaurants that have Gluten Free Options on their menu."""
-
-#     pass
-
-
-# app.route("/bakery_gf_options")
-# def only_gf():
-#     """ Display bakeries that have Gluten Free Options on their menu."""
-
-#     pass
-
-
-# # query restaurants table from there pass neigh id/ gf type
-
-
-
-
-
-
-
-
 
 
 ################################################################################

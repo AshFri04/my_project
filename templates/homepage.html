@@ -1,12 +1,13 @@
 <!DOCTYPE html>
+
 <html>
 
 <head>
-  
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="/static/homepage.css">
-<link href="https://fonts.googleapis.com/css?family=Dancing+Script|Great+Vibes|Lato|Lobster|Nanum+Myeongjo|Old+Standard+TT|Raleway|Tangerine" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Dancing+Script|Great+Vibes|Lato|Lobster|Nanum+Myeongjo|Old+Standard+TT|Raleway|Tangerine" rel="stylesheet">
   
   <title> Glutie </title>
 </head>
@@ -15,120 +16,74 @@
   <div class="container">
     <div class="row">
       <div class="col-xs-2">
-      <div class="col-xs-8> text-center vertical-center">
-          <br>
-          <br>
-          <br>
-          <br> 
-    
+        <div class="col-xs-8> text-center vertical-center"><br><br><br><br>  
           
-        <h1>Glutie</h1>
-        <h2>San Francisco Gluten-Free Restaurant & Bakery Finder without all the Bloat</h2>
+          <h1>Glutie</h1>
+          <h2>San Francisco Gluten-Free Restaurant & Bakery Finder without all the Bloat</h2>
 
-        {% if "user_id" in session %}
-        <a id="text-for-styling"class="btn btn-default btn-lg index-btn" href="/login" type="hidden" role="button">Login &raquo;</a>
-<!-- FIX THIS! -->
-        <a id="text-for-styling" class="btn btn-default btn-lg index-btn" href="/signup" type="hidden" role="button">Sign Up &raquo;</a>
-        {% else %}
-        <a id="text-for-styling"class="btn btn-default btn-lg index-btn" href="/login" 
-        role="button">Login &raquo;</a>
+          {% if "user_id" in session %}
+            <a id="text-for-styling"class="btn btn-default btn-lg index-btn" href="/login" type="hidden" role="button">Login &raquo;</a>
+            <a id="text-for-styling" class="btn btn-default btn-lg index-btn" href="/signup" type="hidden" role="button">Sign Up &raquo;</a>
+          {% else %}
+            <a id="text-for-styling"class="btn btn-default btn-lg index-btn" href="/login" role="button">Login &raquo;</a>
+            <a id="text-for-styling"class="btn btn-default btn-lg index-btn" href="/signup" role="button">Sign Up &raquo;</a>
+          {% endif %}<br><br>
 
-        <a id="text-for-styling"class="btn btn-default btn-lg index-btn" href="/signup" 
-        role="button">Sign Up &raquo;</a>
-        <!-- <div class="col text-center vertical-center"> -->
-        <!-- </div> -->
-        {% endif %}
-      <br>
-      <br>
+      <!-- Golden Line to Separate Title/Login/Sign-Up from functional buttons     -->
       <hr style="margin-left: 100px;">
 
+<!-- FORM 1 -->
+          <form action="/is-glutie" id="text-for-styling2">
+            Check to see if a restaurant has gluten-free options: 
+            <input id="box" type="text" name="place" placeholder="Type Restaurant Name" required> 
+            <input id="button" class="btn btn-default btn-lg index-btn" type="submit" value="Find Me Glutie >>">
+          </form>
+          
+<!-- FORM 2 -->
+          <form action="/restaurants" id="text-for-styling2" class="btn btn-default btn-lg index-btn" >
+            Check to see if there is a Glutie in your neighborhood:
+            <select name="neighborhood" required>
 
-        <form action="/is-glutie" id="text-for-styling2">
-          Check to see if a restaurant has gluten-free options: 
-          <input id="box" type="text" name="place" placeholder="Type Restaurant Name" required> 
-          <input id="button" class="btn btn-default btn-lg index-btn" type="submit" value="Find Me Glutie >>">
-        </form>
-      
-      
-       <!--  <div class="dropdown">
-          <button class="dropbtn">Gluten-Free in your neighborhood?</button>
-          <div class="dropdown-content">
-            <a href= "/restaurants" value="25">Bayview</a>
-            <a href= "/restaurants" value="17">Bernal Heights</a>
-            <a href= "/restaurants" value="15">Castro</a>
-            <a href= "/restaurants" value="11">China Town</a>
-            <a href= "/restaurants" value="5">Cow Hollow</a>
-            <a href= "/restaurants" value="10">Financial District</a>
-            <a href= "/restaurants" value="3">Fisherman's Wharf</a>
-            <a href= "/restaurants" value="19">Haight Ashbury</a>
-            <a href= "/restaurants" value="23">Lakeshore</a>
-            <a href= "/restaurants" value="4">Marina</a>
-            <a href= "/restaurants" value="13">Mission</a>
-            <a href= "/restaurants" value="9">Nob Hill</a>
-            <a href= "/restaurants" value="16">Noe Valley</a>
-            <a href= "/restaurants" value="1">North Beach</a>
-            <a href= "/restaurants" value="24">Ocean View</a>
-            <a href= "/restaurants" value="8">Pacific Heights</a>
-            <a href= "/restaurants" value="22">Parkside</a>
-            <a href= "/restaurants" value="14">Potrero Hill</a>
-            <a href= "/restaurants" value="6">Presidio Heights</a>
-            <a href= "/restaurants" value="20">Richmond District</a>
-            <a href= "/restaurants" value="2">Russian Hill</a>
-            <a href= "/restaurants" value="7">Seacliff</a>
-            <a href= "/restaurants" value="12">South of Market</a>
-            <a href= "/restaurants" value="21">Sunset District</a>
-            <a href= "/restaurants" value="18">Twin Peaks</a>
-          </div>
-        </div>  -->
+       <!-- Neighborhoods are displayed in alphabetical order for user -->
+              <option value="" disabled selected hidden>Click & Pick</option>
+              <option value="25">Bayview</option>
+              <option value="17">Bernal Heights</option>
+              <option value="15">Castro</option>
+              <option value="11">China Town</option>
+              <option value="5">Cow Hollow</option>
+              <option value="10">Financial District</option>
+              <option value="3">Fisherman's Wharf</option>
+              <option value="19">Haight Ashbury</option>
+              <option value="23">Lakeshore</option>
+              <option value="4">Marina</option>
+              <option value="13">Mission</option>
+              <option value="9">Nob Hill</option>
+              <option value="16">Noe Valley</option>
+              <option value="1">North Beach</option>
+              <option value="24">Ocean View</option>
+              <option value="8">Pacific Heights</option>
+              <option value="22">Parkside</option>
+              <option value="14">Potrero Hill</option>
+              <option value="6">Presidio Heights</option>
+              <option value="20">Richmond District</option>
+              <option value="2">Russian Hill</option>
+              <option value="7">Seacliff</option>
+              <option value="12">South of Market</option>
+              <option value="21">Sunset District</option>
+              <option value="18">Twin Peaks</option>
+            </select>
 
-         <form action="/restaurants" id="text-for-styling2" class="btn btn-default btn-lg index-btn" >
-          Check to see if there is a Glutie in your neighborhood:
-          <select name="neighborhood" required>
-     <!-- Neighborhoods are displayed in alphabetical order for user -->
-            <option value="" disabled selected hidden>Click & Pick</option>
-            <option value="25">Bayview</option>
-            <option value="17">Bernal Heights</option>
-            <option value="15">Castro</option>
-            <option value="11">China Town</option>
-            <option value="5">Cow Hollow</option>
-            <option value="10">Financial District</option>
-            <option value="3">Fisherman's Wharf</option>
-            <option value="19">Haight Ashbury</option>
-            <option value="23">Lakeshore</option>
-            <option value="4">Marina</option>
-            <option value="13">Mission</option>
-            <option value="9">Nob Hill</option>
-            <option value="16">Noe Valley</option>
-            <option value="1">North Beach</option>
-            <option value="24">Ocean View</option>
-            <option value="8">Pacific Heights</option>
-            <option value="22">Parkside</option>
-            <option value="14">Potrero Hill</option>
-            <option value="6">Presidio Heights</option>
-            <option value="20">Richmond District</option>
-            <option value="2">Russian Hill</option>
-            <option value="7">Seacliff</option>
-            <option value="12">South of Market</option>
-            <option value="21">Sunset District</option>
-            <option value="18">Twin Peaks</option>
-          </select>
-          <input id="button" class="btn btn-default btn-lg index-btn" type="submit" value="Find Me Glutie >>">
-        </form> 
-      </div>
-      </div>
+            <input id="button" class="btn btn-default btn-lg index-btn" type="submit" value="Find Me Glutie >>">
+          </form> 
+        </div>
       </div>
     </div>
   </div>
-  <br>
-  <br>
-  <br>
-
-
+  
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-<script type="text/javascript" src="static/glutie.js"></script>
 
 
 </body>
