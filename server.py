@@ -12,7 +12,7 @@ from datetime import datetime
 
 from random import choice
 
-from werkzeug.utils import secure_filename
+
 
 
 app = Flask(__name__)
@@ -20,9 +20,9 @@ app = Flask(__name__)
 # Required to use Flask sessions and the debug toolbar
 app.secret_key = 'ABC'
 
-photos = UploadSet('photos', IMAGES)
-app.config['UPLOADED_PHOTOS_DEST'] = 'static/images'
-configure_uploads(app, photos)
+# photos = UploadSet('photos', IMAGES)
+# app.config['UPLOADED_PHOTOS_DEST'] = 'static/images'
+# configure_uploads(app, photos)
 
 api_key = os.environ['YELP_ACCESS_KEY']
 client_id = os.environ['YELP_CLIENT_ID']
@@ -487,9 +487,9 @@ def display_search_results():
 
 
 
-def convert_military_to_pretty_time(start_time, end_time):
+# def convert_military_to_pretty_time(start_time, end_time):
 
-     datetime.datetime.strptime(x,'%H:%M').strftime('%I:%M %p') + " - " + datetime.datetime.strptime(x,'%H:%M').strftime('%I:%M %p')
+#      datetime.datetime.strptime(x,'%H:%M').strftime('%I:%M %p') + " - " + datetime.datetime.strptime(x,'%H:%M').strftime('%I:%M %p')
 
 
 @app.route('/rest_info', methods=["POST"])
