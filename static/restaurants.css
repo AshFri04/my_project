@@ -48,7 +48,7 @@
 
 body  {
     margin: 0;
-    background: url("/static/images/background_all.jpg") no-repeat center center fixed;
+    background: url("/static/images/background-food.jpg") no-repeat center center fixed;
     background-size: cover;
     -webkit-background-size: cover;
     -moz-background-size: cover;
