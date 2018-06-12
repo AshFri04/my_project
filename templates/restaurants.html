@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<!-- FIX: LINE 23, 26, 60-61, 72-77 -->
+
 
 
 <div class="container">
@@ -11,21 +11,21 @@
 
   <div class="row" id="row">
 
-  <!--//////   Restaurants within the SCROLL  ////// -->
-    <div id="scroll" class="col">
+  <!--//////   Restaurants  ////// -->
+    <div class="col" id="scroll">
 
 <!--////// ROW within Column //////-->
 
-      <div class="row">
-          
+      <div class="row" style="margin-right: 0; boxing-size: 0;">
         {% for restaurant in restaurants %}
-<!--#SHOULD BE A Colunm? -->
-           <!-- <div class="row"> -->
-        <!-- Column displaying image of Restaurants -->
-         <div class="col"> 
-           <img class="restaurant_image" src="{{ restaurant.picture }}" alt="This is a user photo.">
-         </div>
+        <!-- <div class="row"> -->
 
+        <!-- Column 1: displaying image of Restaurants -->
+          <div class="col" style="padding-right: 0;">
+             <img class="restaurant_image" src="{{ restaurant.picture }}" alt="This is a user photo.">
+           </div>
+
+        <!-- Column 2: Restaurant Info -->
          <div class="col" id="column-background">
 
            <!-- Add Favorites -->
@@ -51,18 +51,13 @@
               <input type="submit" id="rest-name-style" value="{{ restaurant.name }}">
             </form> 
             <span id="food-types">{{ restaurant.types_of_food }}</span><span id="price-icon">{{ restaurant.price }}</span>
-          <div>
+          <br>
             <i id="yelp"class="fab fa-yelp"></i><span id="rating">Yelp Rating |  </span>
             {% for i in range(restaurant.avg_rating) %}
               <i id="star"class="fas fa-star"></i>
             {% endfor %}
-          </div>
 
-        <!-- Ending Row Within Colum  -->
-        <!-- </div> -->
 
-        <!-- Ending Column with Restaurant Info -->
-        </div>
 
           <!-- Restaurant Location on Map -->
           <div> 
@@ -70,19 +65,19 @@
             <input type="hidden" class="rest_name" value="{{ restaurant.name }}">
             <input type="hidden" class="rest_type" value="{{ restaurant.types_of_food }}">
           </div>
+        
 
-        <!-- End of Row with Image/Info -->
-        </div>
-
-
-      <!-- End Scroll Row -->
+       </div>
+       {% endfor %}
+      </div>
     </div>
-    {% endfor %}
+
+
+  
+   
     
-<!-- DELETE THIS TWO DIV?       -->
-   <!--    
-    </div>
-  </div> -->
+
+
 
  <!-- Map Column-->
       <div class="col">
@@ -97,9 +92,13 @@
             <input type="hidden" class="hood_lng" value= "{{ neighborhood.lng }}">
           </div>
 
-    <!-- End of Row -->
-  </div>
-<!-- End of Container -->
+      </div>
+
+
+
+</div>
+</div>
+</div>
 </div>
 
 
