@@ -2,107 +2,42 @@
 
 {% block content %}
 
-<!-- Search bar -->
-<form action="/search-results" required>
-  <input type="checkbox" name="restaurants" value="True">Restaurants
-  <input type="checkbox" name="bakeries" value="True">Bakeries
-  <input type="checkbox" name="bars" value="True">Bars
-  <input type="checkbox" name="coffee-shops" value="True">Coffee Shops
-  <br>
-  <input type="checkbox" name="open" value="True">Open Now?
-  
-<br>
-  Search By Price:
-  <select name="price">
-    <!-- Neighborhoods are displayed in alphabetical order for user-->
-    <option value="$">Inexpensive</option>
-    <option value="$$">Moderately Inexpensive</option>
-    <option value="$$$">Expensive</option>
-    <option value="$$$$">High End</option>
-  </select>
- 
-
-<br>
-   Gluten-Free in your neighborhood?
-  Search By:
-  <select name="neighborhoods">
-   Neighborhoods are displayed in alphabetical order for user
-    <option value="False">Choose a Location</option>
-    <option value="25">Bayview</option>
-    <option value="17">Bernal Heights</option>
-    <option value="15">Castro</option>
-    <option value="11">China Town</option>
-    <option value="5">Cow Hollow</option>
-    <option value="10">Financial District</option>
-    <option value="3">Fisherman's Wharf</option>
-    <option value="19">Haight Ashbury</option>
-    <option value="23">Lakeshore</option>
-    <option value="4">Marina</option>
-    <option value="13">Mission</option>
-    <option value="9">Nob Hill</option>
-    <option value="16">Noe Valley</option>
-    <option value="1">North Beach</option>
-    <option value="24">Ocean View</option>
-    <option value="8">Pacific Heights</option>
-    <option value="22">Parkside</option>
-    <option value="14">Potrero Hill</option>
-    <option value="6">Presidio Heights</option>
-    <option value="20">Richmond District</option>
-    <option value="2">Russian Hill</option>
-    <option value="7">Seacliff</option>
-    <option value="12">South of Market</option>
-    <option value="21">Sunset District</option>
-    <option value="18">Twin Peaks</option>
-  </select> 
-  <br>
-  <input type="submit" value="Find Me Glutie">
-</form>
 
 
-{% if "pickup" in restaurant.transaction %}
-<form class="pickup" action="{{ restaurant.website }}" method="POST">
-   <div class="form-group">
-     <!--  <input id = "restaurant-id-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_id" value="{{ restaurant.restaurant_id }}">
-      <input id = "restaurant-name-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_name" value="{{ restaurant.name }}"> -->
-      <input type="submit" value="Pick up">
-  </div>
-</form>
- 
-{% elif "delivery" in restaurant.transaction %}
-<form class="delivery" action="{{ restaurant.website }}" method="POST">
-   <div class="form-group">
-     <!--  <input id = "restaurant-id-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_id" value="{{ restaurant.restaurant_id }}">
-      <input id = "restaurant-name-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_name" value="{{ restaurant.name }}"> -->
-      <input type="submit" value="Delivery">
-  </div>
-</form>
- 
-{% elif "restaurant_reservation" in restaurant.transaction %}
-<form class="reservation" action="{{ restaurant.website }}" method="POST">
-   <div class="form-group">
-     <!--  <input id = "restaurant-id-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_id" value="{{ restaurant.restaurant_id }}">
-      <input id = "restaurant-name-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_name" value="{{ restaurant.name }}"> -->
-      <input type="submit" value="Reservation">
-  </div>
-</form>
-{% endif %} 
-   <div>Contact</div>
-      <div> {{ restaurant.phone_number }} </div>
-      <div>{{ restaurant.address }} </div> 
+<link rel="stylesheet" type="text/css" href="static/restaurant_info.css">
+
+<div class="container">
+  <div class="row">
+
+
+    <div class="col-xs" id="column">
+      <div id="restaurant_name">{{ restaurant.name }}</div>
+        <div id="contact">Contact</div>
+          <div> {{ restaurant.phone_number }} </div>
+            <div id="address">{{ restaurant.address }} </div> 
+              <a id="website" href="{{ restaurant.website_url }}">For Menu, Directions and More</a><br>
+              <a id="website" href="https://www.opentable.com/san-francisco-restaurants"> Make a Reservation</a><br>
+              <a id="website" href="https://help.lyft.com/access/unauthenticated">Grab a Lyft to your Restaurant</a>
+    </div>
+
+    <div class="col-xs text-center vertical-center" style="margin-left: 78px;">
    
 
+<div id="hours-operation">Hours of Operation</div>
+<div>Monday:<span id="m">{{ m_hours }}</span></div> 
+<div>Tuesday:<span id="t">{{ t_hours }}</span></div>
+<div>Wednesday:<span id="w">{{ w_hours }}</span></div>
+<div>Thursday:<span id="th">{{ th_hours }}</span></div>
+<div>Friday:<span id="f">{{ f_hours }}</span></div>
+<div>Saturday:<span id="sat">{{ sa_hours }}</span></div>
+<div>Sunday:<span id="sun">{{ su_hours }}</span></div>
+</div>
 
-<div>Monday:    {{ m_hours }}</div> 
-<div>Tuesday:   {{ t_hours }}</div>
-<div>Wednesday: {{ w_hours }}</div>
-<div>Thursday:  {{ th_hours }}</div>
-<div>Friday:    {{ f_hours }}</div>
-<div>Saturday:  {{ sa_hours }}</div>
-<div>Sunday:    {{ su_hours }}</div>
 
-
-
-
+    
+  
+</div>
+</div>
 
 
 

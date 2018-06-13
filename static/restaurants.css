@@ -1,3 +1,23 @@
+#none-found {
+    color: black;
+    margin-top: 200px;
+    font-family: 'Raleway', sans-serif;
+}
+#none-found2 {
+    color: black;
+    font-family: 'Raleway', sans-serif;
+}
+#filtering-search {
+    color: white;
+    background-color: #a6a6a6;    /* Gray - Shade:Light */
+    font-family: 'Raleway', sans-serif;
+    font-size: 28px;
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+}
+
 
 /* //////  Styling: Displaying Restaurant Information ////// */
 

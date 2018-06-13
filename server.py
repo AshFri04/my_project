@@ -20,9 +20,6 @@ app = Flask(__name__)
 # Required to use Flask sessions and the debug toolbar
 app.secret_key = 'ABC'
 
-# photos = UploadSet('photos', IMAGES)
-# app.config['UPLOADED_PHOTOS_DEST'] = 'static/images'
-# configure_uploads(app, photos)
 
 api_key = os.environ['YELP_ACCESS_KEY']
 client_id = os.environ['YELP_CLIENT_ID']
@@ -32,7 +29,7 @@ client_id = os.environ['YELP_CLIENT_ID']
 
 # 1.) Line 616 (4 While Loops - check len(): might not need +1. Also, check if above for loop is also causing duplicates) Line 69, Line 125 - AJAX calls/ see what this is doing, LINE 204 (HOURS OF OPERATION)
 
-# 2.) Add user pic to profile?
+
 
 ################################################################################
 
@@ -300,7 +297,7 @@ def search_by_neighborhood():
 
 @app.route("/search")
 def display_options():
-    """ """
+    """ Displays features for the user to filter out their search. """
 
     return render_template("filter-search.html")
 
@@ -480,7 +477,7 @@ def display_search_results():
             #     elif coffee_shops not in coffee_prices:
             #         continue
                    
-    return render_template("search-categories.html", results=results, open_restaurants=results)
+    return render_template("search-categories.html", results=results, open_restaurants=results, neighborhood=neighborhood)
 
 
 ################################################################################

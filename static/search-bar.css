@@ -12,8 +12,8 @@
 [type=reset], [type=submit], button, html [type=button] {
     -webkit-appearance: button;
     font-family: 'Raleway', sans-serif;
-    font-size: 20px;
-    margin-bottom: 20px;
+    font-size: 18px;
+    margin-bottom: 31px;
     box-shadow: 1px 0px 0px 2px black;
 }
 
@@ -24,7 +24,7 @@
 
 #form {
     margin-top: 100px;
-    margin-left: 185px;
+    margin-left: 141px;
     border: 5px solid #F5F5F5;
 }
 
@@ -114,11 +114,11 @@
     /*margin-left: 315px;*/
     /*text-shadow: 3px 2px #233237;  GunMetal (Emerald Green) */
     /*background-color: #a6a6a6;  */
-    font-size: 26px;
+    font-size: 27px;
 }
 
 .search-bar {
-    margin-left: 25px;
+    margin-left: 113px;
 }
 
 #inputGroupSelect01 {
