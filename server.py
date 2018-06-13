@@ -757,25 +757,6 @@ def display_all_coffee_shops():
 
     return render_template("restaurants.html", restaurants=restaurants, neighborhood=neighborhood)
 
-# @app.route('/restaurant.json')
-# def restaurant_info():
-#     """ JSON information about restaurants. """
-
-#     neighborhood = request.form.get("neighborhood_id")
-    
-#     restaurants = Restaurant.query.filter(Restaurant.neighborhood_id==neighborhood).all()
-
-#     all_rest_info = {}
-
-#     for restaurant in restaurants:
-#         rest_info = {
-#         "name": restaurant.name,
-#         "type_of_food": restaurant.type_of_food
-#         }
-    
-#         all_rest_info[restaurant.restaurant_id] = rest_info
-
-#     return jsonify(all_rest_info)
 
 
 ################################################################################
