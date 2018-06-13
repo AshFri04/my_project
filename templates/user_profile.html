@@ -1,50 +1,118 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<!-- User can upload their profile photo -->
+<link rel="stylesheet" type="text/css" href="static/user_profile.css">
+
 <div class='container'>
 
 
 
-
-
-
-<!-- Displays a random restaurant for the user to try -->
-<div>Ready to try a new Glutie?</div>
- <img class="random_image" src="{{ random.picture }}">
-<div>{{ random.name }}  {{ random.price }}</div>
-<div>{{ random.avg_rating }}</div>
-
-
+ <div class="row" id="row">
 <!-- Displays user's favorites -->
 {% if fav_restaurant != None %}
-<div>{{ user.fname }}'s Favorites</div>
-<div>
-  {% for restaurant in restaurants %}
-  <img class="restaurant_image" src="{{ restaurant.picture }}">
 
 
-    <form class="rest-info" action="/rest_info" method="POST" id="{{ restaurant.restaurant_id }}">
-      <div>
-        <input id = "rest-id-{{ restaurant.restaurant_id }}" type="hidden" name="rest_id" value="{{ restaurant.restaurant_id }}">
-        <input id = "rest-name-{{ restaurant.restaurant_id }}" type="hidden" name="rest_name" value="{{ restaurant.name }}">
-        <input type="submit" value="{{ restaurant.name }}">
+
+ <!--////// ROW //////-->
+
+  <div class="row" id="row">
+
+  <!--//////   Restaurants  ////// -->
+    <div class="col" id="scroll">
+      <div id="name">{{ user.fname }}'s Favorites</div>
+
+<!--////// ROW within Column //////-->
+
+      <div class="row" style="margin-right: 0; boxing-size: 0;">
+        {% for restaurant in restaurants %}
+        <!-- <div class="row"> -->
+
+        <!-- Column 1: displaying image of Restaurants -->
+          <div class="col" style="padding-right: 0;">
+             <img class="restaurant_image" src="{{ restaurant.picture }}" alt="This is a user photo.">
+           </div>
+
+        <!-- Column 2: Restaurant Info -->
+         <div class="col" id="column-background">
+
+      
+     
+          
+            <form class="rest-info" action="/rest_info" method="POST" id="{{ restaurant.restaurant_id }}">
+              <input id = "rest-id-{{ restaurant.restaurant_id }}" type="hidden" name="rest_id" value="{{ restaurant.restaurant_id }}">
+              <input id = "rest-name-{{ restaurant.restaurant_id }}" type="hidden" name="rest_name" value="{{ restaurant.name }}">
+              <input type="submit" id="rest-name-style" value="{{ restaurant.name }}">
+            </form> 
+            <span id="food-types">{{ restaurant.types_of_food }}</span><span id="price-icon">{{ restaurant.price }}</span>
+          <br>
+            <i id="yelp"class="fab fa-yelp"></i><span id="rating">Yelp Rating |  </span>
+            {% for i in range(restaurant.avg_rating) %}
+              <i id="star"class="fas fa-star"></i>
+            {% endfor %}
+
+
+
+         
+        
+
+       </div>
+       {% endfor %}
       </div>
-    </form> 
+    </div>
 
-  <div>Average Yelp Rating: {{ restaurant.avg_rating }}/5 Stars</div>
-  <div>{{ restaurant.types_of_food }}</div>
-  {% endfor %}
+      <div class="col text-center vertical-center" id="random-column">
+
+     <!-- Displays a random restaurant for the user to try -->
+<div id="name">Ready to try a new Glutie?</div>
+ <img class="random_image" src="{{ random.picture }}">
+<div id="rest-name-styling">{{ random.name }}</div>  
+<span id="random-food-types">{{ random.types_of_food }}  <span id="random-price-icon">{{ random.price }}</span></span>
+<br>
+ <i id="random-yelp"class="fab fa-yelp"></i><span id="random-rating">Yelp Rating |  </span>
+            {% for i in range(random.avg_rating) %}
+              <i id="star"class="fas fa-star"></i>
+            {% endfor %}
+            <br><br>
+
+     <!--  <hr id="line"> -->
+<br>
+
+<!-- User can make a reservation via OpenTable and grab a Lyft to their restaurant of choice -->
+<a id="a" href="https://www.opentable.com/san-francisco-restaurants"> Make a Reservation</a>
+<br>
+<a href="https://help.lyft.com/access/unauthenticated">Grab a Lyft to your Restaurant</a>
+
+      </div>
+
+
+ 
+
+
+  
+   
+    
+
+
+
+           
+
 {% else %}
 <div>{{ user.fname }}, you don't have any favorites! Explore restaurants and bakeries to add to your favorite's list!</div>
  <a class="btn btn-default btn-lg index-btn" href="/search" 
   role="button">Explore</a>
 {% endif %}
+</div><br>
+
+
+
+
+
+
+
 </div>
-<br>
-<!-- User can make a reservation via OpenTable and grab a Lyft to their restaurant of choice -->
-<a href="https://www.opentable.com/san-francisco-restaurants"> Make a Reservation!</a>
-<br>
-<a href="https://help.lyft.com/access/unauthenticated">Grab a Lyft to your Restaurant!</a>
+
 
 {% endblock %}
+
+
+

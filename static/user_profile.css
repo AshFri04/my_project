@@ -1,0 +1,104 @@
+
+/*////// User Profile Styling //////*/
+
+
+.col {
+    max-width: 56%;
+}
+/* User's name favorites and ready to try new glutie titles */
+#name {
+    font-family: 'Raleway', sans-serif;
+    font-size: 32px;
+    margin-left: 20px;
+    border: 5px solid #F5F5F5;  /* WhiteSmoke */
+    color: white;
+    text-shadow: 4px 1px black;
+    margin-right: 17px;
+    margin-bottom: 24px;
+    padding-bottom: 0;
+    text-align: center;
+    background:  #A52A2A;  /* Brown (really Red) */
+}
+
+.random_image {
+    height: 200px;
+    width: 300px;
+    box-shadow: 2px 5px 14px 3px black;
+}
+
+#random-column {
+    border: 5px solid #F5F5F5;
+    width: 600px;
+    height: 600px;
+    padding-bottom: 25px;
+    padding-top: 25px;
+    padding-left: 0;
+    padding-right: 0;
+    margin-top: 73px;
+    margin-right: 20px;
+}
+
+#rest-name-styling {
+    color: #233237;
+    font-weight: 900;
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    cursor: pointer;
+    margin-top: 31px;
+    margin-bottom: 9px;
+    text-align: center;
+    font-family: 'Raleway', sans-serif;
+    font-size: 22px
+}
+
+#random-food-types {
+    color: inherit;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 900;
+    padding-top: 14px;
+}
+#random-price-icon {
+    color: inherit;
+    font-family: 'Raleway', sans-serif;
+}
+
+#random-yelp {
+    color: #A52A2A;
+    font-size: 28px;
+    margin-right: 8px;
+
+}
+
+#random-rating {
+    color: inherit;
+    font-family: 'Raleway', sans-serif;
+}
+
+#a {
+    font-family: 'Raleway', sans-serif;
+    color: initial;
+    font-size: 19px;
+    text-decoration: underline;
+    background-color: transparent;
+
+}
+
+a {
+    font-family: 'Raleway', sans-serif;
+    color: initial;
+    font-size: 19px;
+    text-decoration: underline;
+    background-color: transparent;
+}
+
+a:hover {
+    color: #DCB239;  /* Lemon */
+    text-decoration: underline;
+}
+
+#a:hover {
+    color: #DCB239;  /* Lemon */
+    text-decoration: underline;
+}
+
