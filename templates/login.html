@@ -3,27 +3,37 @@
 {% block content %}
 
 
-<h1>Login</h1>
+<link rel="stylesheet" type="text/css" href="static/login.css">
 
+<div class="container vertical-center" id="login-container">
+  <div class="row" id="row-login">
+    
+
+
+    <div class="col-xs text-center vertical-center" id="column">
+      <div id="login-word">Login</div>
 
 <form action="/login_mainpage" method="POST">
   <div class="form group">
-    <label>Email:
-      <input type="email" name="email" placeholder="Email" class="form-control" required>
-    </label>
+    <label id="label" >Email:</label><input id="email" type="email" name="email" placeholder="Email" class="form-control" required>
+    
   </div>
 
   <div lass="form group">
-    <label>Password:
-      <input type="password" name="password" placeholder="Password" class="form-control" required>
-    </label>
+    <label id="label">Password: </label><input id="password" type="password" name="password" placeholder="Password" class="form-control" required>
   </div>
 
   <div class="form-group">
-    <input id= "login" type="submit" value="Login">
+    <input id="login-button" type="submit" value="Login">
   </div>
 </form>
 
+
+</div>
+
+
+</div>
+</div>
 
 
 {% endblock %}
