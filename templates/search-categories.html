@@ -39,12 +39,9 @@
                 <i class="fas fa-heart"></i>
               </button>
             </form>
-          {% else %}   <!-- Hide Favorite Button -->
-              <input id = "restaurant-id-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_id" value="{{ restaurant.restaurant_id }}">
-              <input id = "restaurant-name-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_name" value="{{ restaurant.name }}">
-              <button type="hidden" id="fav-button">
-                <i class="fas fa-heart"></i>
-              </button>
+          {% else %}  
+           <!-- Hide Favorite Button -->
+           
           {% endif %}
             <form class="rest-info" action="/rest_info" method="POST" id="{{ restaurant.restaurant_id }}">
               <input id = "rest-id-{{ restaurant.restaurant_id }}" type="hidden" name="rest_id" value="{{ restaurant.restaurant_id }}">

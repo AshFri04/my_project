@@ -493,7 +493,7 @@ def display_search_results():
 def display_transactions():
     """ Display restaurant information."""
 
-    user_id = session["user_id"]
+  
     rest_id = request.form.get("rest_id")
 
     restaurant = Restaurant.query.filter_by(restaurant_id=rest_id).first()
