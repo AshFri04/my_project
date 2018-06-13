@@ -43,7 +43,7 @@ h2 {
     position: absolute;
     top: 0;
     right: 0;
-    border-color: #F5F5F5;  /* WhiteSmoke  */ 
+    border-color: #F5F5F5;  /* WhiteSmoke   */
 }
 
 #restaurant-info-button {
@@ -60,4 +60,20 @@ h2 {
 
 #yelp-rating {
     color: #DCB239;  /* Lemon */ 
+}
+
+/*Checkbox style*/
+.form-check-label {
+    font-family: 'Raleway', sans-serif;
+    font-size: 15px;
+}
+
+[type=reset], [type=submit], button, html [type=button] {
+    -webkit-appearance: button;
+    font-family: 'Raleway', sans-serif;
+}
+
+[type=submit]:hover {
+    background-color: #DCB239;  /* Lemon */
+    color: #F5F5F5;  /* WhiteSmoke */
 }

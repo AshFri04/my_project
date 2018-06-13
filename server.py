@@ -302,7 +302,7 @@ def search_by_neighborhood():
 def display_options():
     """ """
 
-    return render_template("search-categories.html")
+    return render_template("filter-search.html")
 
 
 

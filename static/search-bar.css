@@ -1,0 +1,150 @@
+
+
+/* //////// Search Page Styling  ////////*/
+
+
+/*Checkbox style*/
+.form-check-label {
+    font-family: 'Raleway', sans-serif;
+    font-size: 15px;
+}
+
+[type=reset], [type=submit], button, html [type=button] {
+    -webkit-appearance: button;
+    font-family: 'Raleway', sans-serif;
+    font-size: 20px;
+    margin-bottom: 20px;
+    box-shadow: 1px 0px 0px 2px black;
+}
+
+[type=submit]:hover {
+    background-color: #DCB239;  /* Lemon */
+    color: #F5F5F5;  /* WhiteSmoke */
+}
+
+#form {
+    margin-top: 100px;
+    margin-left: 185px;
+    border: 5px solid #F5F5F5;
+}
+
+.neighborhood {
+    margin-right: 200px;
+}
+
+.form-check-inline {
+    padding-left: 7px;
+    margin-right: .75rem;
+    margin-left: 2px;
+}
+
+#restaurant-checkbox {
+    display: flex;
+    padding: .375rem .75rem;
+    margin-bottom: 0;
+    margin-left: 16px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    font-family: 'Raleway', sans-serif;
+}
+
+#bake-checkbox {
+    display: flex;
+    padding: .375rem .75rem;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    font-family: 'Raleway', sans-serif;
+
+}
+
+#bar-checkbox {
+    display: flex;
+    padding: .375rem .75rem;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    font-family: 'Raleway', sans-serif;
+}
+
+#coffee-checkbox {
+    display: flex;
+    padding: .375rem .75rem;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    font-family: 'Raleway', sans-serif;
+}
+
+#open-checkbox {
+   margin-top: 13px;
+}
+
+#searching-for {
+    font-family: 'Raleway', sans-serif;
+    margin-top: 40px;
+    /*margin-left: 315px;*/
+    /*text-shadow: 3px 2px #233237;  GunMetal (Emerald Green) */
+    /*background-color: #a6a6a6;  */
+    font-size: 26px;
+}
+
+.search-bar {
+    margin-left: 25px;
+}
+
+#inputGroupSelect01 {
+    margin-right: 46px;
+    /*margin-left: 0;*/
+}
+
+#find-me-glutie-button {
+    margin-bottom: 5px;
+    margin-top: 7px;
+    color: black;
+    background-color: #a6a6a6; 
+}
+
+#find-me-glutie-button:hover {
+    background-color: #DCB239;  /* Lemon */
+    color: #F5F5F5;
+
+.input-group-prepend {
+    margin-right: -1px;
+    margin-left: 25px;
+}
+
+
+
+
+
+
+
