@@ -1,0 +1,102 @@
+.container {
+    width: 60%;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-top: 150px;
+    margin-right: 200px;
+    margin-left: 299px;
+    /* background: #F5F5F5; */
+    border: 5px solid #F5F5F5;
+}
+
+#column {
+    padding-bottom: 38px; 
+    margin-left: 76px;
+    margin-top: -9px;
+    margin-right: 38px;
+}
+
+#restaurant_name {
+    font-weight: bolder;
+    padding-bottom: 9px;
+    padding-top: 9px;
+    border: 1px solid black;
+    margin-bottom: 13px;
+    margin-top: 7px;
+
+}
+
+#address {
+    color: black;
+    padding-bottom: 30px;
+}
+
+#website {
+    color: black;
+    text-decoration: underline;
+}
+
+#website:hover {
+    color: #DCB239;  /* Lemon */
+}
+
+
+.row {
+    position: relative;
+    margin-top: 49px;
+    margin-left: 3px;
+    font-family: 'Raleway', sans-serif;
+}
+
+
+body {
+    margin: 0;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: center;
+    background-color: #fff;
+}
+
+#m {
+    margin-left: 35px;
+}
+
+#t {
+    margin-left: 33px;
+}
+#w {
+    margin-left: 10px;
+}
+#th {
+    margin-left: 28px;
+}
+#f {
+    margin-left: 53px;
+}
+
+#sat {
+    margin-left: 32px;
+}
+#sun {
+    margin-left: 43px;
+}
+
+#contact {
+    font-weight: 900;
+    text-shadow: 0px 1px #233237;
+}
+
+#hours-operation {
+    font-weight: 900;
+    text-shadow: 0px 1px #233237;
+    margin-top: 20px;
+}
+
+
+
+
+
+
