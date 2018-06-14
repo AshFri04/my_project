@@ -1,0 +1,114 @@
+
+
+
+
+
+#sign-up-container {
+    width: 32%;
+    margin-top: 90px;
+    margin-left: 345px;
+}
+
+
+#sign-up-row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -166px;
+    margin-left: 0;
+    border: 5px solid #F5F5F5;
+    padding-left: 75px;
+    padding-top: 60px;
+    padding-bottom: 48px;
+    margin-bottom: 200px;
+}
+
+#sign-up-title {
+    font-family: 'Raleway', sans-serif;
+    font-size: 32px;
+    padding-bottom: 19px;
+    padding-top: 10px;
+}
+
+
+#sign-up-form {
+    font-family: 'Raleway', sans-serif;
+    font-size: 17px;
+    padding-bottom: 14px;
+}
+
+
+#sign-up-button {
+    font-family: 'Raleway', sans-serif;
+    font-size: 17px;
+    box-shadow: 1px 1px 1px 1px #233237;
+    margin-top: -3px;
+}
+
+
+#sign-up-button:hover {
+    background-color: #DCB239;   /* Lemon */
+    color: #F5F5F5;   /* WhiteSmoke  */ 
+}
+
+#first {
+    font-family: 'Raleway', sans-serif;
+    margin-left: 18px;
+}
+#last {
+    font-family: 'Raleway', sans-serif;
+    margin-left: 20px;
+}
+#email {
+    font-family: 'Raleway', sans-serif;
+    margin-left: 20px;
+}
+#confirm-email {
+    font-family: 'Raleway', sans-serif;
+    margin-right: 23px;
+}
+#zipcode {
+    font-family: 'Raleway', sans-serif;
+    margin-left: 18px;
+}
+#password {
+    font-family: 'Raleway', sans-serif;
+    margin-left: 24px;
+}
+#confirm-password {
+    font-family: 'Raleway', sans-serif;
+    margin-right: 57px;
+}
+#terms {
+    font-family: 'Raleway', sans-serif;
+    margin-right: 2px;
+    margin-left: 31px;
+}
+
+#l-confirm-email {
+    font-family: 'Raleway', sans-serif;
+    display: inline-block;
+    margin-bottom: .5rem;
+    margin-right: 20px;
+
+}
+#l-zip {
+    font-family: 'Raleway', sans-serif;
+    margin-left: 20px;
+}
+#l-pass {
+    font-family: 'Raleway', sans-serif;
+    margin-left: 9px;
+}
+#l-confirm-pass {
+    font-family: 'Raleway', sans-serif;
+    margin-right: 20px;
+}
+
+#yes-terms {
+    font-family: 'Raleway', sans-serif;
+    margin-right: 26px;
+}
+
+

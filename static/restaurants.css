@@ -22,7 +22,7 @@
 /* //////  Styling: Displaying Restaurant Information ////// */
 
 .restaurant_image {
-    width: 216px;
+    width: 223px;
     height: 210px;
     padding-bottom: 15px;
     margin-left: 20px;
@@ -131,12 +131,13 @@ body  {
     border:none;
     padding:0!important;
     font: inherit;
-    /*border is optional*/
     border-bottom:1px solid #444;
     cursor: pointer;
     margin-top: 50px;
     margin-bottom: 9px;
 }
+
+
 
 #rest-name-style:hover {
     color: #DCB239;  /* Lemon */

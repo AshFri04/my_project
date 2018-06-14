@@ -123,8 +123,7 @@ def login_process():
             session['user_id'] = user.user_id
             session['email'] = user.email
             session['fname'] =user.fname
-# CREATE AJAX!!
-            flash("Great to have you back, {}!".format(user.fname))
+
             return redirect("/profile")
 # CREATE AJAX!
 # Why doesn't the else work here
