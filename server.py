@@ -13,22 +13,15 @@ from datetime import datetime
 from random import choice
 
 
-
-
 app = Flask(__name__)
 
 # Required to use Flask sessions and the debug toolbar
-app.secret_key = 'ABC'
+app.secret_key = os.environ["FLASK_SECRET_KEY"]
 
 
 api_key = os.environ['YELP_ACCESS_KEY']
 client_id = os.environ['YELP_CLIENT_ID']
-
-
-# FIX: 
-
-# 1.) Line 616 (4 While Loops - check len(): might not need +1. Also, check if above for loop is also causing duplicates) Line 69, Line 125 - AJAX calls/ see what this is doing, LINE 204 (HOURS OF OPERATION)
-
+google_maps_key = os.environ['GOOGLE_MAPS_API_KEY']
 
 
 ################################################################################
@@ -53,10 +46,9 @@ def register():
     return render_template("signup.html")
 
 
-
 @app.route('/thankyou', methods=["POST"])
 def register_process():
-    """ Process registration and thank the user for signing up. """
+    """ Process registration/add to db and thank the user for signing up. """
 
     first_name = request.form.get("firstname")
     lname = request.form.get("lastname")
@@ -67,7 +59,6 @@ def register_process():
     confirm_password = request.form.get("confirm_password")
     terms = request.form.get("terms")
 
-# FIX BUG WITH ZIPCODE!!
     fname = first_name.capitalize()
 
     password_hash = pbkdf2_sha256.hash(password)
@@ -89,7 +80,8 @@ def register_process():
                 session["email"] = user_info.email
                 session["fname"] = user_info.fname
 
-                return render_template("thankyou.html", name=fname)
+                flash("Thank you for signing up!")
+                return redirect("/profile")
         else:
             flash("Passwords do not match. Please try again.")
             return redirect('/signup')
@@ -109,7 +101,6 @@ def login():
     return render_template("login.html")
 
 
-
 @app.route('/login_mainpage', methods=["POST"])
 def login_process():
     """ Process login information; log a user into their account. """
@@ -126,7 +117,6 @@ def login_process():
 
             return redirect("/profile")
 # CREATE AJAX!
-# Why doesn't the else work here
     flash("The email or password you've entered does not match any of our accounts. \n Please try again.")
     return redirect('/login')
 
@@ -137,8 +127,10 @@ def sign_out():
     """ Sign out of user's account. """
 
     session.clear()
-   
-    return render_template("sign_out.html")
+
+# CREATE AJAX!
+    flash("You have successfully signed out. See you soon!")   
+    return redirect("/")
 
 
 ################################################################################
@@ -161,66 +153,6 @@ def display_profile():
     return render_template('user_profile.html', restaurants=fav_restaurants, user=user_object, random=random_restaurant)
 
 
-
-# def allowed_file(filename):
-#     return '.' in filename and \
-#            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-# @app.route('/upload', methods=['GET', 'POST'])
-# def upload():
-#     """ """
-#     user_id = session.get('user_id')
-#     path = str(user_id) + '.jpg'
-#     if request.method == 'POST' and 'photo' in request.files:
-#        request.files['photo'].filename = path
-#        filename = photos.save(request.files['photo'])
-#        user = User.query.get(user_id)
-#        user.photo = '/' + app.config['UPLOADED_PHOTOS_DEST'] + '/' + path
-    
-#        db.session.commit()
-
-#     flash("You've successfully loaded your photo to your profile!")
-#     return redirect('/profile')
-
-
-
-        # file = request.files['file']
-        # (if user does not select file, browser also)
-        # (submit an empty part without filename)
-        # if file.filename == '':
-        #     flash('No selected file')
-        #     return redirect(request.url)
-        # if file and allowed_file(file.filename):
-        #     filename = secure_filename(file.filename)
-        #     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        #     return redirect(url_for('uploaded_file',
-        #                             filename=filename))
-
-
-# @app.route()
-# def delete_account():
-#     """ User deletes their account. """
-
-#     pass
-
-# @app.route()
-# def change_password():
-#     """ User changes their password. """
-
-#     pass
-
-# @app.route()
-# def change_email():
-#     """ User changes their email. """
-
-#     pass
-
-# @app.route()
-# def update_account():
-#     """ User updates their account. """
-
-#     pass
-
 @app.route('/favorite', methods=["POST"])
 def add_favorite_restaurant():
     """Adds a restaurant to user's favorites in db when user clicks favorites button."""
@@ -235,7 +167,7 @@ def add_favorite_restaurant():
 
     if fav_restaurant_db:
 
-        # Way to confirm on the front end that this AJAX request/response was successful
+        # AJAX call: confirms that restaurant was already added to favorites.
         return "{} is already one of your favorites!".format(restaurant_name)
 
 
@@ -246,7 +178,7 @@ def add_favorite_restaurant():
         db.session.add(new_fav_restaurant)
         db.session.commit()
 
-        # Way to confirm on the front end that this AJAX request/response was successful
+        # AJAX call: confirms that restaurant was added to favorites.
         return "{} is now in your favorites!".format(restaurant_name)
 
 
@@ -287,12 +219,12 @@ def search_by_neighborhood():
 
     neighborhood = Neighborhood.query.filter(Neighborhood.neighborhood_id==user_choice).first()
   
-    return render_template("restaurants.html", restaurants=restaurants, neighborhood=neighborhood)
+    return render_template("restaurants.html", key=google_maps_key, restaurants=restaurants, neighborhood=neighborhood)
 
 
 ################################################################################
 
-# Routes used with User is searching by using the 'Filter By Search' option
+# Routes used when User is using the 'Filter By Search' option in NavBar
 
 @app.route("/search")
 def display_options():
@@ -301,11 +233,9 @@ def display_options():
     return render_template("filter-search.html")
 
 
-
-
 @app.route("/search-results")
 def display_search_results():
-    """ """
+    """ Display search results from user input in Filter By Search Page. """
 
     restaurant = request.args.get("restaurants")
     bakery = request.args.get("bakeries")
@@ -319,8 +249,7 @@ def display_search_results():
     if neighborhood == 'False':
         rest_objects = Restaurant.query.all()
     else:
-        rest_objects = Restaurant.query.filter(Restaurant.neighborhood_id==neighborhood).all()
-    
+        rest_objects = Restaurant.query.filter(Restaurant.neighborhood_id==neighborhood).all() 
 
     results = []
     open_restaurants = []
@@ -373,7 +302,6 @@ def display_search_results():
                         open_restaurants.append(restaurant)
 
 
-
     
     restaurants = []
     if restaurant:
@@ -392,15 +320,6 @@ def display_search_results():
             for rest in rest_prices:
                 if rest in restaurants and rest not in results:
                     results.append(rest)
-
-            # while restaurants < len(restaurants+1):
-            #     if restaurants in rest_prices:
-            #         results.append(restaurants)
-            #     elif restaurants not in rest_prices:
-            #         continue
-
-
-#BUG: PRINTS DUPLICATES - try this while loop ^
 
 
     bakeries = []
@@ -422,12 +341,6 @@ def display_search_results():
                     print b
                     results.append(b)
 
-            # while bakeries < len(bakeries+1):
-            #     if bakeries in bakery_prices:
-            #         results.append(bakeries)
-            #     elif bakeries not in bakery_prices:
-            #         continue
-
 
     bars = []
     if bar:
@@ -445,12 +358,6 @@ def display_search_results():
             for bar in bar_prices:
                 if bar in bars and bar not in results:
                     results.append(bar)
-
-            # while bars < len(bars+1):
-            #     if bars in bar_prices:
-            #         results.append(bars)
-            #     elif bars not in bar_prices:
-            #         continue
 
     coffee_shops = []
     if coffee_shop:
@@ -470,13 +377,8 @@ def display_search_results():
                 if coffee in coffee_shops and coffee not in results:
                     results.append(coffee)
 
-            # while coffee_shops < len(coffee_shops+1):
-            #     if coffee_shops in coffee_prices:
-            #         results.append(coffee_shops)
-            #     elif coffee_shops not in coffee_prices:
-            #         continue
                    
-    return render_template("search-categories.html", results=results, open_restaurants=results, neighborhood=neighborhood)
+    return render_template("search-categories.html", key=google_maps_key, results=results, open_restaurants=results, neighborhood=neighborhood)
 
 
 ################################################################################
@@ -685,77 +587,6 @@ def display_transactions():
 
     return render_template("restaurant_info.html", restaurant=restaurant, m_hours=m_hours, t_hours=t_hours, w_hours=w_hours, th_hours=th_hours, f_hours=f_hours, sa_hours=sa_hours, su_hours=su_hours)
 
-   
-
-@app.route("/restaurants-all")
-def display_all_restaurants():
-    """ Display all restaurants in San Francisco;
-
-        Sort by neighborhood, open now, delivery, pickup, reservation & price. """
-
-    food_types = ('Southern', 'Seafood', 'American', 'Tapas/Small Plates', 'French', 'Pizza', 'Breakfast', 'Wings', 'Moroccan', 'Burgers', 'Sandwiches', 'Mexican')
-
-    restaurants = []
-
-    rest_objects = Restaurant.query.all()
-
-    for restaurant in rest_objects:
-        food1 = restaurant.types_of_food
-        foods = food1.split()
-       
-        for food in foods:
-            if food in food_types:
-                restaurants.append(restaurant)
-                break
-
-
-    return render_template("restaurants-all.html", restaurants=restaurants)
-
-
-
-@app.route("/bakeries-all")
-def display_all_bakeries():
-    """ Display all bakeries in San Francisco;
-
-        Sort by neighborhood, open now, delivery, pickup, reservation & price. """
-
-
-    restaurants = Restaurant.query.filter(Restaurant.types_of_food.in_(['bakery', 'bakeries', 'Bakeries', 'Bakery'])).all()
-
-    neighborhood = Neighborhood.query.filter(Neighborhood.neighborhood_id).all()
-
-    return render_template("restaurants.html", restaurants=restaurants, neighborhood=neighborhood)
-
-
-
-@app.route("/bars-all")
-def display_all_bars():
-    """ Display all bakeries in San Francisco;
-
-        Sort by neighborhood, open now, delivery, pickup, reservation & price. """
-
-
-    restaurants = Restaurant.query.filter(Restaurant.types_of_food.in_(['bar', 'Bar'])).all()
-
-    neighborhood = Neighborhood.query.filter(Neighborhood.neighborhood_id).all()
-
-    return render_template("restaurants.html", restaurants=restaurants, neighborhood=neighborhood)
-
-
-
-@app.route("/coffee-shops-all")
-def display_all_coffee_shops():
-    """ Display all coffee shops in San Francisco;
-
-        Sort by neighborhood, open now, delivery, pickup, reservation & price. """
-
-
-    restaurants = Restaurant.query.filter(Restaurant.types_of_food.in_(['coffee', 'tea', 'Coffee', 'Tea', 'Sandwiches'])).all()
-    # (or if cafe in name) Sandwiches?
-    neighborhood = Neighborhood.query.filter(Neighborhood.neighborhood_id).all()
-
-    return render_template("restaurants.html", restaurants=restaurants, neighborhood=neighborhood)
-
 
 
 ################################################################################
@@ -767,3 +598,4 @@ if __name__ == "__main__":
 
 
     app.run(port=5000, host="0.0.0.0")
+

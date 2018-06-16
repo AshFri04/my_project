@@ -55,7 +55,7 @@ for (let i = 0; i < (locationDetails.length); i++) {
 
     
     let contentString = '<div id="content">' +
-    '<h3 style="font-family: 'Nanum Myeongjo', serif;">'+ restName + '</h3>' +
+    '<h3>'+ restName + '</h3>' +
     '<h3>'+ restType + '</h3>' +
     '</div>';
 

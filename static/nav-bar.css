@@ -118,6 +118,10 @@
     margin-right: 15px;
 }
 
+#Login:hover {
+    color: #DCB239;  /* Lemon */
+}
+
 #Sign-Up {
     color: white;
     font-family: 'Raleway', sans-serif;
@@ -125,6 +129,10 @@
     margin-right: 40px;
     margin-top: 19px;
     margin-left: 15px;
+}
+
+#Sign-Up:hover {
+    color: #DCB239;  /* Lemon */
 }
 
 

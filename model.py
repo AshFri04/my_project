@@ -1,6 +1,6 @@
+
 """ Models for Gluten-Free WebApp Project. """
 
-#from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import pdb
 db = SQLAlchemy()
@@ -44,13 +44,12 @@ class Restaurant(db.Model):
     picture = db.Column(db.String(255))
     menu_url= db.Column(db.String(255))
     website_url = db.Column(db.String(255))
-    last_update = db.Column(db.DateTime)
+    # last_update = db.Column(db.DateTime)
     avg_rating = db.Column(db.Integer)
     neighborhood_id = db.Column(db.Integer, db.ForeignKey('neighborhoods.neighborhood_id'))
     latitude = db.Column(db.String(255))
     longitude = db.Column(db.String(255))
     transactions = db.Column(db.JSON)
-    closed = db.Column(db.String(255))
     price = db.Column(db.String(255))
     types_of_food = db.Column(db.String(255))
     hours_of_operation = db.Column(db.JSON)
@@ -141,7 +140,7 @@ class Neighborhood(db.Model):
 #############################################################################
 # # Helper functions
 
-def connect_to_db(app):
+def connect_to_db(app, db_uri="postgresql:///gluten_free"):
     """ Connect the database to my Flask app. """
 
     # Configure to use PostgreSQL database

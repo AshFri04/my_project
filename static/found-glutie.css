@@ -76,4 +76,5 @@
 [type=submit]:hover {
     background-color: #DCB239;  /* Lemon */
     color: #F5F5F5;  /* WhiteSmoke */
+    cursor: pointer;
 }
