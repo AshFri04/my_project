@@ -80,8 +80,8 @@ def register_process():
                 session["email"] = user_info.email
                 session["fname"] = user_info.fname
 
-                flash("Thank you for signing up!")
-                return redirect("/profile")
+                flash("Thank you for signing up!".format(fname))
+                return redirect('/profile')
         else:
             flash("Passwords do not match. Please try again.")
             return redirect('/signup')
@@ -128,8 +128,7 @@ def sign_out():
 
     session.clear()
 
-# CREATE AJAX!
-    flash("You have successfully signed out. See you soon!")   
+    flash("Until next time!")
     return redirect("/")
 
 
