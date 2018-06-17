@@ -1,7 +1,8 @@
 
+/*  Contains both sign in and sign out styling  */
 
 
-
+/*//////  SIGN IN STYLING  //////*/
 
 #sign-up-container {
     width: 32%;
@@ -109,6 +110,46 @@
 #yes-terms {
     font-family: 'Raleway', sans-serif;
     margin-right: 26px;
+}
+
+
+/*//////  SIGN OUT STYLING  //////*/
+
+body  {
+    margin: 0;
+    background: url("/static/images/sign-out-image.jpg") no-repeat center center fixed;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-color: transparent;
+    margin-bottom: 100px;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    margin-top: 345px;
+    box-shadow: 0px 2px 8px 0px black;
+}
+
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 2.25rem;
+    background-color: #F5F5F5;   /* WhiteSmoke  */ 
+    font-family: 'Raleway', sans-serif;
+    font-size: 20px;
+}
+
+h5 {
+    font-size: 30px;
+}
+
+#back-to-glutie {
+    font-size: 20px;
 }
 
 

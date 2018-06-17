@@ -128,8 +128,7 @@ def sign_out():
 
     session.clear()
 
-    flash("Until next time!")
-    return redirect("/")
+    return render_template("sign_out.html")
 
 
 ################################################################################
