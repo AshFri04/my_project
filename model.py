@@ -92,7 +92,7 @@ class GF_type(db.Model):
     gf_type_id = db.Column(db.Integer, primary_key=True)
     gf_type = db.Column(db.String(100))
 
-    # Relationship between GF_type, restaurants and estaurant_types.
+    # Relationship between GF_type, restaurants and restaurant_types.
     restaurant = db.relationship("Restaurant", secondary="restaurant_types", backref="GF_type")
 
 

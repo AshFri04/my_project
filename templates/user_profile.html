@@ -1,134 +1,101 @@
+
 {% extends 'base.html' %}
+
 {% block content %}
+
+
 
 <link rel="stylesheet" type="text/css" href="static/user_profile.css">
 
 <div class='container'>
-
-
-
- <div class="row" id="row">
-<!-- Displays user's favorites -->
-{% if fav_restaurant != None %}
-
-
-
- <!--////// ROW //////-->
-
   <div class="row" id="row">
 
-  <!--//////   Restaurants  ////// -->
-    <div class="col horizontal-scroll-wrapper squares" id="scroll2">
-      <div id="name">{{ user.fname }}'s Favorites</div>
+    <!-- Displays user's favorites -->
+    {% if fav_restaurant != None %}
+      <div class="row" id="row">
 
-<!--////// ROW within Column //////-->
+<!--///// First Column //////-->
+        <div class="col horizontal-scroll-wrapper squares" id="scroll2">
+          <div id="name">{{ user.fname }}'s Favorites</div>
 
-      <div class="row" style="margin-right: 0; boxing-size: 0;">
-        {% for restaurant in restaurants %}
-        <!-- <div class="row"> -->
+            <!-- Row within Column -->
+            <div class="row" style="margin-right: 0; boxing-size: 0;">
+              {% for restaurant in restaurants %}
 
-        <!-- Column 1: displaying image of Restaurants -->
-          <div class="col" style="padding-right: 0;">
-             <img class="restaurant_image" src="{{ restaurant.picture }}" alt="This is a user photo.">
-           </div>
+                <!-- Column 1: displaying image of Restaurants -->
+                <div class="col" style="padding-right: 0;">
+                  <img class="restaurant_image" src="{{ restaurant.picture }}" alt="This is a user photo.">
+                </div>
 
-        <!-- Column 2: Restaurant Info -->
-         <div class="col" id="column-background">
+                <!-- Column 2: Restaurant Info -->
+                <div class="col" id="column-background">     
+                
+                  <form class="rest-info" action="/rest_info" method="POST" id="{{ restaurant.restaurant_id }}">
+                    <input id = "rest-id-{{ restaurant.restaurant_id }}" type="hidden" name="rest_id" value="{{ restaurant.restaurant_id }}">
+                    <input id = "rest-name-{{ restaurant.restaurant_id }}" type="hidden" name="rest_name" value="{{ restaurant.name }}">
+                    <input type="submit" id="rest-name-style" value="{{ restaurant.name }}">
+                  </form> 
 
-      
-     
-          
-            <form class="rest-info" action="/rest_info" method="POST" id="{{ restaurant.restaurant_id }}">
-              <input id = "rest-id-{{ restaurant.restaurant_id }}" type="hidden" name="rest_id" value="{{ restaurant.restaurant_id }}">
-              <input id = "rest-name-{{ restaurant.restaurant_id }}" type="hidden" name="rest_name" value="{{ restaurant.name }}">
-              <input type="submit" id="rest-name-style" value="{{ restaurant.name }}">
-            </form> 
-            <span id="food-types">{{ restaurant.types_of_food }}</span><span id="price-icon">{{ restaurant.price }}</span>
-          <br>
-            <i id="yelp"class="fab fa-yelp"></i><span id="rating">Yelp Rating |  </span>
-            {% for i in range(restaurant.avg_rating) %}
-              <i id="star"class="fas fa-star"></i>
-            {% endfor %}
-
-
-
-         
+                  <span id="food-types">{{ restaurant.types_of_food }}</span><span id="price-icon">{{ restaurant.price }}</span><br>
+                  <i id="yelp"class="fab fa-yelp"></i><span id="rating">Yelp Rating |  </span>
+                  
+                  <!-- Number of Stars for yelp rating -->
+                  {% for i in range(restaurant.avg_rating) %}
+                    <i id="star"class="fas fa-star"></i>
+                  {% endfor %}
+                
+                </div>  <!-- End of Column 2 -->
+              {% endfor %}
+            </div>  <!-- End of ROW within Column -->
         
+        </div>
 
-       </div>
-       {% endfor %}
-      </div>
-    </div>
+<!--////// Second Column //////-->
+        <div class="col text-center vertical-center" id="random-column">
 
-      <div class="col text-center vertical-center" id="random-column">
-        <div class="row">
-          <br>
+          <!-- Row within Column -->
+          <div class="row"><br>
+            
+            <!-- Displays a random restaurant for the user to try -->
+            <div id="name2">Ready to try a new Glutie?</div>
+              
+              <!-- Column 1 -->
+              <div class="col">
+                <img class="random_image" src="{{ random.picture }}">
+              </div>
+              
+              <!-- Column 2 -->
+              <div class="col" id="second-column"><div>
 
-
-     <!-- Displays a random restaurant for the user to try -->
-<div id="name2">Ready to try a new Glutie?</div>
-
-
-<div class="col">
-
- <img class="random_image" src="{{ random.picture }}">
-</div>
-<div class="col" id="second-column">
-
-<div>
-<form class="rest-info" action="/rest_info" method="POST" id="{{ random.restaurant_id }}">
-              <input id = "rest-id-{{ random.restaurant_id }}" type="hidden" name="rest_id" value="{{ random.restaurant_id }}">
-              <input id = "rest-name-{{ random.restaurant_id }}" type="hidden" name="rest_name" value="{{ random.name }}">
-              <input type="submit" id="rest-name-style" value="{{ random.name }}">
+              <form class="rest-info" action="/rest_info" method="POST" id="{{ random.restaurant_id }}">
+                <input id = "rest-id-{{ random.restaurant_id }}" type="hidden" name="rest_id" value="{{ random.restaurant_id }}">
+                <input id = "rest-name-{{ random.restaurant_id }}" type="hidden" name="rest_name" value="{{ random.name }}">
+                <input type="submit" id="rest-name-style" value="{{ random.name }}">
             </form> 
-            </div>  
-<span id="random-food-types">{{ random.types_of_food }}  <span id="random-price-icon">{{ random.price }}</span></span>
-<br>
- <i id="random-yelp"class="fab fa-yelp"></i><span id="random-rating">Yelp Rating |  </span>
-            {% for i in range(random.avg_rating) %}
-              <i id="star"class="fas fa-star"></i>
-            {% endfor %}
-            <br><br>
-  </div>
-</div>
-<br>
-<br>
-      <hr id="line">
-<br>
-
-
-<!-- User can make a reservation via OpenTable and grab a Lyft to their restaurant of choice -->
-<a id="a" href="https://www.opentable.com/san-francisco-restaurants" target="_blank"> Make a Reservation</a>
-<br>
-<a id="a2" href="https://help.lyft.com/access/unauthenticated" target="_blank">Grab a Lyft to your Restaurant</a>
-
+          
+          </div>  <!-- End of Row within Column -->
+          <span id="random-food-types">{{ random.types_of_food }} <span id="random-price-icon">{{ random.price }}</span></span><br>
+          <i id="random-yelp"class="fab fa-yelp"></i><span id="random-rating">Yelp Rating |  </span>
+          
+          <!-- Number of Stars for yelp rating -->
+          {% for i in range(random.avg_rating) %}
+            <i id="star"class="fas fa-star"></i>
+          {% endfor %}<br><br>
+        </div>
       </div>
+    <br><br>
+      <hr id="line"><br>
 
 
- 
-
-
-  
-   
-    
-
-
-
-           
-
-{% else %}
-<div>{{ user.fname }}, you don't have any favorites! Explore restaurants and bakeries to add to your favorite's list!</div>
- <a class="btn btn-default btn-lg index-btn" href="/search" 
-  role="button">Explore</a>
-{% endif %}
-</div><br>
-
-
-
-
-
-
-
+    <!-- User can make a reservation via OpenTable and grab a Lyft to their restaurant of choice -->
+    <a id="a" href="https://www.opentable.com/san-francisco-restaurants" target="_blank"> Make a Reservation</a><br>
+    <a id="a2" href="https://help.lyft.com/access/unauthenticated" target="_blank">Grab a Lyft to your Restaurant</a>
+    </div>
+    {% else %}
+    <div>{{ user.fname }}, you don't have any favorites! Explore restaurants and bakeries to add to your favorite's list!</div>
+      <a class="btn btn-default btn-lg index-btn" href="/search" role="button">Explore</a>
+    {% endif %}
+  </div>
 </div>
 
 
