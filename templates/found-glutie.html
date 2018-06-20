@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 
 {% block content %}
@@ -6,83 +7,42 @@
 
 
 <div class="container">
+  <div id="title-name" class="text-center vertical-center">{{ restaurant.name }} is a Glutie!</div><br>
+    <div class="row">
 
-       <div id="title-name" class="text-center vertical-center">{{ restaurant.name }} is a Glutie!</div><br>
-       <div class="row">
-      
+      <!-- Column 1: displaying image of Restaurants -->
+      <div class="col-4" id="col">
+        <img class="restaurant-image" src="{{ restaurant.picture }}" alt="This is a user photo.">
+      </div>
+      <div class="col-4" id="col2">
+ 
+      {% if "user_id" in session %}
+        <form class="favorite_form_rest" action="/favorite" method="POST" id="{{ restaurant.restaurant_id }}">
+          <input id = "restaurant-id-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_id" value="{{ restaurant.restaurant_id }}">
+          <input id = "restaurant-name-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_name" value="{{ restaurant.name }}">
+          <button type="submit" id="favorite-button">
+            <i class="fas fa-heart"></i>
+          </button>
+        </form>
+      {% else %}   <!-- Hide Favorite Button -->
+       
+      {% endif %}
+        <form class="rest-info" action="/rest_info" method="POST" id="{{ restaurant.restaurant_id }}">
+          <input id = "rest-id-{{ restaurant.restaurant_id }}" type="hidden" name="rest_id" value="{{ restaurant.restaurant_id }}">
+          <input id = "rest-name-{{ restaurant.restaurant_id }}" type="hidden" name="rest_name" value="{{ restaurant.name }}">
+          <input type="submit" id="rest-name-style" value="{{ restaurant.name }}">
+        </form> 
+        <span id="food-types">{{ restaurant.types_of_food }}</span><span id="price-icon">{{ restaurant.price }}</span><br>
+        <i id="yelp"class="fab fa-yelp"></i><span id="rating">Yelp Rating |  </span>
+        
+        <!-- Stars for Yelp Rating -->
+        {% for i in range(restaurant.avg_rating) %}
+          <i id="star"class="fas fa-star"></i>
+        {% endfor %}
 
-              
-            <!-- Column 1: displaying image of Restaurants -->
-          <div class="col-4" id="col">
-             <img class="restaurant-image" src="{{ restaurant.picture }}" alt="This is a user photo.">
-</div>
-             <div class="col-4" id="col2">
-     
-          {% if "user_id" in session %}
-            <form class="favorite_form_rest" action="/favorite" method="POST" id="{{ restaurant.restaurant_id }}">
-              <input id = "restaurant-id-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_id" value="{{ restaurant.restaurant_id }}">
-              <input id = "restaurant-name-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_name" value="{{ restaurant.name }}">
-              <button type="submit" id="favorite-button">
-                <i class="fas fa-heart"></i>
-              </button>
-            </form>
-          {% else %}   <!-- Hide Favorite Button -->
-           
-          {% endif %}
-            <form class="rest-info" action="/rest_info" method="POST" id="{{ restaurant.restaurant_id }}">
-              <input id = "rest-id-{{ restaurant.restaurant_id }}" type="hidden" name="rest_id" value="{{ restaurant.restaurant_id }}">
-              <input id = "rest-name-{{ restaurant.restaurant_id }}" type="hidden" name="rest_name" value="{{ restaurant.name }}">
-              <input type="submit" id="rest-name-style" value="{{ restaurant.name }}">
-            </form> 
-            <span id="food-types">{{ restaurant.types_of_food }}</span><span id="price-icon">{{ restaurant.price }}</span>
-          <br>
-            <i id="yelp"class="fab fa-yelp"></i><span id="rating">Yelp Rating |  </span>
-            {% for i in range(restaurant.avg_rating) %}
-              <i id="star"class="fas fa-star"></i>
-            {% endfor %}
-
-</div>
-
-
-
-
-
-
-<!-- 
-
-                  <div> 
-                    <input type="hidden" class="coordinates" value= "{{ restaurant.latitude }} {{ restaurant.longitude }}">
-                  </div>
-                  <div>
-                    <input type="hidden" class="rest_name" value="{{ restaurant.name }}">
-                  </div>
-                  <div>
-                    <input type="hidden" class="rest_type" value="{{ restaurant.types_of_food }}">
-                  </div> -->
-
-               <!--    {% if "user_id" in session %}
-                  <form class="favorite_form_rest" action="/favorite" method="POST" id="{{ restaurant.restaurant_id }}">
-                  <div class="form-group">
-                    <input id = "restaurant-id-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_id" value="{{ restaurant.restaurant_id }}">
-                      <input id = "restaurant-name-{{ restaurant.restaurant_id }}" type="hidden" name="restaurant_name" value="{{ restaurant.name }}">
-                    <input type="submit" value="Favorite">
-                  </div>
-                  </form> 
-                  {% else %}
-                    <h3>Create an Account to access other features</h3>
-                  {% endif %}
- -->
-</div>
-
-<!--  </div> -->
-      <!-- </div> -->
-    <!-- </div> -->
+    </div>
   </div>
-
-
-
-
-
-
+</div>
 
 {% endblock %}
+
