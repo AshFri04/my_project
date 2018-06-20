@@ -28,7 +28,7 @@ class User(db.Model):
     def __repr__(self):
         """ Provide helpful representation when printed. """
 
-        return "<User user_id={} fname={} lname={} email={} zipcode={}>".format(self.user_id, self.fname, self.lname, self.email, self.zipcode)
+        return "<User user_id={} fname={} lname={} email={} zipcode={} password={}>".format(self.user_id, self.fname, self.lname, self.email, self.zipcode, self.password)
 
 
 

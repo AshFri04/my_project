@@ -152,4 +152,16 @@ h5 {
     font-size: 20px;
 }
 
+.btn-primary {
+    color: #fff;
+    background-color: #ff7f50;  /* coral */
+    border-color: #ff7f50;  /* coral */
+}
+
+.btn-primary:hover {
+    background-color: #DCB239;   /* Lemon */
+    border-color: #DCB239;   /* Lemon */
+    color: #F5F5F5;   /* WhiteSmoke  */ 
+}
+
 

@@ -1,44 +1,101 @@
 
-
-#login-container {
-    width:13%;
-    padding-right: 0px;
-    padding-left: 0px;
-    margin-top: 100px;
-    margin-left: 488px;
-
+body {
+    background: url("/static/images/login-background.jpg") no-repeat center center fixed;
+    /*background-size: cover;*/
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-color: transparent;
+    margin-bottom: 400px;
+    /*margin: 0;*/
 }
 
-#row-login {
+/*#lock icon*/
+.input-group-text {
     display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    margin-right: -166px;
-    margin-left: 0;
-    border: 5px solid #F5F5F5;
-    padding-left: 75px;
-    padding-top: 60px;
-    padding-bottom: 48px;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 0.375rem 12px;
+    margin-bottom: 0;
+    margin-left: 20px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+}
+
+p {
+    font-family: 'Raleway', sans-serif;
+}
+
+.form-control {
+    font-family: 'Raleway', sans-serif;
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 17px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    margin-right: 20px;
+}
+div.transbox form {
+    margin: 5%;
+    font-weight: bold;
+    color: #000000;
+}
+
+div.background {
+    border: 2px solid black;
+}
+
+div.transbox {
+    margin: 30px;
+    height: 365px;
+    width: 500px;
+    background-color: #ffffff;
+    border: 1px solid black;
+    opacity: 0.9;
+    filter: alpha(opacity=60); /* For IE8 and earlier */
+}
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+
+#row-login {
+    max-width: 500px;
+    margin: auto;
+    margin-top: 200px;
 }
 
 #login-word {
     font-family: 'Raleway', sans-serif;
     font-size: 32px;
     padding-bottom: 14px;
+    padding-top: 49px;
 }
 
 #login-button {
     font-family: 'Raleway', sans-serif;
-    font-size: 17px;
+    font-size: 19px;
     box-shadow: 1px 1px 1px 1px #233237;
     margin-top: 11px;
+    padding-left: 35px;
+    padding-right: 35px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 
 #login-button:hover {
-    font-family: 'Raleway', sans-serif;
-    font-size: 17px;
     background-color: #DCB239;   /* Lemon */
     color: #F5F5F5;   /* WhiteSmoke  */ 
 }

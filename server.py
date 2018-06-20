@@ -1,6 +1,7 @@
 import os
 
 from flask import Flask, render_template, request, redirect, session, flash, jsonify, url_for
+from flask_bcrypt import Bcrypt
 from flask_uploads import UploadSet, configure_uploads, IMAGES
 from flask_debugtoolbar import DebugToolbarExtension
 
@@ -14,6 +15,7 @@ from random import choice
 
 
 app = Flask(__name__)
+bcrypt = Bcrypt(app)
 
 # Required to use Flask sessions and the debug toolbar
 app.secret_key = os.environ["FLASK_SECRET_KEY"]
@@ -61,7 +63,9 @@ def register_process():
 
     fname = first_name.capitalize()
 
-    password_hash = pbkdf2_sha256.hash(password)
+    # bcrypt password encryption with a work factor of 10
+    # (Work factor value determines how slow the hash function will be)
+    pw_hash = bcrypt.generate_password_hash(password, 10)
 
     if email == confirm_email:
         if password == confirm_password:
@@ -69,7 +73,7 @@ def register_process():
                 flash("This email address is already registered.")
                 return redirect('/signup')
             else:
-                user_info = User(fname=fname, lname=lname, email=email, zipcode=zipcode, password=password_hash)
+                user_info = User(fname=fname, lname=lname, email=email, zipcode=zipcode, password=pw_hash)
 
                 # Add user information to the database.
                 db.session.add(user_info)
@@ -80,7 +84,6 @@ def register_process():
                 session["email"] = user_info.email
                 session["fname"] = user_info.fname
 
-                flash("Thank you for signing up!".format(fname))
                 return redirect('/profile')
         else:
             flash("Passwords do not match. Please try again.")
@@ -106,17 +109,20 @@ def login_process():
     """ Process login information; log a user into their account. """
 
     email = request.form.get('email')
-    password = request.form.get('password')
+    candidate = request.form.get('password')
     user = User.query.filter_by(email=email).first()
 
+    pw_hash = user.password
+
     if user:
-        if pbkdf2_sha256.verify(password, user.password):
+        # Helps to prevent timing attacks
+        if bcrypt.check_password_hash(pw_hash, candidate):  # returns True
             session['user_id'] = user.user_id
             session['email'] = user.email
             session['fname'] =user.fname
 
             return redirect("/profile")
-# CREATE AJAX!
+
     flash("The email or password you've entered does not match any of our accounts. \n Please try again.")
     return redirect('/login')
 
